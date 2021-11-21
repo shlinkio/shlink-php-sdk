@@ -24,7 +24,7 @@ final class ArrayShlinkConfig implements ShlinkConfigInterface
     public static function fromArray(array $config): self
     {
         if (! isset($config[self::BASE_URL_PROP], $config[self::API_KEY_PROP])) {
-            throw InvalidConfigException::fromInvalidConfig();
+            throw InvalidConfigException::forInvalidConfig();
         }
 
         $baseUrl = trim($config[self::BASE_URL_PROP]);

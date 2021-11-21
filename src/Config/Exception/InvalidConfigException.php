@@ -22,7 +22,7 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
         ));
     }
 
-    public static function fromInvalidConfig(): self
+    public static function forInvalidConfig(): self
     {
         return new self(sprintf(
             'Provided array is missing "%s" and/or "%s" props, or their values are invalid. Make sure both are set '
