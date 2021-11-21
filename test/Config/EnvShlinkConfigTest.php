@@ -37,7 +37,7 @@ class EnvShlinkConfigTest extends TestCase
 
     public function provideWrongEnvSetUps(): iterable
     {
-        $buildSetUpWithEnvVars = static fn (?string $envVar = null) => static function () use ($envVar) {
+        $buildSetUpWithEnvVars = static fn (?string $envVar = null) => static function () use ($envVar): void {
             if ($envVar) {
                 putenv(sprintf('%s=SOME_VALUE', $envVar));
             }

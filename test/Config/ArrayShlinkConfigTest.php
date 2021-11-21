@@ -19,7 +19,7 @@ class ArrayShlinkConfigTest extends TestCase
         $this->expectException(InvalidConfigException::class);
         $this->expectExceptionMessage(
             'Provided array is missing "baseUrl" and/or "apiKey" props, or their values are invalid. Make sure both '
-            . 'are set with strings.'
+            . 'are set with strings.',
         );
 
         ArrayShlinkConfig::fromArray($rawConfig);
