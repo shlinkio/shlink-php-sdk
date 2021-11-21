@@ -20,8 +20,13 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     public function listShortUrls(): ShortUrlsList
     {
         return new ShortUrlsList(function (int $page): array {
-            $resp = $this->httpClient->getFromShlink('/short-urls', ['page' => $page]);
-            return json_decode($resp->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
+            $resp = $this->httpClient->getFromShlink(
+                '/short-urls',
+                ['page' => $page, 'itemsPerPage' => ShortUrlsList::ITEMS_PER_PAGE],
+            );
+            $body = json_decode($resp->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
+
+            return [$body['shortUrls']['data'] ?? [], $body['shortUrls']['pagination'] ?? []];
         });
     }
 }
