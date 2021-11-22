@@ -6,11 +6,8 @@ namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-
-use function json_decode;
-
-use const JSON_THROW_ON_ERROR;
 
 class VisitsClient implements VisitsClientInterface
 {
@@ -40,7 +37,7 @@ class VisitsClient implements VisitsClientInterface
             $query['page'] = $page;
             $query['itemsPerPage'] = VisitsList::ITEMS_PER_PAGE;
             $resp = $this->httpClient->getFromShlink($url, $query);
-            $body = json_decode($resp->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
+            $body = JsonDecoder::decode($resp->getBody()->__toString());
 
             return [$body['visits']['data'] ?? [], $body['visits']['pagination'] ?? []];
         };

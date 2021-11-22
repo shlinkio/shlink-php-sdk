@@ -6,10 +6,7 @@ namespace Shlinkio\Shlink\SDK\ShortUrls;
 
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
-
-use function json_decode;
-
-use const JSON_THROW_ON_ERROR;
+use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 
 class ShortUrlsClient implements ShortUrlsClientInterface
 {
@@ -24,7 +21,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
                 '/short-urls',
                 ['page' => $page, 'itemsPerPage' => ShortUrlsList::ITEMS_PER_PAGE],
             );
-            $body = json_decode($resp->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
+            $body = JsonDecoder::decode($resp->getBody()->__toString());
 
             return [$body['shortUrls']['data'] ?? [], $body['shortUrls']['pagination'] ?? []];
         });
