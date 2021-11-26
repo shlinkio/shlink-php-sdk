@@ -13,7 +13,7 @@ interface TagsClientInterface
     /**
      * @return TagWithStats[]
      */
-    public function listTagsWithStats(): array;
+    public function listTagsWithStats(): iterable;
 
     public function renameTag(string $oldName, string $newName): void;
 

@@ -7,8 +7,6 @@ namespace Shlinkio\Shlink\SDK\Tags;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
-use function array_map;
-
 class TagsClient implements TagsClientInterface
 {
     public function __construct(private HttpClientInterface $httpClient)
@@ -20,12 +18,12 @@ class TagsClient implements TagsClientInterface
         return $this->loadTags()['data'];
     }
 
-    public function listTagsWithStats(): array
+    public function listTagsWithStats(): iterable
     {
-        return array_map(
-            static fn (array $data) => TagWithStats::fromArray($data),
-            $this->loadTags(['withStats' => 'true'])['stats'] ?? [],
-        );
+        $tags = $this->loadTags(['withStats' => 'true'])['stats'] ?? [];
+        foreach ($tags as $index => $tag) {
+            yield $index => TagWithStats::fromArray($tag);
+        }
     }
 
     private function loadTags(array $query = []): array
