@@ -90,7 +90,7 @@ class DomainsClientTest extends TestCase
     }
 
     /** @test */
-    public function configureNotFoundRedirectsSendsExpectedRequestAndReceivesExpectedResponse(): void
+    public function configureDomainRedirectsSendsExpectedRequestAndReceivesExpectedResponse(): void
     {
         $config = DomainRedirectsConfig::forDomain('foo.com')
             ->withRegularNotFoundRedirect('somewhere.com')
@@ -103,7 +103,7 @@ class DomainsClientTest extends TestCase
             DomainRedirectProps::INVALID_SHORT_URL => null,
         ]);
 
-        $result = $this->domainsClient->configureNotFoundRedirects($config);
+        $result = $this->domainsClient->configureDomainRedirects($config);
 
         self::assertNull($result->baseUrlRedirect());
         self::assertNull($result->invalidShortUrlRedirect());

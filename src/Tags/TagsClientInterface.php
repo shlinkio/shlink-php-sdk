@@ -11,7 +11,7 @@ interface TagsClientInterface
     public function listTags(): array;
 
     /**
-     * @return TagWithStats[]
+     * @return iterable<TagWithStats>
      */
     public function listTagsWithStats(): iterable;
 

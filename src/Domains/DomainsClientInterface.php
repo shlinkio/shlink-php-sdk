@@ -15,5 +15,5 @@ interface DomainsClientInterface
      */
     public function listDomains(): iterable;
 
-    public function configureNotFoundRedirects(DomainRedirectsConfig $redirects): DomainRedirects;
+    public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects;
 }

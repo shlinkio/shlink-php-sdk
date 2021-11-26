@@ -18,7 +18,7 @@ final class ArrayShlinkConfig implements ShlinkConfigInterface
     }
 
     /**
-     * @param array{baseUrl: string, apiKey: string} $config
+     * @param array $config
      * @throws InvalidConfigException
      */
     public static function fromArray(array $config): self

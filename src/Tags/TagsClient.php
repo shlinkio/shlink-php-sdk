@@ -18,6 +18,9 @@ class TagsClient implements TagsClientInterface
         return $this->loadTags()['data'];
     }
 
+    /**
+     * @return iterable<TagWithStats>
+     */
     public function listTagsWithStats(): iterable
     {
         $tags = $this->loadTags(['withStats' => 'true'])['stats'] ?? [];

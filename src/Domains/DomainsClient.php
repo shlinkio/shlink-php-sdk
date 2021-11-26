@@ -26,7 +26,7 @@ class DomainsClient implements DomainsClientInterface
         }
     }
 
-    public function configureNotFoundRedirects(DomainRedirectsConfig $redirects): DomainRedirects
+    public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects
     {
         $payload = $this->httpClient->callShlinkWithBody('/domains/redirects', 'PATCH', $redirects);
         return DomainRedirects::fromArray($payload);
