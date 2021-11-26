@@ -6,6 +6,8 @@ namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 
@@ -22,9 +24,23 @@ class VisitsClient implements VisitsClientInterface
         return VisitsSummary::fromArray($this->httpClient->getFromShlink('/visits')['visits'] ?? []);
     }
 
-    public function listShortUrlVisits(string $shortCode, ?string $domain = null): VisitsList
+    public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
-        $query = $domain !== null ? ['domain' => $domain] : [];
+        return $this->listShortUrlVisitsWithFilter($shortUrlIdentifier, VisitsFilter::create());
+    }
+
+    public function listShortUrlVisitsWithFilter(
+        ShortUrlIdentifier $shortUrlIdentifier,
+        VisitsFilter $filter,
+    ): VisitsList {
+        $shortCode = $shortUrlIdentifier->shortCode();
+        $domain = $shortUrlIdentifier->domain();
+        $query = $filter->toArray();
+
+        if ($domain !== null) {
+            $query['domain'] = $domain;
+        }
+
         return VisitsList::forTupleLoader(
             $this->createVisitsLoaderForUrl(sprintf('/short-urls/%s/visits', $shortCode), $query),
         );
@@ -32,15 +48,27 @@ class VisitsClient implements VisitsClientInterface
 
     public function listTagVisits(string $tag): VisitsList
     {
-        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl(sprintf('/tags/%s/visits', $tag)));
+        return $this->listTagVisitsWithFilter($tag, VisitsFilter::create());
+    }
+
+    public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
+    {
+        return VisitsList::forTupleLoader(
+            $this->createVisitsLoaderForUrl(sprintf('/tags/%s/visits', $tag), $filter->toArray()),
+        );
     }
 
     public function listOrphanVisits(): VisitsList
     {
-        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl('/visits/orphan'));
+        return $this->listOrphanVisitsWithFilter(VisitsFilter::create());
     }
 
-    private function createVisitsLoaderForUrl(string $url, array $query = []): Closure
+    public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
+    {
+        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl('/visits/orphan', $filter->toArray()));
+    }
+
+    private function createVisitsLoaderForUrl(string $url, array $query): Closure
     {
         return function (int $page) use ($url, $query): array {
             $query['page'] = $page;

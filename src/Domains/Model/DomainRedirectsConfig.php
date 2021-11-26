@@ -8,18 +8,13 @@ use JsonSerializable;
 
 final class DomainRedirectsConfig implements JsonSerializable
 {
-    private array $redirectsPayload = [];
-
-    private function __construct()
+    private function __construct(private array $redirectsPayload = [])
     {
     }
 
     public static function forDomain(string $domain): self
     {
-        $instance = new self();
-        $instance->redirectsPayload['domain'] = $domain;
-
-        return $instance;
+        return new self(['domain' => $domain]);
     }
 
     public function withBaseUrlRedirect(string $url): self
@@ -54,8 +49,7 @@ final class DomainRedirectsConfig implements JsonSerializable
 
     private function getCloneWithProp(string $prop, ?string $value): self
     {
-        $clone = new self();
-        $clone->redirectsPayload = $this->redirectsPayload;
+        $clone = new self($this->redirectsPayload);
         $clone->redirectsPayload[$prop] = $value;
 
         return $clone;

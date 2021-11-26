@@ -7,10 +7,12 @@ namespace Shlinkio\Shlink\SDK;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
@@ -72,9 +74,16 @@ class ShlinkClient implements
         return $this->visitsClient->getVisitsSummary();
     }
 
-    public function listShortUrlVisits(string $shortCode, ?string $domain = null): VisitsList
+    public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
-        return $this->visitsClient->listShortUrlVisits($shortCode, $domain);
+        return $this->visitsClient->listShortUrlVisits($shortUrlIdentifier);
+    }
+
+    public function listShortUrlVisitsWithFilter(
+        ShortUrlIdentifier $shortUrlIdentifier,
+        VisitsFilter $filter,
+    ): VisitsList {
+        return $this->visitsClient->listShortUrlVisitsWithFilter($shortUrlIdentifier, $filter);
     }
 
     public function listTagVisits(string $tag): VisitsList
@@ -82,8 +91,18 @@ class ShlinkClient implements
         return $this->visitsClient->listTagVisits($tag);
     }
 
+    public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
+    {
+        return $this->visitsClient->listTagVisitsWithFilter($tag, $filter);
+    }
+
     public function listOrphanVisits(): VisitsList
     {
         return $this->visitsClient->listOrphanVisits();
+    }
+
+    public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
+    {
+        return $this->visitsClient->listOrphanVisitsWithFilter($filter);
     }
 }

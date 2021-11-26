@@ -11,6 +11,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
+use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 
 use function http_build_query;
@@ -32,9 +33,9 @@ class HttpClient implements HttpClientInterface
     /**
      * @throws HttpException
      */
-    public function getFromShlink(string $path, array $query = []): array
+    public function getFromShlink(string $path, array|ArraySerializable $query = []): array
     {
-        return $this->callShlink($path, 'GET', null, $query);
+        return $this->callShlink($path, 'GET', null, $this->normalizeQuery($query));
     }
 
     /**
@@ -44,9 +45,9 @@ class HttpClient implements HttpClientInterface
         string $path,
         string $method,
         array|JsonSerializable $body,
-        array $query = [],
+        array|ArraySerializable $query = [],
     ): array {
-        return $this->callShlink($path, $method, $body, $query);
+        return $this->callShlink($path, $method, $body, $this->normalizeQuery($query));
     }
 
     /**
@@ -80,5 +81,10 @@ class HttpClient implements HttpClientInterface
         }
 
         return $status === 204 ? [] : JsonDecoder::decode($resp->getBody()->__toString());
+    }
+
+    private function normalizeQuery(array|ArraySerializable $query): array
+    {
+        return $query instanceof ArraySerializable ? $query->toArray() : $query;
     }
 }

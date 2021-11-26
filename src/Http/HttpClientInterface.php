@@ -6,13 +6,14 @@ namespace Shlinkio\Shlink\SDK\Http;
 
 use JsonSerializable;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
+use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
 interface HttpClientInterface
 {
     /**
      * @throws HttpException
      */
-    public function getFromShlink(string $path, array $query = []): array;
+    public function getFromShlink(string $path, array|ArraySerializable $query = []): array;
 
     /**
      * @throws HttpException
@@ -21,6 +22,6 @@ interface HttpClientInterface
         string $path,
         string $method,
         array|JsonSerializable $body,
-        array $query = [],
+        array|ArraySerializable $query = [],
     ): array;
 }
