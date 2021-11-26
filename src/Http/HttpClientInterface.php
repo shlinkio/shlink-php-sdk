@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Http;
 
-use Psr\Http\Message\ResponseInterface;
+use JsonSerializable;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 interface HttpClientInterface
@@ -12,10 +12,15 @@ interface HttpClientInterface
     /**
      * @throws HttpException
      */
-    public function getFromShlink(string $path, array $query = []): ResponseInterface;
+    public function getFromShlink(string $path, array $query = []): array;
 
     /**
      * @throws HttpException
      */
-    public function callShlinkWithBody(string $path, string $method, array $body, array $query = []): ResponseInterface;
+    public function callShlinkWithBody(
+        string $path,
+        string $method,
+        array|JsonSerializable $body,
+        array $query = [],
+    ): array;
 }

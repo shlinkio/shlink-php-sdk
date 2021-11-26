@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Http;
 
 use JsonException;
+use JsonSerializable;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
+use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 
 use function http_build_query;
 use function json_encode;
@@ -31,7 +32,7 @@ class HttpClient implements HttpClientInterface
     /**
      * @throws HttpException
      */
-    public function getFromShlink(string $path, array $query = []): ResponseInterface
+    public function getFromShlink(string $path, array $query = []): array
     {
         return $this->callShlink($path, 'GET', null, $query);
     }
@@ -39,8 +40,12 @@ class HttpClient implements HttpClientInterface
     /**
      * @throws HttpException
      */
-    public function callShlinkWithBody(string $path, string $method, array $body, array $query = []): ResponseInterface
-    {
+    public function callShlinkWithBody(
+        string $path,
+        string $method,
+        array|JsonSerializable $body,
+        array $query = []
+    ): array {
         return $this->callShlink($path, $method, $body, $query);
     }
 
@@ -48,8 +53,12 @@ class HttpClient implements HttpClientInterface
      * @throws HttpException
      * @throws JsonException
      */
-    private function callShlink(string $path, string $method, ?array $body = null, array $query = []): ResponseInterface
-    {
+    private function callShlink(
+        string $path,
+        string $method,
+        array|JsonSerializable|null $body = null,
+        array $query = []
+    ): array {
         $uri = sprintf('%s/rest/v2%s', $this->config->baseUrl(), $path);
         if (! empty($query)) {
             $uri = sprintf('%s?%s', $uri, http_build_query($query));
@@ -64,11 +73,12 @@ class HttpClient implements HttpClientInterface
         }
 
         $resp = $this->client->sendRequest($req);
+        $status = $resp->getStatusCode();
 
-        if ($resp->getStatusCode() >= 400) {
+        if ($status >= 400) {
             throw HttpException::fromNonSuccessfulResponse($resp);
         }
 
-        return $resp;
+        return $status === 204 ? [] : JsonDecoder::decode($resp->getBody()->__toString());
     }
 }

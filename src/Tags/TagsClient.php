@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Tags;
 
-use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
@@ -31,8 +30,7 @@ class TagsClient implements TagsClientInterface
 
     private function loadTags(array $query = []): array
     {
-        $resp = $this->httpClient->getFromShlink('/tags', $query);
-        return JsonDecoder::decode($resp->getBody()->__toString())['tags'] ?? [];
+        return $this->httpClient->getFromShlink('/tags', $query)['tags'] ?? [];
     }
 
     public function renameTag(string $oldName, string $newName): void

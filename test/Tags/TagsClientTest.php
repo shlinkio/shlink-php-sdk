@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags;
 
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -28,9 +26,11 @@ class TagsClientTest extends TestCase
     /** @test */
     public function listTagsReturnsDataProp(): void
     {
-        $get = $this->httpClient->getFromShlink('/tags', [])->willReturn(
-            (new Response())->withBody(Utils::streamFor('{"tags": {"data": ["foo", "bar", "baz"]}}'))
-        );
+        $get = $this->httpClient->getFromShlink('/tags', [])->willReturn([
+            'tags' => [
+                'data' => ['foo', 'bar', 'baz'],
+            ],
+        ]);
 
         $result = $this->tagsClient->listTags();
 
@@ -41,9 +41,11 @@ class TagsClientTest extends TestCase
     /** @test */
     public function listTagsWithStatsReturnsStatsProp(): void
     {
-        $get = $this->httpClient->getFromShlink('/tags', ['withStats' => 'true'])->willReturn(
-            (new Response())->withBody(Utils::streamFor('{"tags": {"stats": [{}, {}, {}, {}, {}]}}'))
-        );
+        $get = $this->httpClient->getFromShlink('/tags', ['withStats' => 'true'])->willReturn([
+            'tags' => [
+                'stats' => [[], [], [], [], [], ],
+            ],
+        ]);
 
         $result = $this->tagsClient->listTagsWithStats();
 

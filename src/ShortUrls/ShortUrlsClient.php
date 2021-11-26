@@ -6,7 +6,6 @@ namespace Shlinkio\Shlink\SDK\ShortUrls;
 
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
-use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 
 class ShortUrlsClient implements ShortUrlsClientInterface
 {
@@ -17,13 +16,12 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     public function listShortUrls(): ShortUrlsList
     {
         return new ShortUrlsList(function (int $page): array {
-            $resp = $this->httpClient->getFromShlink(
+            $payload = $this->httpClient->getFromShlink(
                 '/short-urls',
                 ['page' => $page, 'itemsPerPage' => ShortUrlsList::ITEMS_PER_PAGE],
             );
-            $body = JsonDecoder::decode($resp->getBody()->__toString());
 
-            return [$body['shortUrls']['data'] ?? [], $body['shortUrls']['pagination'] ?? []];
+            return [$payload['shortUrls']['data'] ?? [], $payload['shortUrls']['pagination'] ?? []];
         });
     }
 }
