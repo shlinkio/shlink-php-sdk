@@ -11,8 +11,13 @@ final class ShortUrlsList extends ListEndpointIterator
 {
     public const ITEMS_PER_PAGE = 20;
 
-    public function __construct(private Closure $pageLoader)
+    private function __construct(private Closure $pageLoader)
     {
         parent::__construct($this->pageLoader, static fn (array $value) => $value, self::ITEMS_PER_PAGE);
+    }
+
+    public static function forTupleLoader(Closure $pageLoader): self
+    {
+        return new self($pageLoader);
     }
 }

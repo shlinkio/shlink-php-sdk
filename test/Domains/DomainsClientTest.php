@@ -12,6 +12,8 @@ use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectProps;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 
+use function count;
+
 class DomainsClientTest extends TestCase
 {
     use ProphecyTrait;

@@ -44,7 +44,7 @@ class HttpClient implements HttpClientInterface
         string $path,
         string $method,
         array|JsonSerializable $body,
-        array $query = []
+        array $query = [],
     ): array {
         return $this->callShlink($path, $method, $body, $query);
     }
@@ -57,7 +57,7 @@ class HttpClient implements HttpClientInterface
         string $path,
         string $method,
         array|JsonSerializable|null $body = null,
-        array $query = []
+        array $query = [],
     ): array {
         $uri = sprintf('%s/rest/v2%s', $this->config->baseUrl(), $path);
         if (! empty($query)) {

@@ -15,7 +15,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
 
     public function listShortUrls(): ShortUrlsList
     {
-        return new ShortUrlsList(function (int $page): array {
+        return ShortUrlsList::forTupleLoader(function (int $page): array {
             $payload = $this->httpClient->getFromShlink(
                 '/short-urls',
                 ['page' => $page, 'itemsPerPage' => ShortUrlsList::ITEMS_PER_PAGE],

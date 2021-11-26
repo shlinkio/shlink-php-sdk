@@ -10,6 +10,7 @@ final class DomainRedirectProps
     public const REGULAR_NOT_FOUND = 'regular404Redirect';
     public const INVALID_SHORT_URL = 'invalidShortUrlRedirect';
 
-    private function __construct() {
+    private function __construct()
+    {
     }
 }

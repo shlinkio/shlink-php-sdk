@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Domains;
 
 use Shlinkio\Shlink\SDK\Domains\Model\Domain;
-use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
+use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 
 class DomainsClient implements DomainsClientInterface

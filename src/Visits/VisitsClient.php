@@ -8,6 +8,7 @@ use Closure;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 
 class VisitsClient implements VisitsClientInterface
 {
@@ -15,20 +16,25 @@ class VisitsClient implements VisitsClientInterface
     {
     }
 
+    public function getVisitsSummary(): VisitsSummary
+    {
+        return VisitsSummary::fromArray($this->httpClient->getFromShlink('/visits')['visits'] ?? []);
+    }
+
     public function listShortUrlVisits(string $shortCode, ?string $domain = null): VisitsList
     {
         $query = $domain !== null ? ['domain' => $domain] : [];
-        return new VisitsList($this->createVisitsLoaderForUrl("/short-urls/$shortCode/visits", $query));
+        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl("/short-urls/$shortCode/visits", $query));
     }
 
     public function listTagVisits(string $tag): VisitsList
     {
-        return new VisitsList($this->createVisitsLoaderForUrl("/tags/$tag/visits"));
+        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl("/tags/$tag/visits"));
     }
 
     public function listOrphanVisits(): VisitsList
     {
-        return new VisitsList($this->createVisitsLoaderForUrl('/visits/orphan'));
+        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl('/visits/orphan'));
     }
 
     private function createVisitsLoaderForUrl(string $url, array $query = []): Closure

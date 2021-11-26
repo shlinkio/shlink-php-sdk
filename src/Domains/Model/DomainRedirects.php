@@ -9,7 +9,7 @@ final class DomainRedirects
     private function __construct(
         private ?string $baseUrlRedirect,
         private ?string $regularNotFoundRedirect,
-        private ?string $invalidShortUrlRedirect
+        private ?string $invalidShortUrlRedirect,
     ) {
     }
 

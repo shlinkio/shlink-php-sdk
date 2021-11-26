@@ -10,7 +10,8 @@ final class DomainRedirectsConfig implements JsonSerializable
 {
     private array $redirectsPayload = [];
 
-    private function __construct() {
+    private function __construct()
+    {
     }
 
     public static function forDomain(string $domain): self
