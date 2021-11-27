@@ -55,7 +55,7 @@ final class ShortUrlEdition implements JsonSerializable
         return $this->cloneWithProp('forwardQuery', true);
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->payload;
     }

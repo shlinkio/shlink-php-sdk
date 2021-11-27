@@ -11,7 +11,7 @@ final class VisitsList extends ListEndpointIterator
 {
     public const ITEMS_PER_PAGE = 1000;
 
-    private function __construct(Closure $visitsLoader, closure $itemMapper)
+    private function __construct(Closure $visitsLoader, Closure $itemMapper)
     {
         parent::__construct($visitsLoader, $itemMapper, self::ITEMS_PER_PAGE);
     }

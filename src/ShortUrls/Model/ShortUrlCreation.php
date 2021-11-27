@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 use JsonSerializable;
+
 use function array_filter;
+
 use const ARRAY_FILTER_USE_KEY;
 
 final class ShortUrlCreation implements JsonSerializable
@@ -47,7 +49,7 @@ final class ShortUrlCreation implements JsonSerializable
         return new self($props);
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->payload;
     }

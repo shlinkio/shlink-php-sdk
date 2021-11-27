@@ -22,7 +22,7 @@ final class Visit implements VisitInterface
     {
         return new self(
             $payload['referer'] ?? '',
-            DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']),
+            DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']), // @phpstan-ignore-line
             $payload['userAgent'] ?? '',
             $payload['potentialBot'] ?? false,
             VisitLocation::fromArray($payload['visitLocation'] ?? []),
