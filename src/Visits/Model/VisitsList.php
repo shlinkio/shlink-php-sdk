@@ -11,17 +11,18 @@ final class VisitsList extends ListEndpointIterator
 {
     public const ITEMS_PER_PAGE = 1000;
 
-    private function __construct(private Closure $visitsLoader)
+    private function __construct(Closure $visitsLoader, closure $itemMapper)
     {
-        parent::__construct(
-            $this->visitsLoader,
-            static fn (array $value) => $value,
-            self::ITEMS_PER_PAGE,
-        );
+        parent::__construct($visitsLoader, $itemMapper, self::ITEMS_PER_PAGE);
     }
 
     public static function forTupleLoader(Closure $visitsLoader): self
     {
-        return new self($visitsLoader);
+        return new self($visitsLoader, static fn (array $value) => Visit::fromArray($value));
+    }
+
+    public static function forOrphanVisitsTupleLoader(Closure $visitsLoader): self
+    {
+        return new self($visitsLoader, static fn (array $value) => OrphanVisit::fromArray($value));
     }
 }

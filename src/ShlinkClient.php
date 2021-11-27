@@ -12,6 +12,8 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
+use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
@@ -74,11 +76,17 @@ class ShlinkClient implements
         return $this->visitsClient->getVisitsSummary();
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
         return $this->visitsClient->listShortUrlVisits($shortUrlIdentifier);
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
@@ -86,21 +94,33 @@ class ShlinkClient implements
         return $this->visitsClient->listShortUrlVisitsWithFilter($shortUrlIdentifier, $filter);
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listTagVisits(string $tag): VisitsList
     {
         return $this->visitsClient->listTagVisits($tag);
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listTagVisitsWithFilter($tag, $filter);
     }
 
+    /**
+     * @return VisitsList|OrphanVisit[]
+     */
     public function listOrphanVisits(): VisitsList
     {
         return $this->visitsClient->listOrphanVisits();
     }
 
+    /**
+     * @return VisitsList|OrphanVisit[]
+     */
     public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listOrphanVisitsWithFilter($filter);

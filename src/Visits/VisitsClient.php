@@ -7,6 +7,8 @@ namespace Shlinkio\Shlink\SDK\Visits;
 use Closure;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
+use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
@@ -24,11 +26,17 @@ class VisitsClient implements VisitsClientInterface
         return VisitsSummary::fromArray($this->httpClient->getFromShlink('/visits')['visits'] ?? []);
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
         return $this->listShortUrlVisitsWithFilter($shortUrlIdentifier, VisitsFilter::create());
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
@@ -46,11 +54,17 @@ class VisitsClient implements VisitsClientInterface
         );
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listTagVisits(string $tag): VisitsList
     {
         return $this->listTagVisitsWithFilter($tag, VisitsFilter::create());
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
         return VisitsList::forTupleLoader(
@@ -58,14 +72,22 @@ class VisitsClient implements VisitsClientInterface
         );
     }
 
+    /**
+     * @return VisitsList|OrphanVisit[]
+     */
     public function listOrphanVisits(): VisitsList
     {
         return $this->listOrphanVisitsWithFilter(VisitsFilter::create());
     }
 
+    /**
+     * @return VisitsList|OrphanVisit[]
+     */
     public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
-        return VisitsList::forTupleLoader($this->createVisitsLoaderForUrl('/visits/orphan', $filter->toArray()));
+        return VisitsList::forOrphanVisitsTupleLoader(
+            $this->createVisitsLoaderForUrl('/visits/orphan', $filter->toArray()),
+        );
     }
 
     private function createVisitsLoaderForUrl(string $url, array $query): Closure

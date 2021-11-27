@@ -10,9 +10,9 @@ final class TagWithStats
     {
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $payload): self
     {
-        return new self($data['tag'] ?? '', $data['shortUrlsCount'] ?? 0, $data['visitsCount'] ?? 0);
+        return new self($payload['tag'] ?? '', $payload['shortUrlsCount'] ?? 0, $payload['visitsCount'] ?? 0);
     }
 
     public function tag(): string
