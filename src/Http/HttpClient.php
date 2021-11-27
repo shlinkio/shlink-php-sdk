@@ -10,6 +10,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
+use Shlinkio\Shlink\SDK\Http\Debug\HttpDebuggerInterface;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
@@ -27,6 +28,7 @@ class HttpClient implements HttpClientInterface
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
         private ShlinkConfigInterface $config,
+        private ?HttpDebuggerInterface $debugger = null,
     ) {
     }
 
@@ -73,6 +75,7 @@ class HttpClient implements HttpClientInterface
                        ->withBody($this->streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR)));
         }
 
+        $this->debugger?->debugRequest($req);
         $resp = $this->client->sendRequest($req);
         $status = $resp->getStatusCode();
 
