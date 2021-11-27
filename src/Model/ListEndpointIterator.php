@@ -27,9 +27,8 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
     {
         $currentPage = $this->currentPagination['currentPage'] ?? -1;
 
-        // We cannot simply "yield from" in order to keep consistent indexes
         foreach ($this->currentData as $index => $value) {
-            yield $index + (($currentPage - 1) * $this->itemsPerPage) => ($this->itemMapper)($value);
+            yield $this->calculateIndex($index, $currentPage) => ($this->itemMapper)($value);
         }
 
         $isLastPage = $currentPage < 0 || $currentPage === $this->currentPagination['pagesCount'];
@@ -37,6 +36,11 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
             $this->loadPage(($currentPage ?? -1) + 1);
             yield from $this->getFullList();
         }
+    }
+
+    private function calculateIndex(int $index, int $currentPage): int
+    {
+        return ($currentPage - 1) * $this->itemsPerPage + $index;
     }
 
     public function count(): int
