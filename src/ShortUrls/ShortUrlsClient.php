@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\ShortUrls;
 
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
+
+use function sprintf;
 
 class ShortUrlsClient implements ShortUrlsClientInterface
 {
@@ -23,5 +27,13 @@ class ShortUrlsClient implements ShortUrlsClientInterface
 
             return [$payload['shortUrls']['data'] ?? [], $payload['shortUrls']['pagination'] ?? []];
         });
+    }
+
+    public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
+    {
+        return ShortUrl::fromArray($this->httpClient->getFromShlink(
+            sprintf('/short-urls/%s', $identifier->shortCode()),
+            ['domain' => $identifier->domain()],
+        ));
     }
 }

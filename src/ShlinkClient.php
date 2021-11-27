@@ -7,6 +7,7 @@ namespace Shlinkio\Shlink\SDK;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
@@ -46,6 +47,11 @@ class ShlinkClient implements
     public function listShortUrls(): ShortUrlsList
     {
         return $this->shortUrlsClient->listShortUrls();
+    }
+
+    public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
+    {
+        return $this->shortUrlsClient->getShortUrl($identifier);
     }
 
     public function listTags(): array
