@@ -13,4 +13,6 @@ interface ShortUrlsClientInterface
     public function listShortUrls(): ShortUrlsList;
 
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl;
+
+    public function deleteShortUrl(ShortUrlIdentifier $identifier): void;
 }

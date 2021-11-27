@@ -54,6 +54,11 @@ class ShlinkClient implements
         return $this->shortUrlsClient->getShortUrl($identifier);
     }
 
+    public function deleteShortUrl(ShortUrlIdentifier $identifier): void
+    {
+        $this->shortUrlsClient->deleteShortUrl($identifier);
+    }
+
     public function listTags(): array
     {
         return $this->tagsClient->listTags();

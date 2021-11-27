@@ -31,9 +31,23 @@ class ShortUrlsClient implements ShortUrlsClientInterface
 
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
-        return ShortUrl::fromArray($this->httpClient->getFromShlink(
+        return ShortUrl::fromArray($this->httpClient->getFromShlink(...$this->identifierToUrlAndQuery($identifier)));
+    }
+
+    public function deleteShortUrl(ShortUrlIdentifier $identifier): void
+    {
+        [$url, $query] = $this->identifierToUrlAndQuery($identifier);
+        $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
+    }
+
+    /**
+     * @return array{string, array}
+     */
+    private function identifierToUrlAndQuery(ShortUrlIdentifier $identifier): array
+    {
+        return [
             sprintf('/short-urls/%s', $identifier->shortCode()),
             ['domain' => $identifier->domain()],
-        ));
+        ];
     }
 }
