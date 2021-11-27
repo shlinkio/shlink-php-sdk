@@ -8,6 +8,8 @@ use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
@@ -57,6 +59,16 @@ class ShlinkClient implements
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
         $this->shortUrlsClient->deleteShortUrl($identifier);
+    }
+
+    public function createShortUrl(ShortUrlCreation $creation): ShortUrl
+    {
+        return $this->shortUrlsClient->createShortUrl($creation);
+    }
+
+    public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
+    {
+        return $this->shortUrlsClient->editShortUrl($identifier, $edition);
     }
 
     public function listTags(): array

@@ -6,6 +6,8 @@ namespace Shlinkio\Shlink\SDK\ShortUrls;
 
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 
@@ -38,6 +40,17 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     {
         [$url, $query] = $this->identifierToUrlAndQuery($identifier);
         $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
+    }
+
+    public function createShortUrl(ShortUrlCreation $creation): ShortUrl
+    {
+        return ShortUrl::fromArray($this->httpClient->callShlinkWithBody('/short-urls', 'POST', $creation));
+    }
+
+    public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
+    {
+        [$url, $query] = $this->identifierToUrlAndQuery($identifier);
+        return ShortUrl::fromArray($this->httpClient->callShlinkWithBody($url, 'PATCH', $edition, $query));
     }
 
     /**

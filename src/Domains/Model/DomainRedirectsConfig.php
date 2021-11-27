@@ -8,7 +8,7 @@ use JsonSerializable;
 
 final class DomainRedirectsConfig implements JsonSerializable
 {
-    private function __construct(private array $redirectsPayload = [])
+    private function __construct(private array $payload = [])
     {
     }
 
@@ -49,14 +49,14 @@ final class DomainRedirectsConfig implements JsonSerializable
 
     private function getCloneWithProp(string $prop, ?string $value): self
     {
-        $clone = new self($this->redirectsPayload);
-        $clone->redirectsPayload[$prop] = $value;
+        $clone = new self($this->payload);
+        $clone->payload[$prop] = $value;
 
         return $clone;
     }
 
     public function jsonSerialize(): array
     {
-        return $this->redirectsPayload;
+        return $this->payload;
     }
 }
