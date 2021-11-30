@@ -7,6 +7,12 @@ namespace Shlinkio\Shlink\SDK;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
+use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
@@ -57,21 +63,41 @@ class ShlinkClient implements
         return $this->shortUrlsClient->listShortUrlsWithFilter($filter);
     }
 
+    /**
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
+     */
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
         return $this->shortUrlsClient->getShortUrl($identifier);
     }
 
+    /**
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
+     * @throws DeleteShortUrlThresholdException
+     */
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
         $this->shortUrlsClient->deleteShortUrl($identifier);
     }
 
+    /**
+     * @throws HttpException
+     * @throws NonUniqueSlugException
+     * @throws InvalidLongUrlException
+     * @throws InvalidDataException
+     */
     public function createShortUrl(ShortUrlCreation $creation): ShortUrl
     {
         return $this->shortUrlsClient->createShortUrl($creation);
     }
 
+    /**
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
+     * @throws InvalidDataException
+     */
     public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
     {
         return $this->shortUrlsClient->editShortUrl($identifier, $edition);

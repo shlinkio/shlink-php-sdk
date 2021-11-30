@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\ShortUrls;
 
+use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
@@ -45,26 +51,82 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         });
     }
 
+    /**
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
+     */
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
-        return ShortUrl::fromArray($this->httpClient->getFromShlink(...$this->identifierToUrlAndQuery($identifier)));
+        try {
+            return ShortUrl::fromArray(
+                $this->httpClient->getFromShlink(...$this->identifierToUrlAndQuery($identifier)),
+            );
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
+    /**
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
+     * @throws DeleteShortUrlThresholdException
+     */
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
         [$url, $query] = $this->identifierToUrlAndQuery($identifier);
-        $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
+
+        try {
+            $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
+                'INVALID_SHORTCODE_DELETION' => DeleteShortUrlThresholdException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
+    /**
+     * @throws HttpException
+     * @throws NonUniqueSlugException
+     * @throws InvalidLongUrlException
+     * @throws InvalidDataException
+     */
     public function createShortUrl(ShortUrlCreation $creation): ShortUrl
     {
-        return ShortUrl::fromArray($this->httpClient->callShlinkWithBody('/short-urls', 'POST', $creation));
+        try {
+            return ShortUrl::fromArray($this->httpClient->callShlinkWithBody('/short-urls', 'POST', $creation));
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
+                'INVALID_URL' => InvalidLongUrlException::fromHttpException($e),
+                'INVALID_SLUG' => NonUniqueSlugException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
+    /**
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
+     * @throws InvalidDataException
+     */
     public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
     {
         [$url, $query] = $this->identifierToUrlAndQuery($identifier);
-        return ShortUrl::fromArray($this->httpClient->callShlinkWithBody($url, 'PATCH', $edition, $query));
+
+        try {
+            return ShortUrl::fromArray($this->httpClient->callShlinkWithBody($url, 'PATCH', $edition, $query));
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
+                'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
     /**
