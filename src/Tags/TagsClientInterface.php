@@ -17,5 +17,5 @@ interface TagsClientInterface
 
     public function renameTag(string $oldName, string $newName): void;
 
-    public function deleteTags(array $tags): void;
+    public function deleteTags(string ...$tags): void;
 }

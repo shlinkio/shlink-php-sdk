@@ -11,6 +11,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
@@ -51,6 +52,11 @@ class ShlinkClient implements
         return $this->shortUrlsClient->listShortUrls();
     }
 
+    public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
+    {
+        return $this->shortUrlsClient->listShortUrlsWithFilter($filter);
+    }
+
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
         return $this->shortUrlsClient->getShortUrl($identifier);
@@ -89,9 +95,9 @@ class ShlinkClient implements
         $this->tagsClient->renameTag($oldName, $newName);
     }
 
-    public function deleteTags(array $tags): void
+    public function deleteTags(string ...$tags): void
     {
-        $this->tagsClient->deleteTags($tags);
+        $this->tagsClient->deleteTags(...$tags);
     }
 
     public function getVisitsSummary(): VisitsSummary

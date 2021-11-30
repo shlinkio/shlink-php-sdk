@@ -42,7 +42,7 @@ class TagsClient implements TagsClientInterface
         ]);
     }
 
-    public function deleteTags(array $tags): void
+    public function deleteTags(string ...$tags): void
     {
         $this->httpClient->callShlinkWithBody('/tags', 'DELETE', [], ['tags' => $tags]);
     }

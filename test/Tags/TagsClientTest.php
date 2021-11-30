@@ -72,7 +72,7 @@ class TagsClientTest extends TestCase
         $tags = ['foo', 'bar', 'baz'];
         $call = $this->httpClient->callShlinkWithBody('/tags', 'DELETE', [], ['tags' => $tags]);
 
-        $this->tagsClient->deleteTags($tags);
+        $this->tagsClient->deleteTags(...$tags);
 
         $call->shouldHaveBeenCalledOnce();
     }

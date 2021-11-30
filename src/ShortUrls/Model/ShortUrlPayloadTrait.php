@@ -27,7 +27,7 @@ trait ShortUrlPayloadTrait
         return $this->cloneWithProp('maxVisits', $maxVisits);
     }
 
-    public function withTags(array $tags): self
+    public function withTags(string ...$tags): self
     {
         return $this->cloneWithProp('tags', $tags);
     }

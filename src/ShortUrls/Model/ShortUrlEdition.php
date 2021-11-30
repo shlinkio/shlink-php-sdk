@@ -42,7 +42,7 @@ final class ShortUrlEdition implements JsonSerializable
 
     public function withoutTags(): self
     {
-        return $this->withTags([]);
+        return $this->withTags();
     }
 
     public function notCrawlable(): self

@@ -9,6 +9,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 
 use function sprintf;
@@ -21,10 +22,23 @@ class ShortUrlsClient implements ShortUrlsClientInterface
 
     public function listShortUrls(): ShortUrlsList
     {
-        return ShortUrlsList::forTupleLoader(function (int $page): array {
+        return $this->listShortUrlsWithFilter(ShortUrlsFilter::create());
+    }
+
+    public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
+    {
+        $buildQueryWithPage = static function (int $page) use ($filter): array {
+            $query = $filter->toArray();
+            $query['itemsPerPage'] = ShortUrlsList::ITEMS_PER_PAGE;
+            $query['page'] = $page;
+
+            return $query;
+        };
+
+        return ShortUrlsList::forTupleLoader(function (int $page) use ($buildQueryWithPage): array {
             $payload = $this->httpClient->getFromShlink(
                 '/short-urls',
-                ['page' => $page, 'itemsPerPage' => ShortUrlsList::ITEMS_PER_PAGE],
+                $buildQueryWithPage($page),
             );
 
             return [$payload['shortUrls']['data'] ?? [], $payload['shortUrls']['pagination'] ?? []];

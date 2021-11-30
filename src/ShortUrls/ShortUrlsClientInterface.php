@@ -8,11 +8,14 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 
 interface ShortUrlsClientInterface
 {
     public function listShortUrls(): ShortUrlsList;
+
+    public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList;
 
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl;
 
