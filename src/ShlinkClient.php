@@ -51,6 +51,10 @@ class ShlinkClient implements
         return $this->domainsClient->listDomains();
     }
 
+    /**
+     * @throws HttpException
+     * @throws InvalidDataException
+     */
     public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects
     {
         return $this->domainsClient->configureDomainRedirects($redirects);
