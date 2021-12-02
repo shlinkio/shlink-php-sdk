@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Tags;
 
+use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
+use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
+use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 class TagsClient implements TagsClientInterface
@@ -13,6 +18,9 @@ class TagsClient implements TagsClientInterface
     {
     }
 
+    /**
+     * @return string[]
+     */
     public function listTags(): array
     {
         return $this->loadTags()['data'];
@@ -34,16 +42,44 @@ class TagsClient implements TagsClientInterface
         return $this->httpClient->getFromShlink('/tags', $query)['tags'] ?? [];
     }
 
+    /**
+     * @throws HttpException
+     * @throws InvalidDataException
+     * @throws ForbiddenTagOperationException
+     * @throws TagNotFoundException
+     * @throws TagConflictException
+     */
     public function renameTag(string $oldName, string $newName): void
     {
-        $this->httpClient->callShlinkWithBody('/tags', 'PUT', [
-            'oldName' => $oldName,
-            'newName' => $newName,
-        ]);
+        try {
+            $this->httpClient->callShlinkWithBody('/tags', 'PUT', [
+                'oldName' => $oldName,
+                'newName' => $newName,
+            ]);
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
+                'FORBIDDEN_OPERATION' => ForbiddenTagOperationException::fromHttpException($e),
+                'TAG_NOT_FOUND' => TagNotFoundException::fromHttpException($e),
+                'TAG_CONFLICT' => TagConflictException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
+    /**
+     * @throws HttpException
+     * @throws ForbiddenTagOperationException
+     */
     public function deleteTags(string ...$tags): void
     {
-        $this->httpClient->callShlinkWithBody('/tags', 'DELETE', [], ['tags' => $tags]);
+        try {
+            $this->httpClient->callShlinkWithBody('/tags', 'DELETE', [], ['tags' => $tags]);
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'FORBIDDEN_OPERATION' => ForbiddenTagOperationException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 }

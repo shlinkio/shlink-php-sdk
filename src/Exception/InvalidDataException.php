@@ -6,23 +6,22 @@ namespace Shlinkio\Shlink\SDK\Exception;
 
 use RuntimeException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
-use Throwable;
 
 class InvalidDataException extends RuntimeException implements ExceptionInterface
 {
     /** @var string[] */
     private array $invalidElements;
 
-    private function __construct(string $message, int $code, Throwable $previous)
+    private function __construct(HttpException $previous)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($previous->detail(), $previous->status(), $previous);
     }
 
     public static function fromHttpException(HttpException $prev): self
     {
         $invalidElements = $prev->additional()['invalidElements'];
 
-        $e = new self('Provided data is not valid', $prev->status(), $prev);
+        $e = new self($prev);
         $e->invalidElements = $invalidElements;
 
         return $e;

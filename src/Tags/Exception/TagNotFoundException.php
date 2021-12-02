@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shlinkio\Shlink\SDK\ShortUrls\Exception;
+namespace Shlinkio\Shlink\SDK\Tags\Exception;
 
 use RuntimeException;
 use Shlinkio\Shlink\SDK\Exception\ExceptionInterface;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
-class InvalidLongUrlException extends RuntimeException implements ExceptionInterface
+class TagNotFoundException extends RuntimeException implements ExceptionInterface
 {
-    private string $longUrl;
+    private string $tag;
 
     private function __construct(HttpException $previous)
     {
@@ -19,17 +19,16 @@ class InvalidLongUrlException extends RuntimeException implements ExceptionInter
 
     public static function fromHttpException(HttpException $prev): self
     {
-        $additional = $prev->additional();
-        $longUrl = $additional['url'] ?? '';
+        $tag = $prev->additional()['tag'] ?? '';
 
         $e = new self($prev);
-        $e->longUrl = $longUrl;
+        $e->tag = $tag;
 
         return $e;
     }
 
-    public function longUrl(): string
+    public function tag(): string
     {
-        return $this->longUrl;
+        return $this->tag;
     }
 }

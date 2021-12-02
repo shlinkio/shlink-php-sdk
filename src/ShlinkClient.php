@@ -20,6 +20,9 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
+use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
+use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
+use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
@@ -103,6 +106,9 @@ class ShlinkClient implements
         return $this->shortUrlsClient->editShortUrl($identifier, $edition);
     }
 
+    /**
+     * @return string[]
+     */
     public function listTags(): array
     {
         return $this->tagsClient->listTags();
@@ -116,11 +122,22 @@ class ShlinkClient implements
         return $this->tagsClient->listTagsWithStats();
     }
 
+    /**
+     * @throws HttpException
+     * @throws InvalidDataException
+     * @throws ForbiddenTagOperationException
+     * @throws TagNotFoundException
+     * @throws TagConflictException
+     */
     public function renameTag(string $oldName, string $newName): void
     {
         $this->tagsClient->renameTag($oldName, $newName);
     }
 
+    /**
+     * @throws HttpException
+     * @throws ForbiddenTagOperationException
+     */
     public function deleteTags(string ...$tags): void
     {
         $this->tagsClient->deleteTags(...$tags);
