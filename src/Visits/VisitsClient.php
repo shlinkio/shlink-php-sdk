@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
+use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
@@ -28,6 +31,8 @@ class VisitsClient implements VisitsClientInterface
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
      */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
@@ -36,6 +41,8 @@ class VisitsClient implements VisitsClientInterface
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
      */
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
@@ -49,13 +56,22 @@ class VisitsClient implements VisitsClientInterface
             $query['domain'] = $domain;
         }
 
-        return VisitsList::forTupleLoader(
-            $this->createVisitsLoaderForUrl(sprintf('/short-urls/%s/visits', $shortCode), $query),
-        );
+        try {
+            return VisitsList::forTupleLoader(
+                $this->createVisitsLoaderForUrl(sprintf('/short-urls/%s/visits', $shortCode), $query),
+            );
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws TagNotFoundException
      */
     public function listTagVisits(string $tag): VisitsList
     {
@@ -64,12 +80,21 @@ class VisitsClient implements VisitsClientInterface
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws TagNotFoundException
      */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
-        return VisitsList::forTupleLoader(
-            $this->createVisitsLoaderForUrl(sprintf('/tags/%s/visits', $tag), $filter->toArray()),
-        );
+        try {
+            return VisitsList::forTupleLoader(
+                $this->createVisitsLoaderForUrl(sprintf('/tags/%s/visits', $tag), $filter->toArray()),
+            );
+        } catch (HttpException $e) {
+            throw match ($e->type()) {
+                'TAG_NOT_FOUND' => TagNotFoundException::fromHttpException($e),
+                default => $e,
+            };
+        }
     }
 
     /**

@@ -150,6 +150,8 @@ class ShlinkClient implements
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
      */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
@@ -158,6 +160,8 @@ class ShlinkClient implements
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws ShortUrlNotFoundException
      */
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
@@ -168,6 +172,8 @@ class ShlinkClient implements
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws TagNotFoundException
      */
     public function listTagVisits(string $tag): VisitsList
     {
@@ -176,6 +182,8 @@ class ShlinkClient implements
 
     /**
      * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws TagNotFoundException
      */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
