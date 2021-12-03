@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 
 class TagsClientTest extends TestCase
@@ -56,12 +57,10 @@ class TagsClientTest extends TestCase
     /** @test */
     public function renameTagCallsApi(): void
     {
-        $call = $this->httpClient->callShlinkWithBody('/tags', 'PUT', [
-            'oldName' => 'foo',
-            'newName' => 'bar',
-        ]);
+        $renaming = TagRenaming::fromOldNameAndNewName('foo', 'bar');
+        $call = $this->httpClient->callShlinkWithBody('/tags', 'PUT', $renaming);
 
-        $this->tagsClient->renameTag('foo', 'bar');
+        $this->tagsClient->renameTag($renaming);
 
         $call->shouldHaveBeenCalledOnce();
     }

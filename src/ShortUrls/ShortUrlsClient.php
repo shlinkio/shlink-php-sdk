@@ -26,11 +26,17 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     {
     }
 
+    /**
+     * @return ShortUrlsList|ShortUrl[]
+     */
     public function listShortUrls(): ShortUrlsList
     {
         return $this->listShortUrlsWithFilter(ShortUrlsFilter::create());
     }
 
+    /**
+     * @return ShortUrlsList|ShortUrl[]
+     */
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
         $buildQueryWithPage = static function (int $page) use ($filter): array {

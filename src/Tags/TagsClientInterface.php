@@ -9,6 +9,7 @@ use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 interface TagsClientInterface
@@ -30,7 +31,7 @@ interface TagsClientInterface
      * @throws TagNotFoundException
      * @throws TagConflictException
      */
-    public function renameTag(string $oldName, string $newName): void;
+    public function renameTag(TagRenaming $tagRenaming): void;
 
     /**
      * @throws HttpException

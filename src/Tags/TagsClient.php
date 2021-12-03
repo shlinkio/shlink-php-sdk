@@ -10,6 +10,7 @@ use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 class TagsClient implements TagsClientInterface
@@ -49,13 +50,10 @@ class TagsClient implements TagsClientInterface
      * @throws TagNotFoundException
      * @throws TagConflictException
      */
-    public function renameTag(string $oldName, string $newName): void
+    public function renameTag(TagRenaming $tagRenaming): void
     {
         try {
-            $this->httpClient->callShlinkWithBody('/tags', 'PUT', [
-                'oldName' => $oldName,
-                'newName' => $newName,
-            ]);
+            $this->httpClient->callShlinkWithBody('/tags', 'PUT', $tagRenaming);
         } catch (HttpException $e) {
             throw match ($e->type()) {
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),

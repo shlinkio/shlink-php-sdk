@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK;
 
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
+use Shlinkio\Shlink\SDK\Domains\Model\Domain;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
@@ -23,6 +24,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
@@ -46,6 +48,9 @@ class ShlinkClient implements
     ) {
     }
 
+    /**
+     * @return iterable<Domain>
+     */
     public function listDomains(): iterable
     {
         return $this->domainsClient->listDomains();
@@ -60,11 +65,17 @@ class ShlinkClient implements
         return $this->domainsClient->configureDomainRedirects($redirects);
     }
 
+    /**
+     * @return ShortUrlsList|ShortUrl[]
+     */
     public function listShortUrls(): ShortUrlsList
     {
         return $this->shortUrlsClient->listShortUrls();
     }
 
+    /**
+     * @return ShortUrlsList|ShortUrl[]
+     */
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
         return $this->shortUrlsClient->listShortUrlsWithFilter($filter);
@@ -133,9 +144,9 @@ class ShlinkClient implements
      * @throws TagNotFoundException
      * @throws TagConflictException
      */
-    public function renameTag(string $oldName, string $newName): void
+    public function renameTag(TagRenaming $tagRenaming): void
     {
-        $this->tagsClient->renameTag($oldName, $newName);
+        $this->tagsClient->renameTag($tagRenaming);
     }
 
     /**
