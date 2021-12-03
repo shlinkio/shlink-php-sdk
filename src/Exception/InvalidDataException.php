@@ -9,22 +9,15 @@ use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class InvalidDataException extends RuntimeException implements ExceptionInterface
 {
-    /** @var string[] */
-    private array $invalidElements;
-
-    private function __construct(HttpException $previous)
+    private function __construct(HttpException $previous, private array $invalidElements)
     {
         parent::__construct($previous->detail(), $previous->status(), $previous);
     }
 
     public static function fromHttpException(HttpException $prev): self
     {
-        $invalidElements = $prev->additional()['invalidElements'];
-
-        $e = new self($prev);
-        $e->invalidElements = $invalidElements;
-
-        return $e;
+        $invalidElements = $prev->additional()['invalidElements'] ?? [];
+        return new self($prev, $invalidElements);
     }
 
     /**

@@ -30,7 +30,11 @@ class HttpException extends RuntimeException implements ExceptionInterface
 
     public static function fromNonSuccessfulResponse(ResponseInterface $resp): self
     {
-        $payload = JsonDecoder::decode($resp->getBody()->__toString());
+        return self::fromPayload(JsonDecoder::decode($resp->getBody()->__toString()));
+    }
+
+    public static function fromPayload(array $payload): self
+    {
         $additional = array_filter(
             $payload,
             static fn (string $key) => ! in_array($key, self::STANDARD_PROBLEM_DETAILS_PROPS, true),

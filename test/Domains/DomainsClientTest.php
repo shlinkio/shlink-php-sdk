@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace ShlinkioTest\Shlink\SDK\Domains;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Domains\DomainsClient;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectProps;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
+use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 
 use function count;
@@ -109,5 +112,30 @@ class DomainsClientTest extends TestCase
         self::assertNull($result->invalidShortUrlRedirect());
         self::assertEquals('somewhere.com', $result->regularNotFoundRedirect());
         $call->shouldHaveBeenCalledOnce();
+    }
+
+    /**
+     * @test
+     * @dataProvider provideExceptions
+     */
+    public function configureDomainRedirectsThrowsProperExceptionIfSomethingGoesWrong(
+        HttpException $originalException,
+        string $expectedException,
+    ): void {
+        $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($originalException);
+
+        $this->expectException($expectedException);
+
+        $this->domainsClient->configureDomainRedirects(DomainRedirectsConfig::forDomain('foo'));
+    }
+
+    public function provideExceptions(): iterable
+    {
+        yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
+        yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
+        yield 'INVALID_ARGUMENT type' =>  [
+            HttpException::fromPayload(['type' => 'INVALID_ARGUMENT']),
+            InvalidDataException::class,
+        ];
     }
 }
