@@ -14,16 +14,18 @@ class DomainRedirectsConfigTest extends TestCase
      * @test
      * @dataProvider provideConfigs
      */
-    public function payloadIsBuiltAsExpected(DomainRedirectsConfig $config, array $expectedPayload): void
+    public function payloadIsBuiltAsExpected(callable $createConfig, array $expectedPayload): void
     {
+        /** @var DomainRedirectsConfig $config */
+        $config = $createConfig();
         self::assertEquals($expectedPayload, $config->jsonSerialize());
     }
 
     public function provideConfigs(): iterable
     {
-        yield [DomainRedirectsConfig::forDomain('foo.com'), ['domain' => 'foo.com']];
+        yield [fn () => DomainRedirectsConfig::forDomain('foo.com'), ['domain' => 'foo.com']];
         yield [
-            DomainRedirectsConfig::forDomain('foo.com')
+            fn () => DomainRedirectsConfig::forDomain('foo.com')
                 ->withRegularNotFoundRedirect('somewhere.com'),
             [
                 'domain' => 'foo.com',
@@ -31,7 +33,7 @@ class DomainRedirectsConfigTest extends TestCase
             ],
         ];
         yield [
-            DomainRedirectsConfig::forDomain('bar.com')
+            fn () => DomainRedirectsConfig::forDomain('bar.com')
                 ->withRegularNotFoundRedirect('foo.com')
                 ->removingBaseUrlRedirect(),
             [
@@ -41,7 +43,7 @@ class DomainRedirectsConfigTest extends TestCase
             ],
         ];
         yield [
-            DomainRedirectsConfig::forDomain('bar.com')
+            fn () => DomainRedirectsConfig::forDomain('bar.com')
                 ->withRegularNotFoundRedirect('foo.net')
                 ->withInvalidShortUrlRedirect('something.com')
                 ->removingBaseUrlRedirect(),
@@ -53,7 +55,7 @@ class DomainRedirectsConfigTest extends TestCase
             ],
         ];
         yield [
-            DomainRedirectsConfig::forDomain('baz.com')
+            fn () => DomainRedirectsConfig::forDomain('baz.com')
                 ->removingBaseUrlRedirect()
                 ->removingRegularNotFoundRedirect()
                 ->removingInvalidShortUrlRedirect(),
@@ -65,7 +67,7 @@ class DomainRedirectsConfigTest extends TestCase
             ],
         ];
         yield [
-            DomainRedirectsConfig::forDomain('foobarbaz.com')
+            fn () => DomainRedirectsConfig::forDomain('foobarbaz.com')
                 ->withRegularNotFoundRedirect('foo.net')
                 ->withInvalidShortUrlRedirect('something.com')
                 ->withBaseUrlRedirect('base-redirect.com'),

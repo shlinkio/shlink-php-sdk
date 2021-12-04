@@ -11,7 +11,7 @@ final class Visit implements VisitInterface
 {
     private function __construct(
         private string $referer,
-        private DateTimeInterface $dateTime,
+        private DateTimeInterface $date,
         private string $userAgent,
         private bool $potentialBot,
         private ?VisitLocation $location,
@@ -34,9 +34,9 @@ final class Visit implements VisitInterface
         return $this->referer;
     }
 
-    public function dateTime(): DateTimeInterface
+    public function date(): DateTimeInterface
     {
-        return $this->dateTime;
+        return $this->date;
     }
 
     public function userAgent(): string

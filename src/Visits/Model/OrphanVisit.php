@@ -30,9 +30,9 @@ final class OrphanVisit implements VisitInterface
         return $this->visit->referer();
     }
 
-    public function dateTime(): DateTimeInterface
+    public function date(): DateTimeInterface
     {
-        return $this->visit->dateTime();
+        return $this->visit->date();
     }
 
     public function userAgent(): string

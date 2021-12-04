@@ -16,6 +16,7 @@ use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 
@@ -160,6 +161,9 @@ class VisitsClientTest extends TestCase
         $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
+    /**
+     * @param VisitsList|VisitInterface[] $result
+     */
     private function assertPaginator(VisitsList $result, int $amountOfPages): void
     {
         self::assertCount($amountOfPages * 2, $result);
@@ -171,7 +175,7 @@ class VisitsClientTest extends TestCase
             self::assertStringStartsWith('userAgent_', $visit->userAgent());
             self::assertStringEndsWith($index % 2 === 0 ? '_1' : '_2', $visit->referer());
             self::assertStringEndsWith($index % 2 === 0 ? '_1' : '_2', $visit->userAgent());
-            self::assertStringStartsWith($visit->dateTime()->format('Y-m-d'), $this->now);
+            self::assertStringStartsWith($visit->date()->format('Y-m-d'), $this->now);
         }
 
         self::assertEquals($amountOfPages * 2, $count);
