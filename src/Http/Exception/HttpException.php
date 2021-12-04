@@ -11,6 +11,7 @@ use Shlinkio\Shlink\SDK\Utils\JsonDecoder;
 
 use function array_filter;
 use function in_array;
+use function sprintf;
 
 use const ARRAY_FILTER_USE_KEY;
 
@@ -25,7 +26,7 @@ class HttpException extends RuntimeException implements ExceptionInterface
         private int $status,
         private array $additional,
     ) {
-        parent::__construct('An HTTP error response was returned from Shlink', $status);
+        parent::__construct(sprintf('An HTTP error response was returned from Shlink: %s', $this->detail), $status);
     }
 
     public static function fromNonSuccessfulResponse(ResponseInterface $resp): self
