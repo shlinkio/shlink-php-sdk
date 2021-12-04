@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\ShortUrls\Exception;
 
+use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
-use PHPUnit\Framework\TestCase;
 
 class ShortUrlNotFoundExceptionTest extends TestCase
 {

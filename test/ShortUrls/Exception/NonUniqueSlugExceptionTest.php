@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\ShortUrls\Exception;
 
+use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
-use PHPUnit\Framework\TestCase;
 
 class NonUniqueSlugExceptionTest extends TestCase
 {
