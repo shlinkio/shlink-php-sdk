@@ -39,8 +39,8 @@ class ShortUrlsClient implements ShortUrlsClientInterface
      */
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
-        $buildQueryWithPage = static function (int $page) use ($filter): array {
-            $query = $filter->toArray();
+        $query = $filter->toArray();
+        $buildQueryWithPage = static function (int $page) use ($query): array {
             $query['itemsPerPage'] = ShortUrlsList::ITEMS_PER_PAGE;
             $query['page'] = $page;
 
