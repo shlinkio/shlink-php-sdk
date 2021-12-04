@@ -11,10 +11,10 @@ final class Visit implements VisitInterface
 {
     private function __construct(
         private string $referer,
-        private DateTimeInterface $dateTime,
+        private DateTimeInterface $date,
         private string $userAgent,
         private bool $potentialBot,
-        private VisitLocation $location,
+        private ?VisitLocation $location,
     ) {
     }
 
@@ -25,7 +25,7 @@ final class Visit implements VisitInterface
             DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']), // @phpstan-ignore-line
             $payload['userAgent'] ?? '',
             $payload['potentialBot'] ?? false,
-            VisitLocation::fromArray($payload['visitLocation'] ?? []),
+            isset($payload['visitLocation']) ? VisitLocation::fromArray($payload['visitLocation']) : null,
         );
     }
 
@@ -34,9 +34,9 @@ final class Visit implements VisitInterface
         return $this->referer;
     }
 
-    public function dateTime(): DateTimeInterface
+    public function date(): DateTimeInterface
     {
-        return $this->dateTime;
+        return $this->date;
     }
 
     public function userAgent(): string
@@ -49,7 +49,7 @@ final class Visit implements VisitInterface
         return $this->potentialBot;
     }
 
-    public function location(): VisitLocation
+    public function location(): ?VisitLocation
     {
         return $this->location;
     }

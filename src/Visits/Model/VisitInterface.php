@@ -9,8 +9,8 @@ use DateTimeInterface;
 interface VisitInterface
 {
     public function referer(): string;
-    public function dateTime(): DateTimeInterface;
+    public function date(): DateTimeInterface;
     public function userAgent(): string;
     public function potentialBot(): bool;
-    public function location(): VisitLocation;
+    public function location(): ?VisitLocation;
 }

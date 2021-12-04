@@ -30,9 +30,9 @@ final class OrphanVisit implements VisitInterface
         return $this->visit->referer();
     }
 
-    public function dateTime(): DateTimeInterface
+    public function date(): DateTimeInterface
     {
-        return $this->visit->dateTime();
+        return $this->visit->date();
     }
 
     public function userAgent(): string
@@ -45,7 +45,7 @@ final class OrphanVisit implements VisitInterface
         return $this->visit->potentialBot();
     }
 
-    public function location(): VisitLocation
+    public function location(): ?VisitLocation
     {
         return $this->visit->location();
     }
