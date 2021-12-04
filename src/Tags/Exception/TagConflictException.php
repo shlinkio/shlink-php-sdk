@@ -10,10 +10,7 @@ use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class TagConflictException extends RuntimeException implements ExceptionInterface
 {
-    private string $oldName;
-    private string $newName;
-
-    private function __construct(HttpException $previous)
+    private function __construct(HttpException $previous, private string $oldName, private string $newName)
     {
         parent::__construct($previous->detail(), $previous->status(), $previous);
     }
@@ -24,11 +21,7 @@ class TagConflictException extends RuntimeException implements ExceptionInterfac
         $oldName = $additional['oldName'] ?? '';
         $newName = $additional['newName'] ?? '';
 
-        $e = new self($prev);
-        $e->oldName = $oldName;
-        $e->newName = $newName;
-
-        return $e;
+        return new self($prev, $oldName, $newName);
     }
 
     public function oldName(): string

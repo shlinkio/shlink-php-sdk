@@ -10,10 +10,7 @@ use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class NonUniqueSlugException extends RuntimeException implements ExceptionInterface
 {
-    private string $customSlug;
-    private ?string $domain;
-
-    private function __construct(HttpException $previous)
+    private function __construct(HttpException $previous, private string $customSlug, private ?string $domain)
     {
         parent::__construct($previous->detail(), $previous->status(), $previous);
     }
@@ -24,11 +21,7 @@ class NonUniqueSlugException extends RuntimeException implements ExceptionInterf
         $customSlug = $additional['customSlug'] ?? '';
         $domain = $additional['domain'] ?? null;
 
-        $e = new self($prev);
-        $e->customSlug = $customSlug;
-        $e->domain = $domain;
-
-        return $e;
+        return new self($prev, $customSlug, $domain);
     }
 
     public function customSlug(): string

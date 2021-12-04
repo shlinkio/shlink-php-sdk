@@ -11,9 +11,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 
 class ShortUrlNotFoundException extends RuntimeException implements ExceptionInterface
 {
-    private ShortUrlIdentifier $identifier;
-
-    private function __construct(HttpException $previous)
+    private function __construct(HttpException $previous, private ShortUrlIdentifier $identifier)
     {
         parent::__construct($previous->detail(), $previous->status(), $previous);
     }
@@ -24,12 +22,12 @@ class ShortUrlNotFoundException extends RuntimeException implements ExceptionInt
         $shortCode = $additional['shortCode'] ?? '';
         $domain = $additional['domain'] ?? null;
 
-        $e = new self($prev);
-        $e->identifier = $domain === null
-            ? ShortUrlIdentifier::fromShortCode($shortCode)
-            : ShortUrlIdentifier::fromShortCodeAndDomain($shortCode, $domain);
-
-        return $e;
+        return new self(
+            $prev,
+            $domain === null
+                ? ShortUrlIdentifier::fromShortCode($shortCode)
+                : ShortUrlIdentifier::fromShortCodeAndDomain($shortCode, $domain),
+        );
     }
 
     public function identifier(): ShortUrlIdentifier

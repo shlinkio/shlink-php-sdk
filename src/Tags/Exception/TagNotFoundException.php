@@ -10,9 +10,7 @@ use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class TagNotFoundException extends RuntimeException implements ExceptionInterface
 {
-    private string $tag;
-
-    private function __construct(HttpException $previous)
+    private function __construct(HttpException $previous, private string $tag)
     {
         parent::__construct($previous->detail(), $previous->status(), $previous);
     }
@@ -20,11 +18,7 @@ class TagNotFoundException extends RuntimeException implements ExceptionInterfac
     public static function fromHttpException(HttpException $prev): self
     {
         $tag = $prev->additional()['tag'] ?? '';
-
-        $e = new self($prev);
-        $e->tag = $tag;
-
-        return $e;
+        return new self($prev, $tag);
     }
 
     public function tag(): string
