@@ -122,8 +122,9 @@ class DomainsClientTest extends TestCase
         HttpException $originalException,
         string $expectedException,
     ): void {
-        $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($originalException);
+        $call = $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($originalException);
 
+        $call->shouldBeCalledOnce();
         $this->expectException($expectedException);
 
         $this->domainsClient->configureDomainRedirects(DomainRedirectsConfig::forDomain('foo'));
