@@ -12,5 +12,5 @@ interface VisitInterface
     public function dateTime(): DateTimeInterface;
     public function userAgent(): string;
     public function potentialBot(): bool;
-    public function location(): VisitLocation;
+    public function location(): ?VisitLocation;
 }
