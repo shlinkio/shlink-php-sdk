@@ -1,5 +1,11 @@
 # Shlink PHP SDK
 
+[![Build Status](https://img.shields.io/github/workflow/status/shlinkio/shlink-php-sdk/Continuous%20integration/main?logo=github&style=flat-square)](https://github.com/shlinkio/shlink-php-sdk/actions?query=workflow%3A%22Continuous+integration%22)
+[![Code Coverage](https://img.shields.io/codecov/c/gh/shlinkio/shlink-php-sdk/main?style=flat-square)](https://app.codecov.io/gh/shlinkio/shlink-php-sdk)
+[![Latest Stable Version](https://img.shields.io/github/release/shlinkio/shlink-php-sdk.svg?style=flat-square)](https://packagist.org/packages/shlinkio/shlink-php-sdk)
+[![License](https://img.shields.io/github/license/shlinkio/shlink-php-sdk.svg?style=flat-square)](https://github.com/shlinkio/shlink-php-sdk/blob/main/LICENSE)
+[![Paypal donate](https://img.shields.io/badge/Donate-paypal-blue.svg?style=flat-square&logo=paypal&colorA=aaaaaa)](https://slnk.to/donate)
+
 A PHP SDK to consume Shlink's REST API in a very convenient and robust way.
 
 * Very expressive API.
