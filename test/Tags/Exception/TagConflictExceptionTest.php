@@ -19,7 +19,7 @@ class TagConflictExceptionTest extends TestCase
         string $expectedOldName,
         string $expectedNewName,
         string $expectedMessage,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $e = TagConflictException::fromHttpException($prev);
 

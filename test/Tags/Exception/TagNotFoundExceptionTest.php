@@ -18,7 +18,7 @@ class TagNotFoundExceptionTest extends TestCase
         HttpException $prev,
         string $expectedTag,
         string $expectedMessage,
-        int $expectedCode
+        int $expectedCode,
     ): void {
         $e = TagNotFoundException::fromHttpException($prev);
 
