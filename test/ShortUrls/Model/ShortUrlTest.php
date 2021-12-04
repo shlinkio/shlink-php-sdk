@@ -77,7 +77,7 @@ class ShortUrlTest extends TestCase
                 'forwardQuery' => true,
                 'tags' => ['foo', 'bar'],
                 'meta' => $meta = [
-                    'maxVisits' => 30
+                    'maxVisits' => 30,
                 ],
             ],
             'foo',
