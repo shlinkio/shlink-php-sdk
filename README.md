@@ -252,32 +252,39 @@ Considerations:
 
 ## Debugging
 
-If you need to debug what HTTP requests the SDK is doing, the `HttpClient` can be provided with an optional fifth argument, which is an object implementing `Shlinkio\Shlink\SDK\Http\Debug\HttpDebuggerInterface`.
+If you need to debug what HTTP requests the SDK is doing, the `HttpClient` and `ShlinkClientBuilder` can be provided with an optional last argument, which is an object implementing `Shlinkio\Shlink\SDK\Http\Debug\HttpDebuggerInterface`.
 
-This interface exposes a method that will get invoked with the request object sent for every request.
+This interface exposes a method that will get invoked with the object sent for every request.
 
-This way, you will be able to inspect or log the headers, URL, body, or anything you need to know.
+This way, you will be able to inspect or log the headers, URL, body, or anything you need.
 
 ```php
-use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\HttpFactory;
 use Psr\Http\Message\RequestInterface;
+use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilder;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 use Shlinkio\Shlink\SDK\Http\Debug\HttpDebuggerInterface;
 use Shlinkio\Shlink\SDK\Http\HttpClient;
 
-$httpClient = new HttpClient(
-    new Client(),
-    new HttpFactory(),
-    new HttpFactory(),
-    ShlinkConfig::fromEnv(),
-    new class implements HttpDebuggerInterface {
-        public function debugRequest(RequestInterface $req): void
-        {
-            var_dump($req->getUri()->__toString());
-            var_dump($req->getBody()->__toString());
-            var_dump($req->getHeaders());
-        }
+$debugger = new class implements HttpDebuggerInterface {
+    public function debugRequest(RequestInterface $req): void
+    {
+        var_dump($req->getUri()->__toString());
+        var_dump($req->getBody()->__toString());
+        var_dump($req->getHeaders());
     }
+};
+
+$httpClient = new HttpClient(
+    /* Client */,
+    /* RequestBuilder */,
+    /* StreamBuilder */,
+    ShlinkConfig::fromEnv(),
+    $debugger,
+)
+$builder = new ShlinkClientBuilder(
+    /* Client */,
+    /* RequestBuilder */,
+    /* StreamBuilder */,
+    $debugger,
 )
 ```
