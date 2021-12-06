@@ -10,7 +10,7 @@
 A PHP SDK to consume Shlink's REST API in a very convenient and robust way.
 
 * Very expressive API.
-* Decoupled from implementations. Depending only on PSR-11, PSR-17 and PSR-18 interfaces.
+* Decoupled from implementations. Depending only on PSR-17 and PSR-18 interfaces.
 * Dependency injection. Every service can be composed out of a set of pieces.
 * Statically typed and immutable DTOs, with meaningful named constructors.
 * Generator-based iterable collections, to abstract pagination and reduce resource consumption.
@@ -42,9 +42,9 @@ use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
 use function count;
 
 $httpClient = new HttpClient(
-    new Client(), // Any object implementing Psr\Http\Client\ClientInterface from PSR-18
-    new HttpFactory(), // Any object implementing Psr\Http\Message\RequestFactoryInterface from PSR-17
-    new HttpFactory(), // Any object implementing Psr\Http\Message\StreamFactoryInterface from PSR-17
+    new Client(), // Any object implementing PSR-18's Psr\Http\Client\ClientInterface
+    new HttpFactory(), // Any object implementing PSR-17's Psr\Http\Message\RequestFactoryInterface
+    new HttpFactory(), // Any object implementing PSR-17's Psr\Http\Message\StreamFactoryInterface
     ShlinkConfig::fromEnv()
 )
 $client = new ShortUrlsClient($httpClient)
@@ -63,7 +63,7 @@ foreach ($shortUrls as $shortUrl) {
 }
 ```
 
-### Shlink configuration
+## Shlink configuration
 
 This SDK provides a couple of ways to provide Shlink's config (mainly base URL and API key).
 
@@ -115,7 +115,7 @@ use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 $config = ShlinkConfig::fromBaseUrlAndApiKey('https://my-domain.com', 'cec2f62c-b119-452a-b351-a416a2f5f45a');
 ```
 
-### Shlink "Clients"
+## Shlink "Clients"
 
 As mentioned above, the SDK provides different services to consume every context of the API, `ShortUrlsClient`, `VisitsClient`, `TagsClient` and `DomainsClient`.
 
@@ -144,13 +144,61 @@ $domainsClient = new DomainsClient($httpClient);
 $client = new ShlinkClient($shortUrlsClient, $visitsClient, $tagsClient, $domainsClient);
 ```
 
-## PSR-11 container integration
+## Client Builder
 
-In the examples above you have seen the dependency injection graph is slightly complex, with a couple of dependency levels until you get a usable API client ready.
+Sometimes you may not know the Shlink config params before runtime, for example, if they are going to be dynamically provided.
 
-In order to simplify creating objects, this SDK provides some basic factories for PSR-11 containers.
+When this happens, it's not possible to predefine the clients creation as in the examples above.
 
-[TODO]
+For those cases, the `ShlinkClientBuilder` is provided. It depends on PSR-17 and 18 adapters, and exposes methods to build client instances from a `ShlinkConfig` instance.
+
+```php
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\HttpFactory;
+use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilder;
+use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+
+$builder = new ShlinkClientBuilder(
+    new Client(), // Any object implementing PSR-18's Psr\Http\Client\ClientInterface
+    new HttpFactory(), // Any object implementing PSR-17's Psr\Http\Message\RequestFactoryInterface
+    new HttpFactory(), // Any object implementing PSR-17's Psr\Http\Message\StreamFactoryInterface
+);
+$config = ShlinkConfig::fromBaseUrlAndApiKey(
+    // Get base URL and API Key from somewhere...
+);
+
+$visitsClient = $builder->buildVisitsClient($config);
+$visitsClient->listTagVisits('foo');
+
+$shortUrlsClient = $builder->buildShortUrlsClient($config);
+$shortUrlsClient->deleteShortUrl(ShortUrlIdentifier::fromShortCode('bar'));
+```
+
+### Singleton instances
+
+In the example above, the `ShlinkClientBuilder` will return a new client instance every time any of the `build` methods is invoked.
+
+If you want to make sure the same instance is always returned for a set of base URL + API key, you can wrap it into a `SingletonShlinkClientBuilder` instance, which also implements `ShlinkClientBuilderInterface` and thus, it can be safely replace the regular `ShlinkClientBuilder`.
+
+```php
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\HttpFactory;
+use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilder;
+use Shlinkio\Shlink\SDK\Builder\SingletonShlinkClientBuilder;
+use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+
+$builder = new SingletonShlinkClientBuilder(
+    new ShlinkClientBuilder(new Client(), new HttpFactory(), new HttpFactory()),
+);
+$config = ShlinkConfig::fromBaseUrlAndApiKey(...);
+
+$client1 = $builder->buildTagsClient($config);
+$client2 = $builder->buildTagsClient($config);
+
+var_dump($client1 === $client2); // This is true
+```
 
 ## Error handling
 
