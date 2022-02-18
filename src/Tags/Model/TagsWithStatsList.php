@@ -21,11 +21,17 @@ final class TagsWithStatsList extends ListEndpointIterator
         );
     }
 
+    /**
+     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     */
     public static function forTupleLoader(Closure $pageLoader): self
     {
         return new self($pageLoader, self::PAGINATED_ITEMS_PER_PAGE);
     }
 
+    /**
+     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     */
     public static function forNonPaginatedTupleLoader(Closure $pageLoader): self
     {
         return new self($pageLoader, self::NON_PAGINATED_ITEMS_PER_PAGE);
