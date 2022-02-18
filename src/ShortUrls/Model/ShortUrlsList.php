@@ -9,7 +9,7 @@ use Shlinkio\Shlink\SDK\Model\ListEndpointIterator;
 
 final class ShortUrlsList extends ListEndpointIterator
 {
-    public const ITEMS_PER_PAGE = 20;
+    private const ITEMS_PER_PAGE = 20;
 
     private function __construct(private Closure $pageLoader)
     {

@@ -51,7 +51,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
 
     private function loadPage(int $page): void
     {
-        [$data, $pagination] = ($this->pageLoader)($page);
+        [$data, $pagination] = ($this->pageLoader)($page, $this->itemsPerPage);
 
         $this->currentData = $data;
         $this->currentPagination = $pagination;

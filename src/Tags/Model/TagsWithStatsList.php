@@ -9,19 +9,25 @@ use Shlinkio\Shlink\SDK\Model\ListEndpointIterator;
 
 final class TagsWithStatsList extends ListEndpointIterator
 {
-    public const ITEMS_PER_PAGE = 30;
+    private const PAGINATED_ITEMS_PER_PAGE = 30;
+    private const NON_PAGINATED_ITEMS_PER_PAGE = -1;
 
-    private function __construct(private Closure $pageLoader)
+    private function __construct(private Closure $pageLoader, int $itemsPerPage)
     {
         parent::__construct(
             $this->pageLoader,
             static fn (array $value) => TagWithStats::fromArray($value),
-            self::ITEMS_PER_PAGE,
+            $itemsPerPage,
         );
     }
 
     public static function forTupleLoader(Closure $pageLoader): self
     {
-        return new self($pageLoader);
+        return new self($pageLoader, self::PAGINATED_ITEMS_PER_PAGE);
+    }
+
+    public static function forNonPaginatedTupleLoader(Closure $pageLoader): self
+    {
+        return new self($pageLoader, self::NON_PAGINATED_ITEMS_PER_PAGE);
     }
 }

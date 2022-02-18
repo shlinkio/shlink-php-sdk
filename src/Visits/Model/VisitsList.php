@@ -9,7 +9,7 @@ use Shlinkio\Shlink\SDK\Model\ListEndpointIterator;
 
 final class VisitsList extends ListEndpointIterator
 {
-    public const ITEMS_PER_PAGE = 1000;
+    private const ITEMS_PER_PAGE = 1000;
 
     private function __construct(Closure $visitsLoader, Closure $itemMapper)
     {

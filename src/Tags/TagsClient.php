@@ -48,17 +48,20 @@ class TagsClient implements TagsClientInterface
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
     {
         $query = $filter->toArray();
-        $buildQueryWithPage = static function (int $page) use ($query): array {
-            $query['itemsPerPage'] = TagsWithStatsList::ITEMS_PER_PAGE;
+        $buildQueryWithPage = static function (int $page, int $itemsPerPage) use ($query): array {
+            $query['itemsPerPage'] = $itemsPerPage;
             $query['page'] = $page;
 
             return $query;
         };
-
-        return TagsWithStatsList::forTupleLoader(function (int $page) use ($buildQueryWithPage): array {
-            $payload = $this->httpClient->getFromShlink('/tags/stats', $buildQueryWithPage($page));
+        $tupleLoader = function (int $page, int $itemsPerPage) use ($buildQueryWithPage): array {
+            $payload = $this->httpClient->getFromShlink('/tags/stats', $buildQueryWithPage($page, $itemsPerPage));
             return [$payload['tags']['data'] ?? [], $payload['tags']['pagination'] ?? []];
-        });
+        };
+
+        return $filter->shouldPaginateRequest()
+            ? TagsWithStatsList::forTupleLoader($tupleLoader)
+            : TagsWithStatsList::forNonPaginatedTupleLoader($tupleLoader);
     }
 
     /**

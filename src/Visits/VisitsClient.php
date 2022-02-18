@@ -117,9 +117,9 @@ class VisitsClient implements VisitsClientInterface
 
     private function createVisitsLoaderForUrl(string $url, array $query): Closure
     {
-        return function (int $page) use ($url, $query): array {
+        return function (int $page, int $itemsPerPage) use ($url, $query): array {
             $query['page'] = $page;
-            $query['itemsPerPage'] = VisitsList::ITEMS_PER_PAGE;
+            $query['itemsPerPage'] = $itemsPerPage;
             $body = $this->httpClient->getFromShlink($url, $query);
 
             return [$body['visits']['data'] ?? [], $body['visits']['pagination'] ?? []];

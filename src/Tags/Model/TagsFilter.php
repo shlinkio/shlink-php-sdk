@@ -6,6 +6,8 @@ namespace Shlinkio\Shlink\SDK\Tags\Model;
 
 use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
+use function explode;
+use function in_array;
 use function sprintf;
 
 final class TagsFilter implements ArraySerializable
@@ -51,5 +53,21 @@ final class TagsFilter implements ArraySerializable
     public function toArray(): array
     {
         return $this->query;
+    }
+
+    public function shouldPaginateRequest(): bool
+    {
+        // Due to an issue on Shlink, ordering by anything other than the tag name makes the request equally slow,
+        // no matter the size of the page. Because of that, when ordering by those fields, it's better to load the
+        // whole dataset at once, until that issue is fixed.
+
+        if (! isset($this->query['orderBy'])) {
+            return true;
+        }
+
+        [$field] = explode('-', $this->query['orderBy']);
+        $orderFieldsThatShouldNotPaginate = [TagsListOrderFields::SHORT_URLS_COUNT, TagsListOrderFields::VISITS_COUNT];
+
+        return ! in_array($field, $orderFieldsThatShouldNotPaginate, true);
     }
 }
