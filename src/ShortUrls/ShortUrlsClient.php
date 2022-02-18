@@ -48,11 +48,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         };
 
         return ShortUrlsList::forTupleLoader(function (int $page) use ($buildQueryWithPage): array {
-            $payload = $this->httpClient->getFromShlink(
-                '/short-urls',
-                $buildQueryWithPage($page),
-            );
-
+            $payload = $this->httpClient->getFromShlink('/short-urls', $buildQueryWithPage($page));
             return [$payload['shortUrls']['data'] ?? [], $payload['shortUrls']['pagination'] ?? []];
         });
     }

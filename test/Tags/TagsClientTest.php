@@ -15,6 +15,7 @@ use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 
 class TagsClientTest extends TestCase
@@ -33,7 +34,7 @@ class TagsClientTest extends TestCase
     /** @test */
     public function listTagsReturnsDataProp(): void
     {
-        $get = $this->httpClient->getFromShlink('/tags', [])->willReturn([
+        $get = $this->httpClient->getFromShlink('/tags', TagsFilter::create())->willReturn([
             'tags' => [
                 'data' => ['foo', 'bar', 'baz'],
             ],
@@ -48,15 +49,20 @@ class TagsClientTest extends TestCase
     /** @test */
     public function listTagsWithStatsReturnsStatsProp(): void
     {
-        $get = $this->httpClient->getFromShlink('/tags', ['withStats' => 'true'])->willReturn([
+        $get = $this->httpClient->getFromShlink('/tags/stats', Argument::type('array'))->willReturn([
             'tags' => [
-                'stats' => [[], [], [], [], [], ],
+                'data' => [[], [], [], [], []],
             ],
         ]);
 
         $result = $this->tagsClient->listTagsWithStats();
 
-        self::assertCount(5, $result);
+        $expectedCount = 0;
+        foreach ($result as $value) {
+            $expectedCount++;
+        }
+
+        self::assertEquals(5, $expectedCount);
         $get->shouldHaveBeenCalledOnce();
     }
 

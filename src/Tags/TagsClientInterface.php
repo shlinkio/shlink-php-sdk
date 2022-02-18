@@ -10,6 +10,8 @@ use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 interface TagsClientInterface
@@ -20,9 +22,25 @@ interface TagsClientInterface
     public function listTags(): array;
 
     /**
+     * @return string[]
+     */
+    public function listTagsWithFilter(TagsFilter $filter): array;
+
+    /**
+     * @return TagsWithStatsList|TagWithStats[]
+     */
+    public function listTagsWithStats(): TagsWithStatsList;
+
+    /**
+     * @return TagsWithStatsList|TagWithStats[]
+     */
+    public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList;
+
+    /**
+     * @deprecated Use listTagsWithStats under Shlink 3.x
      * @return iterable<TagWithStats>
      */
-    public function listTagsWithStats(): iterable;
+    public function listTagsAndStats(): iterable;
 
     /**
      * @throws HttpException

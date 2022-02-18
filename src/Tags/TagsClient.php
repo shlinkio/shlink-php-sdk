@@ -11,6 +11,8 @@ use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 class TagsClient implements TagsClientInterface
@@ -24,23 +26,52 @@ class TagsClient implements TagsClientInterface
      */
     public function listTags(): array
     {
-        return $this->loadTags()['data'];
+        return $this->listTagsWithFilter(TagsFilter::create());
+    }
+
+    public function listTagsWithFilter(TagsFilter $filter): array
+    {
+        return $this->httpClient->getFromShlink('/tags', $filter)['tags']['data'] ?? [];
     }
 
     /**
+     * @return TagsWithStatsList|TagWithStats[]
+     */
+    public function listTagsWithStats(): TagsWithStatsList
+    {
+        return $this->listTagsWithStatsWithFilter(TagsFilter::create());
+    }
+
+    /**
+     * @return TagsWithStatsList|TagWithStats[]
+     */
+    public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
+    {
+        $query = $filter->toArray();
+        $buildQueryWithPage = static function (int $page) use ($query): array {
+            $query['itemsPerPage'] = TagsWithStatsList::ITEMS_PER_PAGE;
+            $query['page'] = $page;
+
+            return $query;
+        };
+
+        return TagsWithStatsList::forTupleLoader(function (int $page) use ($buildQueryWithPage): array {
+            $payload = $this->httpClient->getFromShlink('/tags/stats', $buildQueryWithPage($page));
+            return [$payload['tags']['data'] ?? [], $payload['tags']['pagination'] ?? []];
+        });
+    }
+
+    /**
+     * @deprecated Use listTagsWithStats under Shlink 3.x
      * @return iterable<TagWithStats>
      */
-    public function listTagsWithStats(): iterable
+    public function listTagsAndStats(): iterable
     {
-        $tags = $this->loadTags(['withStats' => 'true'])['stats'] ?? [];
+        $tags = $this->httpClient->getFromShlink('/tags', ['withStats' => 'true'])['tags']['stats'] ?? [];
+
         foreach ($tags as $index => $tag) {
             yield $index => TagWithStats::fromArray($tag);
         }
-    }
-
-    private function loadTags(array $query = []): array
-    {
-        return $this->httpClient->getFromShlink('/tags', $query)['tags'] ?? [];
     }
 
     /**

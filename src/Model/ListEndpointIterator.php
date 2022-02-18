@@ -7,6 +7,7 @@ namespace Shlinkio\Shlink\SDK\Model;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 abstract class ListEndpointIterator implements IteratorAggregate, Countable
 {
@@ -18,7 +19,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
         $this->loadPage(1);
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
         yield from $this->getFullList();
     }

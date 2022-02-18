@@ -22,6 +22,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
@@ -79,7 +80,7 @@ class ShlinkClientTest extends TestCase
     public function listShortUrlsDelegatesCallToProperClient(): void
     {
         $listUrls = $this->shortUrlsClient->listShortUrls()->willReturn(
-            ShortUrlsList::forTupleLoader(fn () => [[], []]),
+            ShortUrlsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listShortUrls();
@@ -92,7 +93,7 @@ class ShlinkClientTest extends TestCase
     {
         $filter = ShortUrlsFilter::create();
         $listUrls = $this->shortUrlsClient->listShortUrlsWithFilter($filter)->willReturn(
-            ShortUrlsList::forTupleLoader(fn () => [[], []]),
+            ShortUrlsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listShortUrlsWithFilter($filter);
@@ -164,7 +165,9 @@ class ShlinkClientTest extends TestCase
     /** @test */
     public function listTagsWithStatsDelegatesCallToProperClient(): void
     {
-        $listTags = $this->tagsClient->listTagsWithStats()->willReturn([]);
+        $listTags = $this->tagsClient->listTagsWithStats()->willReturn(
+            TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
+        );
 
         $this->shlinkClient->listTagsWithStats();
 
@@ -207,7 +210,7 @@ class ShlinkClientTest extends TestCase
     {
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
         $listVisits = $this->visitsClient->listShortUrlVisits($identifier)->willReturn(
-            VisitsList::forTupleLoader(fn () => [[], []]),
+            VisitsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listShortUrlVisits($identifier);
@@ -221,7 +224,7 @@ class ShlinkClientTest extends TestCase
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
         $filter = VisitsFilter::create();
         $listVisits = $this->visitsClient->listShortUrlVisitsWithFilter($identifier, $filter)->willReturn(
-            VisitsList::forTupleLoader(fn () => [[], []]),
+            VisitsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listShortUrlVisitsWithFilter($identifier, $filter);
@@ -233,7 +236,7 @@ class ShlinkClientTest extends TestCase
     public function listTagVisitsDelegatesCallToProperClient(): void
     {
         $listVisits = $this->visitsClient->listTagVisits('foo')->willReturn(
-            VisitsList::forTupleLoader(fn () => [[], []]),
+            VisitsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listTagVisits('foo');
@@ -246,7 +249,7 @@ class ShlinkClientTest extends TestCase
     {
         $filter = VisitsFilter::create();
         $listVisits = $this->visitsClient->listTagVisitsWithFilter('foo', $filter)->willReturn(
-            VisitsList::forTupleLoader(fn () => [[], []]),
+            VisitsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listTagVisitsWithFilter('foo', $filter);
@@ -258,7 +261,7 @@ class ShlinkClientTest extends TestCase
     public function listOrphanVisitsDelegatesCallToProperClient(): void
     {
         $listVisits = $this->visitsClient->listOrphanVisits()->willReturn(
-            VisitsList::forOrphanVisitsTupleLoader(fn () => [[], []]),
+            VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listOrphanVisits();
@@ -271,7 +274,7 @@ class ShlinkClientTest extends TestCase
     {
         $filter = VisitsFilter::create();
         $listVisits = $this->visitsClient->listOrphanVisitsWithFilter($filter)->willReturn(
-            VisitsList::forOrphanVisitsTupleLoader(fn () => [[], []]),
+            VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listOrphanVisitsWithFilter($filter);
