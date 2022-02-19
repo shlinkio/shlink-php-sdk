@@ -40,19 +40,15 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
         $query = $filter->toArray();
-        $buildQueryWithPage = static function (int $page) use ($query): array {
-            $query['itemsPerPage'] = ShortUrlsList::ITEMS_PER_PAGE;
+        $buildQueryWithPage = static function (int $page, int $itemsPerPage) use ($query): array {
+            $query['itemsPerPage'] = $itemsPerPage;
             $query['page'] = $page;
 
             return $query;
         };
 
-        return ShortUrlsList::forTupleLoader(function (int $page) use ($buildQueryWithPage): array {
-            $payload = $this->httpClient->getFromShlink(
-                '/short-urls',
-                $buildQueryWithPage($page),
-            );
-
+        return ShortUrlsList::forTupleLoader(function (int $page, int $itemsPerPage) use ($buildQueryWithPage): array {
+            $payload = $this->httpClient->getFromShlink('/short-urls', $buildQueryWithPage($page, $itemsPerPage));
             return [$payload['shortUrls']['data'] ?? [], $payload['shortUrls']['pagination'] ?? []];
         });
     }

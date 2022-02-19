@@ -25,6 +25,8 @@ use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
@@ -129,12 +131,34 @@ class ShlinkClient implements
         return $this->tagsClient->listTags();
     }
 
+    public function listTagsWithFilter(TagsFilter $filter): array
+    {
+        return $this->tagsClient->listTagsWithFilter($filter);
+    }
+
     /**
-     * @return iterable<TagWithStats>
+     * @return TagsWithStatsList|TagWithStats[]
      */
-    public function listTagsWithStats(): iterable
+    public function listTagsWithStats(): TagsWithStatsList
     {
         return $this->tagsClient->listTagsWithStats();
+    }
+
+    /**
+     * @return TagsWithStatsList|TagWithStats[]
+     */
+    public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
+    {
+        return $this->tagsClient->listTagsWithStatsWithFilter($filter);
+    }
+
+    /**
+     * @deprecated Use listTagsWithStats under Shlink 3.x
+     * @return iterable<TagWithStats>
+     */
+    public function listTagsAndStats(): iterable
+    {
+        return $this->tagsClient->listTagsAndStats();
     }
 
     /**

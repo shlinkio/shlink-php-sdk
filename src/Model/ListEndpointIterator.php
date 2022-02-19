@@ -7,18 +7,23 @@ namespace Shlinkio\Shlink\SDK\Model;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 abstract class ListEndpointIterator implements IteratorAggregate, Countable
 {
     private array $currentData = [];
     private array $currentPagination = [];
 
+    /**
+     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     * @param Closure(mixed): mixed $itemMapper
+     */
     public function __construct(private Closure $pageLoader, private Closure $itemMapper, private int $itemsPerPage)
     {
         $this->loadPage(1);
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
         yield from $this->getFullList();
     }
@@ -50,7 +55,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
 
     private function loadPage(int $page): void
     {
-        [$data, $pagination] = ($this->pageLoader)($page);
+        [$data, $pagination] = ($this->pageLoader)($page, $this->itemsPerPage);
 
         $this->currentData = $data;
         $this->currentPagination = $pagination;
