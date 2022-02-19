@@ -22,6 +22,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
@@ -163,6 +164,17 @@ class ShlinkClientTest extends TestCase
     }
 
     /** @test */
+    public function listTagsWithFilterDelegatesCallToProperClient(): void
+    {
+        $filter = TagsFilter::create();
+        $listTags = $this->tagsClient->listTagsWithFilter($filter)->willReturn([]);
+
+        $this->shlinkClient->listTagsWithFilter($filter);
+
+        $listTags->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
     public function listTagsWithStatsDelegatesCallToProperClient(): void
     {
         $listTags = $this->tagsClient->listTagsWithStats()->willReturn(
@@ -170,6 +182,31 @@ class ShlinkClientTest extends TestCase
         );
 
         $this->shlinkClient->listTagsWithStats();
+
+        $listTags->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listTagsAndStatsDelegatesCallToProperClient(): void
+    {
+        $listTags = $this->tagsClient->listTagsAndStats()->willReturn(
+            TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listTagsAndStats();
+
+        $listTags->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listTagsWithStatsWithFilterDelegatesCallToProperClient(): void
+    {
+        $filter = TagsFilter::create();
+        $listTags = $this->tagsClient->listTagsWithStatsWithFilter($filter)->willReturn(
+            TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listTagsWithStatsWithFilter($filter);
 
         $listTags->shouldHaveBeenCalledOnce();
     }
