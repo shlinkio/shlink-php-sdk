@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -16,10 +17,12 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderFields;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 
 class TagsClientTest extends TestCase
 {
+    use ArraySubsetAsserts;
     use ProphecyTrait;
 
     private TagsClient $tagsClient;
@@ -32,37 +35,80 @@ class TagsClientTest extends TestCase
     }
 
     /** @test */
-    public function listTagsReturnsDataProp(): void
+    public function listTagsReturnsExpectedResponse(): void
     {
-        $get = $this->httpClient->getFromShlink('/tags', TagsFilter::create())->willReturn([
-            'tags' => [
-                'data' => ['foo', 'bar', 'baz'],
-            ],
-        ]);
-
-        $result = $this->tagsClient->listTags();
-
-        self::assertEquals(['foo', 'bar', 'baz'], $result);
-        $get->shouldHaveBeenCalledOnce();
+        $this->assertListTags(
+            ['/tags', TagsFilter::create()],
+            ['foo', 'bar', 'baz'],
+            fn () => $this->tagsClient->listTags(),
+        );
     }
 
     /** @test */
-    public function listTagsWithStatsReturnsStatsProp(): void
+    public function listTagsWithFilterReturnsExpectedResponse(): void
     {
-        $get = $this->httpClient->getFromShlink('/tags/stats', Argument::type('array'))->willReturn([
+        $filter = TagsFilter::create()->searchingBy('foo');
+        $this->assertListTags(
+            ['/tags', $filter],
+            ['foo', 'bar', 'baz'],
+            fn () => $this->tagsClient->listTagsWithFilter($filter),
+        );
+    }
+
+    /** @test */
+    public function listTagsWithStatsReturnsExpectedResponse(): void
+    {
+        $this->assertListTags(
+            ['/tags/stats', Argument::type('array')],
+            [[], [], [], [], []],
+            function (): array {
+                $iterable = $this->tagsClient->listTagsWithStats();
+                $result = [];
+
+                foreach ($iterable as $value) {
+                    $result[] = [];
+                }
+
+                return $result;
+            },
+        );
+    }
+
+    /** @test */
+    public function listTagsWithStatsWithFilterReturnsExpectedResponse(): void
+    {
+        $filter = TagsFilter::create()->searchingBy('foo')->orderingAscBy(TagsListOrderFields::TAG);
+        $test = $this;
+        $this->assertListTags(
+            ['/tags/stats', Argument::that(function (array $arg) use ($filter, $test) {
+                $test->assertArraySubset($filter->toArray(), $arg);
+                return true;
+            })],
+            [[], [], [], [], []],
+            function () use ($filter): array {
+                $iterable = $this->tagsClient->listTagsWithStatsWithFilter($filter);
+                $result = [];
+
+                foreach ($iterable as $value) {
+                    $result[] = [];
+                }
+
+                return $result;
+            },
+        );
+    }
+
+    private function assertListTags(array $expectedArgs, array $expectedData, callable $listTags): void
+    {
+        $get = $this->httpClient->getFromShlink(...$expectedArgs)->willReturn([
             'tags' => [
-                'data' => [[], [], [], [], []],
+                'data' => $expectedData,
             ],
         ]);
 
-        $result = $this->tagsClient->listTagsWithStats();
+        $result = $listTags();
 
-        $expectedCount = 0;
-        foreach ($result as $value) {
-            $expectedCount++;
-        }
-
-        self::assertEquals(5, $expectedCount);
+        self::assertEquals($expectedData, $result);
         $get->shouldHaveBeenCalledOnce();
     }
 
