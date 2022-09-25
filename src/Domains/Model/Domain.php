@@ -6,8 +6,11 @@ namespace Shlinkio\Shlink\SDK\Domains\Model;
 
 final class Domain
 {
-    private function __construct(private string $domain, private bool $isDefault, private DomainRedirects $redirects)
-    {
+    private function __construct(
+        public readonly string $domain,
+        public readonly bool $isDefault,
+        public readonly DomainRedirects $redirects,
+    ) {
     }
 
     public static function fromArray(array $payload): self
@@ -17,20 +20,5 @@ final class Domain
             $payload['isDefault'] ?? false,
             DomainRedirects::fromArray($payload['redirects'] ?? []),
         );
-    }
-
-    public function domain(): string
-    {
-        return $this->domain;
-    }
-
-    public function isDefault(): bool
-    {
-        return $this->isDefault;
-    }
-
-    public function redirects(): DomainRedirects
-    {
-        return $this->redirects;
     }
 }

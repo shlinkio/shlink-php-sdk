@@ -7,7 +7,7 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls\Model;
 use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderFields;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderField;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 
 class ShortUrlsFilterTest extends TestCase
@@ -42,11 +42,11 @@ class ShortUrlsFilterTest extends TestCase
             ['tags' => ['foo', 'bar'], 'searchTerm' => 'searching'],
         ];
         yield [
-            fn () => ShortUrlsFilter::create()->orderingAscBy(ShortUrlListOrderFields::VISITS),
+            fn () => ShortUrlsFilter::create()->orderingAscBy(ShortUrlListOrderField::VISITS),
             ['orderBy' => 'visits-ASC'],
         ];
         yield [
-            fn () => ShortUrlsFilter::create()->orderingDescBy(ShortUrlListOrderFields::LONG_URL),
+            fn () => ShortUrlsFilter::create()->orderingDescBy(ShortUrlListOrderField::LONG_URL),
             ['orderBy' => 'longUrl-DESC'],
         ];
     }

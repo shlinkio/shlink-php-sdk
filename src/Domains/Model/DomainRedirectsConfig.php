@@ -19,32 +19,32 @@ final class DomainRedirectsConfig implements JsonSerializable
 
     public function withBaseUrlRedirect(string $url): self
     {
-        return $this->getCloneWithProp(DomainRedirectProps::BASE_URL, $url);
+        return $this->getCloneWithProp(DomainRedirectProps::BASE_URL->value, $url);
     }
 
     public function removingBaseUrlRedirect(): self
     {
-        return $this->getCloneWithProp(DomainRedirectProps::BASE_URL, null);
+        return $this->getCloneWithProp(DomainRedirectProps::BASE_URL->value, null);
     }
 
     public function withRegularNotFoundRedirect(string $url): self
     {
-        return $this->getCloneWithProp(DomainRedirectProps::REGULAR_NOT_FOUND, $url);
+        return $this->getCloneWithProp(DomainRedirectProps::REGULAR_NOT_FOUND->value, $url);
     }
 
     public function removingRegularNotFoundRedirect(): self
     {
-        return $this->getCloneWithProp(DomainRedirectProps::REGULAR_NOT_FOUND, null);
+        return $this->getCloneWithProp(DomainRedirectProps::REGULAR_NOT_FOUND->value, null);
     }
 
     public function withInvalidShortUrlRedirect(string $url): self
     {
-        return $this->getCloneWithProp(DomainRedirectProps::INVALID_SHORT_URL, $url);
+        return $this->getCloneWithProp(DomainRedirectProps::INVALID_SHORT_URL->value, $url);
     }
 
     public function removingInvalidShortUrlRedirect(): self
     {
-        return $this->getCloneWithProp(DomainRedirectProps::INVALID_SHORT_URL, null);
+        return $this->getCloneWithProp(DomainRedirectProps::INVALID_SHORT_URL->value, null);
     }
 
     private function getCloneWithProp(string $prop, ?string $value): self

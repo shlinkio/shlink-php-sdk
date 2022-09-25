@@ -22,7 +22,7 @@ use function sprintf;
 
 class ShortUrlsClient implements ShortUrlsClientInterface
 {
-    public function __construct(private HttpClientInterface $httpClient)
+    public function __construct(private readonly HttpClientInterface $httpClient)
     {
     }
 
@@ -64,7 +64,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
                 $this->httpClient->getFromShlink(...$this->identifierToUrlAndQuery($identifier)),
             );
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
@@ -83,7 +83,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         try {
             $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 'INVALID_SHORTCODE_DELETION' => DeleteShortUrlThresholdException::fromHttpException($e),
                 default => $e,
@@ -102,7 +102,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         try {
             return ShortUrl::fromArray($this->httpClient->callShlinkWithBody('/short-urls', 'POST', $creation));
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
                 'INVALID_URL' => InvalidLongUrlException::fromHttpException($e),
                 'INVALID_SLUG' => NonUniqueSlugException::fromHttpException($e),
@@ -123,7 +123,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         try {
             return ShortUrl::fromArray($this->httpClient->callShlinkWithBody($url, 'PATCH', $edition, $query));
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
                 default => $e,
@@ -137,8 +137,8 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     private function identifierToUrlAndQuery(ShortUrlIdentifier $identifier): array
     {
         return [
-            sprintf('/short-urls/%s', $identifier->shortCode()),
-            ['domain' => $identifier->domain()],
+            sprintf('/short-urls/%s', $identifier->shortCode),
+            ['domain' => $identifier->domain],
         ];
     }
 }

@@ -20,7 +20,7 @@ use function sprintf;
 
 class VisitsClient implements VisitsClientInterface
 {
-    public function __construct(private HttpClientInterface $httpClient)
+    public function __construct(private readonly HttpClientInterface $httpClient)
     {
     }
 
@@ -48,8 +48,8 @@ class VisitsClient implements VisitsClientInterface
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
     ): VisitsList {
-        $shortCode = $shortUrlIdentifier->shortCode();
-        $domain = $shortUrlIdentifier->domain();
+        $shortCode = $shortUrlIdentifier->shortCode;
+        $domain = $shortUrlIdentifier->domain;
         $query = $filter->toArray();
 
         if ($domain !== null) {
@@ -61,7 +61,7 @@ class VisitsClient implements VisitsClientInterface
                 $this->createVisitsLoaderForUrl(sprintf('/short-urls/%s/visits', $shortCode), $query),
             );
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
@@ -90,7 +90,7 @@ class VisitsClient implements VisitsClientInterface
                 $this->createVisitsLoaderForUrl(sprintf('/tags/%s/visits', $tag), $filter->toArray()),
             );
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'TAG_NOT_FOUND' => TagNotFoundException::fromHttpException($e),
                 default => $e,
             };

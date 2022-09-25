@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitLocation;
 
 class OrphanVisitTest extends TestCase
@@ -24,7 +25,7 @@ class OrphanVisitTest extends TestCase
         bool $expectedPotentialBot,
         ?VisitLocation $expectedLocation,
         string $expectedVisitedUrl,
-        string $expectedType,
+        OrphanVisitType $expectedType,
     ): void {
         $visit = OrphanVisit::fromArray($payload);
 
@@ -42,7 +43,9 @@ class OrphanVisitTest extends TestCase
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
         $formattedDate = $now->format(DateTimeInterface::ATOM);
 
-        yield 'defaults' => [['date' => $formattedDate], '', $now, '', false, null, '', ''];
+        yield 'defaults' => [[
+            'date' => $formattedDate,
+        ], '', $now, '', false, null, '', OrphanVisitType::REGULAR_NOT_FOUND];
         yield 'all data' => [
             [
                 'referer' => 'referer',
@@ -51,7 +54,7 @@ class OrphanVisitTest extends TestCase
                 'potentialBot' => true,
                 'visitLocation' => [],
                 'visitedUrl' => 'https://doma.in/foo/bar',
-                'type' => 'REGULAR_NOT_FOUND',
+                'type' => OrphanVisitType::BASE_URL->value,
             ],
             'referer',
             $now,
@@ -59,7 +62,7 @@ class OrphanVisitTest extends TestCase
             true,
             VisitLocation::fromArray([]),
             'https://doma.in/foo/bar',
-            'REGULAR_NOT_FOUND',
+            OrphanVisitType::BASE_URL,
         ];
     }
 }

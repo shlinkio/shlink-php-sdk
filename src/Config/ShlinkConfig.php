@@ -8,7 +8,7 @@ use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
 
 final class ShlinkConfig implements ShlinkConfigInterface
 {
-    private function __construct(private string $baseUrl, private string $apiKey)
+    private function __construct(private readonly string $baseUrl, private readonly string $apiKey)
     {
     }
 

@@ -32,17 +32,17 @@ class ShortUrlTest extends TestCase
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 
-        self::assertEquals($expectedShortCode, $shortUrl->shortCode());
-        self::assertEquals($expectedShortUrl, $shortUrl->shortUrl());
-        self::assertEquals($expectedLongUrl, $shortUrl->longUrl());
-        self::assertEquals($expectedDateCreated, $shortUrl->dateCreated());
-        self::assertEquals($expectedVisitsCount, $shortUrl->visitsCount());
-        self::assertEquals($expectedDomain, $shortUrl->domain());
-        self::assertEquals($expectedTitle, $shortUrl->title());
-        self::assertEquals($expectedCrawlable, $shortUrl->crawlable());
-        self::assertEquals($expectedForwardQuery, $shortUrl->forwardQuery());
-        self::assertEquals($expectedTags, $shortUrl->tags());
-        self::assertEquals($expectedMeta, $shortUrl->meta());
+        self::assertEquals($expectedShortCode, $shortUrl->shortCode);
+        self::assertEquals($expectedShortUrl, $shortUrl->shortUrl);
+        self::assertEquals($expectedLongUrl, $shortUrl->longUrl);
+        self::assertEquals($expectedDateCreated, $shortUrl->dateCreated);
+        self::assertEquals($expectedVisitsCount, $shortUrl->visitsCount);
+        self::assertEquals($expectedDomain, $shortUrl->domain);
+        self::assertEquals($expectedTitle, $shortUrl->title);
+        self::assertEquals($expectedCrawlable, $shortUrl->crawlable);
+        self::assertEquals($expectedForwardQuery, $shortUrl->forwardQuery);
+        self::assertEquals($expectedTags, $shortUrl->tags);
+        self::assertEquals($expectedMeta, $shortUrl->meta);
     }
 
     public function providePayloads(): iterable

@@ -13,12 +13,11 @@ final class ArrayShlinkConfig implements ShlinkConfigInterface
     public const BASE_URL_PROP = 'baseUrl';
     public const API_KEY_PROP = 'apiKey';
 
-    private function __construct(private ShlinkConfigInterface $wrapped)
+    private function __construct(private readonly ShlinkConfigInterface $wrapped)
     {
     }
 
     /**
-     * @param array $config
      * @throws InvalidConfigException
      */
     public static function fromArray(array $config): self

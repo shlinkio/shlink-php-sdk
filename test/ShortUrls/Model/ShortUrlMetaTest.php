@@ -23,9 +23,9 @@ class ShortUrlMetaTest extends TestCase
     ): void {
         $meta = ShortUrlMeta::fromArray($payload);
 
-        self::assertEquals($expectedValidSince, $meta->validSince());
-        self::assertEquals($expectedValidUntil, $meta->validUntil());
-        self::assertEquals($expectedMaxVisits, $meta->maxVisits());
+        self::assertEquals($expectedValidSince, $meta->validSince);
+        self::assertEquals($expectedValidUntil, $meta->validUntil);
+        self::assertEquals($expectedMaxVisits, $meta->maxVisits);
     }
 
     public function providePayloads(): iterable

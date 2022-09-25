@@ -24,8 +24,8 @@ class DeleteShortUrlThresholdExceptionTest extends TestCase
     ): void {
         $e = DeleteShortUrlThresholdException::fromHttpException($prev);
 
-        self::assertEquals($expectedIdentifier, $e->identifier());
-        self::assertEquals($expectedThreshold, $e->threshold());
+        self::assertEquals($expectedIdentifier, $e->identifier);
+        self::assertEquals($expectedThreshold, $e->threshold);
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
     }

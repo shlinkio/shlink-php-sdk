@@ -35,7 +35,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 use Shlinkio\Shlink\SDK\Http\HttpClient;
-use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderFields;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderField;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
 
@@ -52,14 +52,14 @@ $client = new ShortUrlsClient($httpClient)
 $filter = ShortUrlsFilter::create()
     ->containingTags('foo', 'bar')
     ->since(Chronos::now()->subDays(10)) // Any object implementing DateTimeInterface
-    ->orderingAscBy(ShortUrlListOrderFields::VISITS)
+    ->orderingAscBy(ShortUrlListOrderField::VISITS)
 $shortUrls = $client->listShortUrlsWithFilter($filter)
 
 echo 'The total amount of short URLs is ' . count($shortUrls);
 
 foreach ($shortUrls as $shortUrl) {
-    echo 'Short URL: ' . $shortUrl->shortUrl();
-    echo 'Amount of visits: ' . $shortUrl->visitsCount();
+    echo 'Short URL: ' . $shortUrl->shortUrl;
+    echo 'Amount of visits: ' . $shortUrl->visitsCount;
 }
 ```
 

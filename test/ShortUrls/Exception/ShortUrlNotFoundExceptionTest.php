@@ -23,7 +23,7 @@ class ShortUrlNotFoundExceptionTest extends TestCase
     ): void {
         $e = ShortUrlNotFoundException::fromHttpException($prev);
 
-        self::assertEquals($expectedIdentifier, $e->identifier());
+        self::assertEquals($expectedIdentifier, $e->identifier);
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
     }

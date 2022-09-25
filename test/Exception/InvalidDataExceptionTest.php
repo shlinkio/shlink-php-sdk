@@ -24,7 +24,7 @@ class InvalidDataExceptionTest extends TestCase
 
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
-        self::assertEquals($expectedInvalidElements, $e->invalidElements());
+        self::assertEquals($expectedInvalidElements, $e->invalidElements);
     }
 
     public function provideExceptions(): iterable

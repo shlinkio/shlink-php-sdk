@@ -22,7 +22,7 @@ class InvalidLongUrlExceptionTest extends TestCase
     ): void {
         $e = InvalidLongUrlException::fromHttpException($prev);
 
-        self::assertEquals($expectedLongUrl, $e->longUrl());
+        self::assertEquals($expectedLongUrl, $e->longUrl);
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
     }

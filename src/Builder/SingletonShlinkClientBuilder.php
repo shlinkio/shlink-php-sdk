@@ -16,7 +16,7 @@ class SingletonShlinkClientBuilder implements ShlinkClientBuilderInterface
 {
     private array $instances = [];
 
-    public function __construct(private ShlinkClientBuilderInterface $wrapped)
+    public function __construct(private readonly ShlinkClientBuilderInterface $wrapped)
     {
     }
 

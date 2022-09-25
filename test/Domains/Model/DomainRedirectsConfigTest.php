@@ -29,7 +29,7 @@ class DomainRedirectsConfigTest extends TestCase
                 ->withRegularNotFoundRedirect('somewhere.com'),
             [
                 'domain' => 'foo.com',
-                DomainRedirectProps::REGULAR_NOT_FOUND => 'somewhere.com',
+                DomainRedirectProps::REGULAR_NOT_FOUND->value => 'somewhere.com',
             ],
         ];
         yield [
@@ -38,8 +38,8 @@ class DomainRedirectsConfigTest extends TestCase
                 ->removingBaseUrlRedirect(),
             [
                 'domain' => 'bar.com',
-                DomainRedirectProps::REGULAR_NOT_FOUND => 'foo.com',
-                DomainRedirectProps::BASE_URL => null,
+                DomainRedirectProps::REGULAR_NOT_FOUND->value => 'foo.com',
+                DomainRedirectProps::BASE_URL->value => null,
             ],
         ];
         yield [
@@ -49,9 +49,9 @@ class DomainRedirectsConfigTest extends TestCase
                 ->removingBaseUrlRedirect(),
             [
                 'domain' => 'bar.com',
-                DomainRedirectProps::REGULAR_NOT_FOUND => 'foo.net',
-                DomainRedirectProps::INVALID_SHORT_URL => 'something.com',
-                DomainRedirectProps::BASE_URL => null,
+                DomainRedirectProps::REGULAR_NOT_FOUND->value => 'foo.net',
+                DomainRedirectProps::INVALID_SHORT_URL->value => 'something.com',
+                DomainRedirectProps::BASE_URL->value => null,
             ],
         ];
         yield [
@@ -61,9 +61,9 @@ class DomainRedirectsConfigTest extends TestCase
                 ->removingInvalidShortUrlRedirect(),
             [
                 'domain' => 'baz.com',
-                DomainRedirectProps::REGULAR_NOT_FOUND => null,
-                DomainRedirectProps::BASE_URL => null,
-                DomainRedirectProps::INVALID_SHORT_URL => null,
+                DomainRedirectProps::REGULAR_NOT_FOUND->value => null,
+                DomainRedirectProps::BASE_URL->value => null,
+                DomainRedirectProps::INVALID_SHORT_URL->value => null,
             ],
         ];
         yield [
@@ -73,9 +73,9 @@ class DomainRedirectsConfigTest extends TestCase
                 ->withBaseUrlRedirect('base-redirect.com'),
             [
                 'domain' => 'foobarbaz.com',
-                DomainRedirectProps::REGULAR_NOT_FOUND => 'foo.net',
-                DomainRedirectProps::INVALID_SHORT_URL => 'something.com',
-                DomainRedirectProps::BASE_URL => 'base-redirect.com',
+                DomainRedirectProps::REGULAR_NOT_FOUND->value => 'foo.net',
+                DomainRedirectProps::INVALID_SHORT_URL->value => 'something.com',
+                DomainRedirectProps::BASE_URL->value => 'base-redirect.com',
             ],
         ];
     }

@@ -63,12 +63,12 @@ class HttpExceptionTest extends TestCase
         if ($expectedDetail !== '') {
             self::assertStringEndsWith($expectedDetail, $message);
         }
-        self::assertEquals($expectedType, $e->type());
-        self::assertEquals($expectedTitle, $e->title());
-        self::assertEquals($expectedDetail, $e->detail());
-        self::assertEquals($expectedStatus, $e->status());
+        self::assertEquals($expectedType, $e->type);
+        self::assertEquals($expectedTitle, $e->title);
+        self::assertEquals($expectedDetail, $e->detail);
+        self::assertEquals($expectedStatus, $e->status);
         self::assertEquals($expectedStatus, $e->getCode());
-        self::assertEquals($expectedAdditional, $e->additional());
+        self::assertEquals($expectedAdditional, $e->additional);
     }
 
     public function providePayloads(): iterable

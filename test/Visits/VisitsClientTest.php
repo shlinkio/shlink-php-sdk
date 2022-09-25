@@ -51,8 +51,8 @@ class VisitsClientTest extends TestCase
 
         $result = $this->visitsClient->getVisitsSummary();
 
-        self::assertEquals(200, $result->visitsCount());
-        self::assertEquals(38, $result->orphanVisitsCount());
+        self::assertEquals(200, $result->visitsCount);
+        self::assertEquals(38, $result->orphanVisitsCount);
         self::assertCount(238, $result);
         $call->shouldHaveBeenCalledOnce();
     }
@@ -66,9 +66,9 @@ class VisitsClientTest extends TestCase
         $amountOfPages = 3;
 
         $get = $this->httpClient->getFromShlink(
-            sprintf('/short-urls/%s/visits', $identifier->shortCode()),
+            sprintf('/short-urls/%s/visits', $identifier->shortCode),
             Argument::that(function (array $query) use ($identifier) {
-                $domain = $identifier->domain();
+                $domain = $identifier->domain;
                 return $domain === null ? ! array_key_exists('domain', $query) : $query['domain'] === $domain;
             }),
         )->will($this->buildPaginationImplementation($amountOfPages));

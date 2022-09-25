@@ -14,7 +14,7 @@ final class EnvShlinkConfig implements ShlinkConfigInterface
     public const BASE_URL_ENV_VAR = 'SHLINK_BASE_URL';
     public const API_KEY_ENV_VAR = 'SHLINK_API_KEY';
 
-    private function __construct(private ShlinkConfigInterface $wrapped)
+    private function __construct(private readonly ShlinkConfigInterface $wrapped)
     {
     }
 
