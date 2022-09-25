@@ -51,8 +51,8 @@ class VisitsClientTest extends TestCase
 
         $result = $this->visitsClient->getVisitsSummary();
 
-        self::assertEquals(200, $result->visitsCount());
-        self::assertEquals(38, $result->orphanVisitsCount());
+        self::assertEquals(200, $result->visitsCount);
+        self::assertEquals(38, $result->orphanVisitsCount);
         self::assertCount(238, $result);
         $call->shouldHaveBeenCalledOnce();
     }

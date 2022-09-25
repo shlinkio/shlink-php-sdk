@@ -25,13 +25,13 @@ class VisitLocationTest extends TestCase
     ): void {
         $visitLocation = VisitLocation::fromArray($payload);
 
-        self::assertEquals($expectedCountryCode, $visitLocation->countryCode());
-        self::assertEquals($expectedCountryName, $visitLocation->countryName());
-        self::assertEquals($expectedRegionName, $visitLocation->regionName());
-        self::assertEquals($expectedCityName, $visitLocation->cityName());
-        self::assertEquals($expectedLatitude, $visitLocation->latitude());
-        self::assertEquals($expectedLongitude, $visitLocation->longitude());
-        self::assertEquals($expectedTimezone, $visitLocation->timezone());
+        self::assertEquals($expectedCountryCode, $visitLocation->countryCode);
+        self::assertEquals($expectedCountryName, $visitLocation->countryName);
+        self::assertEquals($expectedRegionName, $visitLocation->regionName);
+        self::assertEquals($expectedCityName, $visitLocation->cityName);
+        self::assertEquals($expectedLatitude, $visitLocation->latitude);
+        self::assertEquals($expectedLongitude, $visitLocation->longitude);
+        self::assertEquals($expectedTimezone, $visitLocation->timezone);
     }
 
     public function providePayloads(): iterable

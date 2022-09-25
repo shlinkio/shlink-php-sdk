@@ -43,10 +43,10 @@ class ShlinkClient implements
     DomainsClientInterface
 {
     public function __construct(
-        private ShortUrlsClientInterface $shortUrlsClient,
-        private VisitsClientInterface $visitsClient,
-        private TagsClientInterface $tagsClient,
-        private DomainsClientInterface $domainsClient,
+        private readonly ShortUrlsClientInterface $shortUrlsClient,
+        private readonly VisitsClientInterface $visitsClient,
+        private readonly TagsClientInterface $tagsClient,
+        private readonly DomainsClientInterface $domainsClient,
     ) {
     }
 

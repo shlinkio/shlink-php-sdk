@@ -10,11 +10,11 @@ use DateTimeInterface;
 final class Visit implements VisitInterface
 {
     private function __construct(
-        private string $referer,
-        private DateTimeInterface $date,
-        private string $userAgent,
-        private bool $potentialBot,
-        private ?VisitLocation $location,
+        private readonly string $referer,
+        private readonly DateTimeInterface $date,
+        private readonly string $userAgent,
+        private readonly bool $potentialBot,
+        private readonly ?VisitLocation $location,
     ) {
     }
 

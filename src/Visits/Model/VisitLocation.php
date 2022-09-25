@@ -7,13 +7,13 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 final class VisitLocation
 {
     private function __construct(
-        private string $countryCode,
-        private string $countryName,
-        private string $regionName,
-        private string $cityName,
-        private float $latitude,
-        private float $longitude,
-        private string $timezone,
+        public readonly string $countryCode,
+        public readonly string $countryName,
+        public readonly string $regionName,
+        public readonly string $cityName,
+        public readonly float $latitude,
+        public readonly float $longitude,
+        public readonly string $timezone,
     ) {
     }
 
@@ -28,40 +28,5 @@ final class VisitLocation
             $payload['longitude'] ?? 0.0,
             $payload['timezone'] ?? '',
         );
-    }
-
-    public function countryCode(): string
-    {
-        return $this->countryCode;
-    }
-
-    public function countryName(): string
-    {
-        return $this->countryName;
-    }
-
-    public function regionName(): string
-    {
-        return $this->regionName;
-    }
-
-    public function cityName(): string
-    {
-        return $this->cityName;
-    }
-
-    public function latitude(): float
-    {
-        return $this->latitude;
-    }
-
-    public function longitude(): float
-    {
-        return $this->longitude;
-    }
-
-    public function timezone(): string
-    {
-        return $this->timezone;
     }
 }

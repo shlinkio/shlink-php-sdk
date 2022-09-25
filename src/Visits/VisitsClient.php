@@ -20,7 +20,7 @@ use function sprintf;
 
 class VisitsClient implements VisitsClientInterface
 {
-    public function __construct(private HttpClientInterface $httpClient)
+    public function __construct(private readonly HttpClientInterface $httpClient)
     {
     }
 

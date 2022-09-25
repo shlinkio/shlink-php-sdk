@@ -8,7 +8,7 @@ use Countable;
 
 final class VisitsSummary implements Countable
 {
-    private function __construct(private int $visitsCount, private int $orphanVisitsCount)
+    private function __construct(public readonly int $visitsCount, public readonly int $orphanVisitsCount)
     {
     }
 
@@ -18,16 +18,6 @@ final class VisitsSummary implements Countable
             $payload['visitsCount'] ?? 0,
             $payload['orphanVisitsCount'] ?? 0,
         );
-    }
-
-    public function visitsCount(): int
-    {
-        return $this->visitsCount;
-    }
-
-    public function orphanVisitsCount(): int
-    {
-        return $this->orphanVisitsCount;
     }
 
     public function count(): int
