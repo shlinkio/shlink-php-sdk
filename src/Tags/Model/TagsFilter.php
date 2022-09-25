@@ -26,12 +26,12 @@ final class TagsFilter implements ArraySerializable
         return $this->cloneWithProp('searchTerm', $searchTerm);
     }
 
-    public function orderingAscBy(TagsListOrderFields $field): self
+    public function orderingAscBy(TagsListOrderField $field): self
     {
         return $this->cloneWithProp('orderBy', sprintf('%s-ASC', $field->value));
     }
 
-    public function orderingDescBy(TagsListOrderFields $field): self
+    public function orderingDescBy(TagsListOrderField $field): self
     {
         return $this->cloneWithProp('orderBy', sprintf('%s-DESC', $field->value));
     }
@@ -61,8 +61,8 @@ final class TagsFilter implements ArraySerializable
 
         [$field] = explode('-', $this->query['orderBy']);
         $orderFieldsThatShouldNotPaginate = [
-            TagsListOrderFields::SHORT_URLS_COUNT->value,
-            TagsListOrderFields::VISITS_COUNT->value,
+            TagsListOrderField::SHORT_URLS_COUNT->value,
+            TagsListOrderField::VISITS_COUNT->value,
         ];
 
         return ! in_array($field, $orderFieldsThatShouldNotPaginate, true);

@@ -17,7 +17,7 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
-use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderFields;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 
 class TagsClientTest extends TestCase
@@ -77,7 +77,7 @@ class TagsClientTest extends TestCase
     /** @test */
     public function listTagsWithStatsWithFilterReturnsExpectedResponse(): void
     {
-        $filter = TagsFilter::create()->searchingBy('foo')->orderingAscBy(TagsListOrderFields::TAG);
+        $filter = TagsFilter::create()->searchingBy('foo')->orderingAscBy(TagsListOrderField::TAG);
         $test = $this;
         $this->assertListTags(
             ['/tags/stats', Argument::that(function (array $arg) use ($filter, $test) {
