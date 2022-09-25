@@ -23,8 +23,8 @@ class TagConflictExceptionTest extends TestCase
     ): void {
         $e = TagConflictException::fromHttpException($prev);
 
-        self::assertEquals($expectedOldName, $e->oldName());
-        self::assertEquals($expectedNewName, $e->newName());
+        self::assertEquals($expectedOldName, $e->oldName);
+        self::assertEquals($expectedNewName, $e->newName);
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
     }

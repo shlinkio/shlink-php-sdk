@@ -14,7 +14,7 @@ final class TagsWithStatsList extends ListEndpointIterator
 
     private function __construct(Closure $pageLoader, int $itemsPerPage)
     {
-        parent::__construct($pageLoader, static fn (array $value) => TagWithStats::fromArray($value), $itemsPerPage);
+        parent::__construct($pageLoader, TagWithStats::fromArray(...), $itemsPerPage);
     }
 
     /**

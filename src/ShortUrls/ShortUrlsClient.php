@@ -22,7 +22,7 @@ use function sprintf;
 
 class ShortUrlsClient implements ShortUrlsClientInterface
 {
-    public function __construct(private HttpClientInterface $httpClient)
+    public function __construct(private readonly HttpClientInterface $httpClient)
     {
     }
 
@@ -137,8 +137,8 @@ class ShortUrlsClient implements ShortUrlsClientInterface
     private function identifierToUrlAndQuery(ShortUrlIdentifier $identifier): array
     {
         return [
-            sprintf('/short-urls/%s', $identifier->shortCode()),
-            ['domain' => $identifier->domain()],
+            sprintf('/short-urls/%s', $identifier->shortCode),
+            ['domain' => $identifier->domain],
         ];
     }
 }

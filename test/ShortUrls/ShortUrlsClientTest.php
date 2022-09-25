@@ -84,11 +84,11 @@ class ShortUrlsClientTest extends TestCase
         $count = 0;
         foreach ($result as $index => $shortUrl) {
             $count++;
-            self::assertStringStartsWith('shortCode_', $shortUrl->shortCode());
-            self::assertStringStartsWith('longUrl_', $shortUrl->longUrl());
-            self::assertStringEndsWith($index % 2 === 0 ? '_1' : '_2', $shortUrl->shortCode());
-            self::assertStringEndsWith($index % 2 === 0 ? '_1' : '_2', $shortUrl->longUrl());
-            self::assertStringStartsWith($shortUrl->dateCreated()->format('Y-m-d'), $now);
+            self::assertStringStartsWith('shortCode_', $shortUrl->shortCode);
+            self::assertStringStartsWith('longUrl_', $shortUrl->longUrl);
+            self::assertStringEndsWith($index % 2 === 0 ? '_1' : '_2', $shortUrl->shortCode);
+            self::assertStringEndsWith($index % 2 === 0 ? '_1' : '_2', $shortUrl->longUrl);
+            self::assertStringStartsWith($shortUrl->dateCreated->format('Y-m-d'), $now);
         }
 
         self::assertEquals($amountOfPages * 2, $count);
@@ -102,8 +102,8 @@ class ShortUrlsClientTest extends TestCase
     public function getShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $expected = ['dateCreated' => $this->now];
-        $get = $this->httpClient->getFromShlink(sprintf('/short-urls/%s', $identifier->shortCode()), Argument::that(
-            fn (array $query): bool => $query['domain'] === $identifier->domain(),
+        $get = $this->httpClient->getFromShlink(sprintf('/short-urls/%s', $identifier->shortCode), Argument::that(
+            fn (array $query): bool => $query['domain'] === $identifier->domain,
         ))->willReturn($expected);
 
         $result = $this->client->getShortUrl($identifier);
@@ -119,10 +119,10 @@ class ShortUrlsClientTest extends TestCase
     public function deleteShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $call = $this->httpClient->callShlinkWithBody(
-            sprintf('/short-urls/%s', $identifier->shortCode()),
+            sprintf('/short-urls/%s', $identifier->shortCode),
             'DELETE',
             [],
-            Argument::that(fn (array $query): bool => $query['domain'] === $identifier->domain()),
+            Argument::that(fn (array $query): bool => $query['domain'] === $identifier->domain),
         );
 
         $this->client->deleteShortUrl($identifier);
@@ -139,10 +139,10 @@ class ShortUrlsClientTest extends TestCase
         $expected = ['dateCreated' => $this->now];
         $edit = ShortUrlEdition::create();
         $call = $this->httpClient->callShlinkWithBody(
-            sprintf('/short-urls/%s', $identifier->shortCode()),
+            sprintf('/short-urls/%s', $identifier->shortCode),
             'PATCH',
             $edit,
-            Argument::that(fn (array $query): bool => $query['domain'] === $identifier->domain()),
+            Argument::that(fn (array $query): bool => $query['domain'] === $identifier->domain),
         )->willReturn($expected);
 
         $result = $this->client->editShortUrl($identifier, $edit);

@@ -40,20 +40,14 @@ final class ShortUrlsFilter implements ArraySerializable
         return $this->cloneWithProp('tags', $tags);
     }
 
-    /**
-     * @param ShortUrlListOrderFields::* $field
-     */
-    public function orderingAscBy(string $field): self
+    public function orderingAscBy(ShortUrlListOrderField $field): self
     {
-        return $this->cloneWithProp('orderBy', sprintf('%s-ASC', $field));
+        return $this->cloneWithProp('orderBy', sprintf('%s-ASC', $field->value));
     }
 
-    /**
-     * @param ShortUrlListOrderFields::* $field
-     */
-    public function orderingDescBy(string $field): self
+    public function orderingDescBy(ShortUrlListOrderField $field): self
     {
-        return $this->cloneWithProp('orderBy', sprintf('%s-DESC', $field));
+        return $this->cloneWithProp('orderBy', sprintf('%s-DESC', $field->value));
     }
 
     private function cloneWithProp(string $prop, mixed $value): self

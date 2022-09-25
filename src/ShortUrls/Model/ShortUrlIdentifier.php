@@ -6,7 +6,7 @@ namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 final class ShortUrlIdentifier
 {
-    public function __construct(private string $shortCode, private ?string $domain)
+    private function __construct(public readonly string $shortCode, public readonly ?string $domain)
     {
     }
 
@@ -18,15 +18,5 @@ final class ShortUrlIdentifier
     public static function fromShortCodeAndDomain(string $shortCode, string $domain): self
     {
         return new self($shortCode, $domain);
-    }
-
-    public function shortCode(): string
-    {
-        return $this->shortCode;
-    }
-
-    public function domain(): ?string
-    {
-        return $this->domain;
     }
 }

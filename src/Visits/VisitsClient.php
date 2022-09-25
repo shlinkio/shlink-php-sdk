@@ -48,8 +48,8 @@ class VisitsClient implements VisitsClientInterface
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
     ): VisitsList {
-        $shortCode = $shortUrlIdentifier->shortCode();
-        $domain = $shortUrlIdentifier->domain();
+        $shortCode = $shortUrlIdentifier->shortCode;
+        $domain = $shortUrlIdentifier->domain;
         $query = $filter->toArray();
 
         if ($domain !== null) {

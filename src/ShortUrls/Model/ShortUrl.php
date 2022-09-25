@@ -9,18 +9,18 @@ use DateTimeInterface;
 
 final class ShortUrl
 {
-    public function __construct(
-        private string $shortCode,
-        private string $shortUrl,
-        private string $longUrl,
-        private DateTimeInterface $dateCreated,
-        private int $visitsCount,
-        private ?string $domain,
-        private ?string $title,
-        private bool $crawlable,
-        private bool $forwardQuery,
-        private array $tags,
-        private ShortUrlMeta $meta,
+    private function __construct(
+        public readonly string $shortCode,
+        public readonly string $shortUrl,
+        public readonly string $longUrl,
+        public readonly DateTimeInterface $dateCreated,
+        public readonly int $visitsCount,
+        public readonly ?string $domain,
+        public readonly ?string $title,
+        public readonly bool $crawlable,
+        public readonly bool $forwardQuery,
+        public readonly array $tags,
+        public readonly ShortUrlMeta $meta,
     ) {
     }
 
@@ -40,60 +40,5 @@ final class ShortUrl
             $payload['tags'] ?? [],
             ShortUrlMeta::fromArray($payload['meta'] ?? []),
         );
-    }
-
-    public function shortCode(): string
-    {
-        return $this->shortCode;
-    }
-
-    public function shortUrl(): string
-    {
-        return $this->shortUrl;
-    }
-
-    public function longUrl(): string
-    {
-        return $this->longUrl;
-    }
-
-    public function dateCreated(): DateTimeInterface
-    {
-        return $this->dateCreated;
-    }
-
-    public function visitsCount(): int
-    {
-        return $this->visitsCount;
-    }
-
-    public function domain(): ?string
-    {
-        return $this->domain;
-    }
-
-    public function title(): ?string
-    {
-        return $this->title;
-    }
-
-    public function crawlable(): bool
-    {
-        return $this->crawlable;
-    }
-
-    public function forwardQuery(): bool
-    {
-        return $this->forwardQuery;
-    }
-
-    public function tags(): array
-    {
-        return $this->tags;
-    }
-
-    public function meta(): ShortUrlMeta
-    {
-        return $this->meta;
     }
 }

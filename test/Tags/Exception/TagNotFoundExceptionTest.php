@@ -22,7 +22,7 @@ class TagNotFoundExceptionTest extends TestCase
     ): void {
         $e = TagNotFoundException::fromHttpException($prev);
 
-        self::assertEquals($expectedTag, $e->tag());
+        self::assertEquals($expectedTag, $e->tag);
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
     }

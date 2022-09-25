@@ -10,9 +10,9 @@ use DateTimeInterface;
 final class ShortUrlMeta
 {
     private function __construct(
-        private ?DateTimeInterface $validSince,
-        private ?DateTimeInterface $validUntil,
-        private ?int $maxVisits,
+        public readonly ?DateTimeInterface $validSince,
+        public readonly ?DateTimeInterface $validUntil,
+        public readonly ?int $maxVisits,
     ) {
     }
 
@@ -32,20 +32,5 @@ final class ShortUrlMeta
         }
 
         return DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $value) ?: null;
-    }
-
-    public function validSince(): ?DateTimeInterface
-    {
-        return $this->validSince;
-    }
-
-    public function validUntil(): ?DateTimeInterface
-    {
-        return $this->validUntil;
-    }
-
-    public function maxVisits(): ?int
-    {
-        return $this->maxVisits;
     }
 }

@@ -14,10 +14,6 @@ final class ShortUrlCreation implements JsonSerializable
 {
     use ShortUrlPayloadTrait;
 
-    private function __construct(private array $payload = [])
-    {
-    }
-
     public static function forLongUrl(string $longUrl): self
     {
         return new self(['longUrl' => $longUrl]);

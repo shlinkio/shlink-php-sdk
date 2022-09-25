@@ -21,9 +21,9 @@ class TagWithStatsTest extends TestCase
     ): void {
         $stats = TagWithStats::fromArray($payload);
 
-        self::assertEquals($expectedTag, $stats->tag());
-        self::assertEquals($expectedShortUrlsCount, $stats->shortUrlsCount());
-        self::assertEquals($expectedVisitsCount, $stats->visitsCount());
+        self::assertEquals($expectedTag, $stats->tag);
+        self::assertEquals($expectedShortUrlsCount, $stats->shortUrlsCount);
+        self::assertEquals($expectedVisitsCount, $stats->visitsCount);
     }
 
     public function providePayloads(): iterable
