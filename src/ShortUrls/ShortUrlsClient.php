@@ -64,7 +64,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
                 $this->httpClient->getFromShlink(...$this->identifierToUrlAndQuery($identifier)),
             );
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
@@ -83,7 +83,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         try {
             $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 'INVALID_SHORTCODE_DELETION' => DeleteShortUrlThresholdException::fromHttpException($e),
                 default => $e,
@@ -102,7 +102,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         try {
             return ShortUrl::fromArray($this->httpClient->callShlinkWithBody('/short-urls', 'POST', $creation));
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
                 'INVALID_URL' => InvalidLongUrlException::fromHttpException($e),
                 'INVALID_SLUG' => NonUniqueSlugException::fromHttpException($e),
@@ -123,7 +123,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
         try {
             return ShortUrl::fromArray($this->httpClient->callShlinkWithBody($url, 'PATCH', $edition, $query));
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
                 default => $e,

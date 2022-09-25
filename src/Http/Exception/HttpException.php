@@ -20,11 +20,11 @@ class HttpException extends RuntimeException implements ExceptionInterface
     private const STANDARD_PROBLEM_DETAILS_PROPS = ['type', 'title', 'detail', 'status'];
 
     private function __construct(
-        private string $type,
-        private string $title,
-        private string $detail,
-        private int $status,
-        private array $additional,
+        public readonly string $type,
+        public readonly string $title,
+        public readonly string $detail,
+        public readonly int $status,
+        public readonly array $additional,
     ) {
         parent::__construct(sprintf('An HTTP error response was returned from Shlink: %s', $this->detail), $status);
     }
@@ -49,30 +49,5 @@ class HttpException extends RuntimeException implements ExceptionInterface
             $payload['status'] ?? -1,
             $additional,
         );
-    }
-
-    public function type(): string
-    {
-        return $this->type;
-    }
-
-    public function title(): string
-    {
-        return $this->title;
-    }
-
-    public function detail(): string
-    {
-        return $this->detail;
-    }
-
-    public function status(): int
-    {
-        return $this->status;
-    }
-
-    public function additional(): array
-    {
-        return $this->additional;
     }
 }

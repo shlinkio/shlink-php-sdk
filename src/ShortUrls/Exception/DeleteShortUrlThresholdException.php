@@ -13,18 +13,17 @@ class DeleteShortUrlThresholdException extends RuntimeException implements Excep
 {
     private function __construct(
         HttpException $previous,
-        private ShortUrlIdentifier $identifier,
-        private int $threshold,
+        public readonly ShortUrlIdentifier $identifier,
+        public readonly int $threshold,
     ) {
-        parent::__construct($previous->detail(), $previous->status(), $previous);
+        parent::__construct($previous->detail, $previous->status, $previous);
     }
 
     public static function fromHttpException(HttpException $prev): self
     {
-        $additional = $prev->additional();
-        $shortCode = $additional['shortCode'] ?? '';
-        $domain = $additional['domain'] ?? null;
-        $threshold = $additional['threshold'] ?? 0;
+        $shortCode = $prev->additional['shortCode'] ?? '';
+        $domain = $prev->additional['domain'] ?? null;
+        $threshold = $prev->additional['threshold'] ?? 0;
 
         return new self(
             $prev,
@@ -33,15 +32,5 @@ class DeleteShortUrlThresholdException extends RuntimeException implements Excep
                 : ShortUrlIdentifier::fromShortCodeAndDomain($shortCode, $domain),
             $threshold,
         );
-    }
-
-    public function identifier(): ShortUrlIdentifier
-    {
-        return $this->identifier;
-    }
-
-    public function threshold(): int
-    {
-        return $this->threshold;
     }
 }

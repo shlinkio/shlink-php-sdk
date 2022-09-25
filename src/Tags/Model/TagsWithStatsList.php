@@ -12,13 +12,9 @@ final class TagsWithStatsList extends ListEndpointIterator
     private const PAGINATED_ITEMS_PER_PAGE = 30;
     private const NON_PAGINATED_ITEMS_PER_PAGE = -1;
 
-    private function __construct(private Closure $pageLoader, int $itemsPerPage)
+    private function __construct(Closure $pageLoader, int $itemsPerPage)
     {
-        parent::__construct(
-            $this->pageLoader,
-            static fn (array $value) => TagWithStats::fromArray($value),
-            $itemsPerPage,
-        );
+        parent::__construct($pageLoader, static fn (array $value) => TagWithStats::fromArray($value), $itemsPerPage);
     }
 
     /**

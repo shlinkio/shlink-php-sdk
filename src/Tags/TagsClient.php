@@ -89,7 +89,7 @@ class TagsClient implements TagsClientInterface
         try {
             $this->httpClient->callShlinkWithBody('/tags', 'PUT', $tagRenaming);
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
                 'FORBIDDEN_OPERATION' => ForbiddenTagOperationException::fromHttpException($e),
                 'TAG_NOT_FOUND' => TagNotFoundException::fromHttpException($e),
@@ -108,7 +108,7 @@ class TagsClient implements TagsClientInterface
         try {
             $this->httpClient->callShlinkWithBody('/tags', 'DELETE', [], ['tags' => $tags]);
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'FORBIDDEN_OPERATION' => ForbiddenTagOperationException::fromHttpException($e),
                 default => $e,
             };

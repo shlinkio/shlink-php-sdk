@@ -23,8 +23,8 @@ class NonUniqueSlugExceptionTest extends TestCase
     ): void {
         $e = NonUniqueSlugException::fromHttpException($prev);
 
-        self::assertEquals($expectedCustomSlug, $e->customSlug());
-        self::assertEquals($expectedDomain, $e->domain());
+        self::assertEquals($expectedCustomSlug, $e->customSlug);
+        self::assertEquals($expectedDomain, $e->domain);
         self::assertEquals($expectedMessage, $e->getMessage());
         self::assertEquals($expectedCode, $e->getCode());
     }

@@ -13,7 +13,7 @@ use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 
 class DomainsClient implements DomainsClientInterface
 {
-    public function __construct(private HttpClientInterface $httpClient)
+    public function __construct(private readonly HttpClientInterface $httpClient)
     {
     }
 
@@ -39,7 +39,7 @@ class DomainsClient implements DomainsClientInterface
                 $this->httpClient->callShlinkWithBody('/domains/redirects', 'PATCH', $redirects),
             );
         } catch (HttpException $e) {
-            throw match ($e->type()) {
+            throw match ($e->type) {
                 'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
                 default => $e,
             };

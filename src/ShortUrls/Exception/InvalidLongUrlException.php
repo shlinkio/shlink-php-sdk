@@ -10,19 +10,14 @@ use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class InvalidLongUrlException extends RuntimeException implements ExceptionInterface
 {
-    private function __construct(HttpException $previous, private string $longUrl)
+    private function __construct(HttpException $previous, public readonly string $longUrl)
     {
-        parent::__construct($previous->detail(), $previous->status(), $previous);
+        parent::__construct($previous->detail, $previous->status, $previous);
     }
 
     public static function fromHttpException(HttpException $prev): self
     {
-        $longUrl = $prev->additional()['url'] ?? '';
+        $longUrl = $prev->additional['url'] ?? '';
         return new self($prev, $longUrl);
-    }
-
-    public function longUrl(): string
-    {
-        return $this->longUrl;
     }
 }

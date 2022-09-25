@@ -12,12 +12,12 @@ class TagNotFoundException extends RuntimeException implements ExceptionInterfac
 {
     private function __construct(HttpException $previous, private string $tag)
     {
-        parent::__construct($previous->detail(), $previous->status(), $previous);
+        parent::__construct($previous->detail, $previous->status, $previous);
     }
 
     public static function fromHttpException(HttpException $prev): self
     {
-        $tag = $prev->additional()['tag'] ?? '';
+        $tag = $prev->additional['tag'] ?? '';
         return new self($prev, $tag);
     }
 

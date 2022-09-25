@@ -38,27 +38,27 @@ class DomainsClientTest extends TestCase
                 'domain' => 'foo.com',
                 'isDefault' => true,
                 'redirects' => [
-                    DomainRedirectProps::BASE_URL => null,
-                    DomainRedirectProps::REGULAR_NOT_FOUND => null,
-                    DomainRedirectProps::INVALID_SHORT_URL => null,
+                    DomainRedirectProps::BASE_URL->value => null,
+                    DomainRedirectProps::REGULAR_NOT_FOUND->value => null,
+                    DomainRedirectProps::INVALID_SHORT_URL->value => null,
                 ],
             ],
             [
                 'domain' => 'bar.com',
                 'isDefault' => false,
                 'redirects' => [
-                    DomainRedirectProps::BASE_URL => 'somewhere.com',
-                    DomainRedirectProps::REGULAR_NOT_FOUND => null,
-                    DomainRedirectProps::INVALID_SHORT_URL => 'somewhere-else.com',
+                    DomainRedirectProps::BASE_URL->value => 'somewhere.com',
+                    DomainRedirectProps::REGULAR_NOT_FOUND->value => null,
+                    DomainRedirectProps::INVALID_SHORT_URL->value => 'somewhere-else.com',
                 ],
             ],
             [
                 'domain' => 'baz.com',
                 'isDefault' => false,
                 'redirects' => [
-                    DomainRedirectProps::BASE_URL => null,
-                    DomainRedirectProps::REGULAR_NOT_FOUND => 'my-redirect.net',
-                    DomainRedirectProps::INVALID_SHORT_URL => null,
+                    DomainRedirectProps::BASE_URL->value => null,
+                    DomainRedirectProps::REGULAR_NOT_FOUND->value => 'my-redirect.net',
+                    DomainRedirectProps::INVALID_SHORT_URL->value => null,
                 ],
             ],
         ];
@@ -71,19 +71,19 @@ class DomainsClientTest extends TestCase
         $count = 0;
 
         foreach ($result as $index => $domain) {
-            self::assertEquals($payload[$index]['domain'], $domain->domain());
-            self::assertEquals($payload[$index]['isDefault'], $domain->isDefault());
+            self::assertEquals($payload[$index]['domain'], $domain->domain);
+            self::assertEquals($payload[$index]['isDefault'], $domain->isDefault);
             self::assertEquals(
-                $payload[$index]['redirects'][DomainRedirectProps::BASE_URL],
-                $domain->redirects()->baseUrlRedirect(),
+                $payload[$index]['redirects'][DomainRedirectProps::BASE_URL->value],
+                $domain->redirects->baseUrlRedirect,
             );
             self::assertEquals(
-                $payload[$index]['redirects'][DomainRedirectProps::REGULAR_NOT_FOUND],
-                $domain->redirects()->regularNotFoundRedirect(),
+                $payload[$index]['redirects'][DomainRedirectProps::REGULAR_NOT_FOUND->value],
+                $domain->redirects->regularNotFoundRedirect,
             );
             self::assertEquals(
-                $payload[$index]['redirects'][DomainRedirectProps::INVALID_SHORT_URL],
-                $domain->redirects()->invalidShortUrlRedirect(),
+                $payload[$index]['redirects'][DomainRedirectProps::INVALID_SHORT_URL->value],
+                $domain->redirects->invalidShortUrlRedirect,
             );
             $count++;
         }
@@ -101,16 +101,16 @@ class DomainsClientTest extends TestCase
             ->removingInvalidShortUrlRedirect();
 
         $call = $this->httpClient->callShlinkWithBody('/domains/redirects', 'PATCH', $config)->willReturn([
-            DomainRedirectProps::BASE_URL => null,
-            DomainRedirectProps::REGULAR_NOT_FOUND => 'somewhere.com',
-            DomainRedirectProps::INVALID_SHORT_URL => null,
+            DomainRedirectProps::BASE_URL->value => null,
+            DomainRedirectProps::REGULAR_NOT_FOUND->value => 'somewhere.com',
+            DomainRedirectProps::INVALID_SHORT_URL->value => null,
         ]);
 
         $result = $this->domainsClient->configureDomainRedirects($config);
 
-        self::assertNull($result->baseUrlRedirect());
-        self::assertNull($result->invalidShortUrlRedirect());
-        self::assertEquals('somewhere.com', $result->regularNotFoundRedirect());
+        self::assertNull($result->baseUrlRedirect);
+        self::assertNull($result->invalidShortUrlRedirect);
+        self::assertEquals('somewhere.com', $result->regularNotFoundRedirect);
         $call->shouldHaveBeenCalledOnce();
     }
 

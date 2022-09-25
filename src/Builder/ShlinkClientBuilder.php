@@ -23,10 +23,10 @@ use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 class ShlinkClientBuilder implements ShlinkClientBuilderInterface
 {
     public function __construct(
-        private ClientInterface $client,
-        private RequestFactoryInterface $requestFactory,
-        private StreamFactoryInterface $streamFactory,
-        private ?HttpDebuggerInterface $debugger = null,
+        private readonly ClientInterface $client,
+        private readonly RequestFactoryInterface $requestFactory,
+        private readonly StreamFactoryInterface $streamFactory,
+        private readonly ?HttpDebuggerInterface $debugger = null,
     ) {
     }
 
