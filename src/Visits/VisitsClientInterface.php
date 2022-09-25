@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Visits;
 
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNonFoundException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
@@ -48,6 +49,34 @@ interface VisitsClientInterface
      * @throws TagNotFoundException
      */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList;
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNonFoundException
+     */
+    public function listDefaultDomainVisits(): VisitsList;
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNonFoundException
+     */
+    public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList;
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNonFoundException
+     */
+    public function listDomainVisits(string $domain): VisitsList;
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNonFoundException
+     */
+    public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList;
 
     /**
      * @return VisitsList|OrphanVisit[]

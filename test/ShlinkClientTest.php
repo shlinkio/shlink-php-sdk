@@ -295,6 +295,56 @@ class ShlinkClientTest extends TestCase
     }
 
     /** @test */
+    public function listDefaultDomainVisitsDelegatesCallToProperClient(): void
+    {
+        $listVisits = $this->visitsClient->listDefaultDOmainVisits()->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listDefaultDOmainVisits();
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listDefaultDomainVisitsWithFilterDelegatesCallToProperClient(): void
+    {
+        $filter = VisitsFilter::create();
+        $listVisits = $this->visitsClient->listDefaultDOmainVisitsWithFilter($filter)->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listDefaultDOmainVisitsWithFilter($filter);
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listDomainVisitsDelegatesCallToProperClient(): void
+    {
+        $listVisits = $this->visitsClient->listDomainVisits('foo.com')->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listDomainVisits('foo.com');
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listDomainVisitsWithFilterDelegatesCallToProperClient(): void
+    {
+        $filter = VisitsFilter::create();
+        $listVisits = $this->visitsClient->listDomainVisitsWithFilter('foo.com', $filter)->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listDomainVisitsWithFilter('foo.com', $filter);
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
     public function listOrphanVisitsDelegatesCallToProperClient(): void
     {
         $listVisits = $this->visitsClient->listOrphanVisits()->willReturn(
