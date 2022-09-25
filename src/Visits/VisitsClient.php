@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
@@ -92,6 +93,55 @@ class VisitsClient implements VisitsClientInterface
         } catch (HttpException $e) {
             throw match ($e->type) {
                 'TAG_NOT_FOUND' => TagNotFoundException::fromHttpException($e),
+                default => $e,
+            };
+        }
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDefaultDomainVisits(): VisitsList
+    {
+        return $this->listDomainVisits('DEFAULT');
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
+    {
+        return $this->listDomainVisitsWithFilter('DEFAULT', $filter);
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDomainVisits(string $domain): VisitsList
+    {
+        return $this->listDomainVisitsWithFilter($domain, VisitsFilter::create());
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
+    {
+        try {
+            return VisitsList::forTupleLoader(
+                $this->createVisitsLoaderForUrl(sprintf('/domains/%s/visits', $domain), $filter->toArray()),
+            );
+        } catch (HttpException $e) {
+            throw match ($e->type) {
+                'DOMAIN_NOT_FOUND' => DomainNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }

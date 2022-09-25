@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK;
 
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Domains\Model\Domain;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
@@ -227,6 +228,46 @@ class ShlinkClient implements
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listTagVisitsWithFilter($tag, $filter);
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDefaultDomainVisits(): VisitsList
+    {
+        return $this->visitsClient->listDefaultDomainVisits();
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
+    {
+        return $this->visitsClient->listDefaultDomainVisitsWithFilter($filter);
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDomainVisits(string $domain): VisitsList
+    {
+        return $this->visitsClient->listDomainVisits($domain);
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     * @throws HttpException
+     * @throws DomainNotFoundException
+     */
+    public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
+    {
+        return $this->visitsClient->listDomainVisitsWithFilter($domain, $filter);
     }
 
     /**
