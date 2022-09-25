@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Removed
-* *Nothing*
+* [#18](https://github.com/shlinkio/shlink-php-client/issues/18) Dropped support for PHP 8.0.
 
 ### Fixed
 * *Nothing*
