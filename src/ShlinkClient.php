@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK;
 
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
-use Shlinkio\Shlink\SDK\Domains\Exception\DomainNonFoundException;
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Domains\Model\Domain;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
@@ -233,7 +233,7 @@ class ShlinkClient implements
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDefaultDomainVisits(): VisitsList
     {
@@ -243,7 +243,7 @@ class ShlinkClient implements
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
@@ -253,7 +253,7 @@ class ShlinkClient implements
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDomainVisits(string $domain): VisitsList
     {
@@ -263,7 +263,7 @@ class ShlinkClient implements
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
     {

@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
@@ -144,6 +145,72 @@ class VisitsClientTest extends TestCase
         yield 'TAG_NOT_FOUND type' =>  [
             HttpException::fromPayload(['type' => 'TAG_NOT_FOUND']),
             TagNotFoundException::class,
+        ];
+    }
+
+    /** @test */
+    public function listDomainVisitsPerformsExpectedCall(): void
+    {
+        $amountOfPages = 5;
+        $get = $this->httpClient->getFromShlink('/domains/foo.com/visits', Argument::cetera())->will(
+            $this->buildPaginationImplementation($amountOfPages),
+        );
+
+        $result = $this->visitsClient->listDomainVisits('foo.com');
+
+        $this->assertPaginator($result, $amountOfPages);
+        $get->shouldHaveBeenCalledTimes($amountOfPages);
+    }
+
+    /** @test */
+    public function listDefaultDomainVisitsPerformsExpectedCall(): void
+    {
+        $amountOfPages = 5;
+        $get = $this->httpClient->getFromShlink('/domains/DEFAULT/visits', Argument::cetera())->will(
+            $this->buildPaginationImplementation($amountOfPages),
+        );
+
+        $result = $this->visitsClient->listDefaultDomainVisits();
+
+        $this->assertPaginator($result, $amountOfPages);
+        $get->shouldHaveBeenCalledTimes($amountOfPages);
+    }
+
+    /**
+     * @test
+     * @dataProvider provideDomainExceptions
+     */
+    public function listDomainVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
+    {
+        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
+
+        $get->shouldBeCalledOnce();
+        $this->expectException($expected);
+
+        $this->visitsClient->listDomainVisits('foo.com');
+    }
+
+    /**
+     * @test
+     * @dataProvider provideDomainExceptions
+     */
+    public function listDefaultDomainVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
+    {
+        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
+
+        $get->shouldBeCalledOnce();
+        $this->expectException($expected);
+
+        $this->visitsClient->listDefaultDomainVisits();
+    }
+
+    public function provideDomainExceptions(): iterable
+    {
+        yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
+        yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
+        yield 'TAG_NOT_FOUND type' =>  [
+            HttpException::fromPayload(['type' => 'DOMAIN_NOT_FOUND']),
+            DomainNotFoundException::class,
         ];
     }
 

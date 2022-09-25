@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ShlinkioTest\Shlink\SDK\Domains\Exception;
 
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\SDK\Domains\Exception\DomainNonFoundException;
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class DomainNotFoundExceptionTest extends TestCase
@@ -20,7 +20,7 @@ class DomainNotFoundExceptionTest extends TestCase
         string $expectedMessage,
         int $expectedCode,
     ): void {
-        $e = DomainNonFoundException::fromHttpException($prev);
+        $e = DomainNotFoundException::fromHttpException($prev);
 
         self::assertEquals($expectedDomain, $e->authority);
         self::assertEquals($expectedMessage, $e->getMessage());

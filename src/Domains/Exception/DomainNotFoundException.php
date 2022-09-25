@@ -8,7 +8,7 @@ use RuntimeException;
 use Shlinkio\Shlink\SDK\Exception\ExceptionInterface;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
-class DomainNonFoundException extends RuntimeException implements ExceptionInterface
+class DomainNotFoundException extends RuntimeException implements ExceptionInterface
 {
     private function __construct(HttpException $previous, public readonly string $authority)
     {

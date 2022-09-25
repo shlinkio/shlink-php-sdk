@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
-use Shlinkio\Shlink\SDK\Domains\Exception\DomainNonFoundException;
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
@@ -101,7 +101,7 @@ class VisitsClient implements VisitsClientInterface
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDefaultDomainVisits(): VisitsList
     {
@@ -111,7 +111,7 @@ class VisitsClient implements VisitsClientInterface
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
@@ -121,7 +121,7 @@ class VisitsClient implements VisitsClientInterface
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDomainVisits(string $domain): VisitsList
     {
@@ -131,7 +131,7 @@ class VisitsClient implements VisitsClientInterface
     /**
      * @return VisitsList|Visit[]
      * @throws HttpException
-     * @throws DomainNonFoundException
+     * @throws DomainNotFoundException
      */
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
     {
@@ -141,7 +141,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                'DOMAIN_NOT_FOUND' => DomainNonFoundException::fromHttpException($e),
+                'DOMAIN_NOT_FOUND' => DomainNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }
