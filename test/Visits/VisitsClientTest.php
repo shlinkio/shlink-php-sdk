@@ -228,6 +228,20 @@ class VisitsClientTest extends TestCase
         $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
+    /** @test */
+    public function listNonOrphanVisitsPerformsExpectedCall(): void
+    {
+        $amountOfPages = 1;
+        $get = $this->httpClient->getFromShlink('/visits/non-orphan', Argument::cetera())->will(
+            $this->buildPaginationImplementation($amountOfPages),
+        );
+
+        $result = $this->visitsClient->listNonOrphanVisits();
+
+        $this->assertPaginator($result, $amountOfPages);
+        $get->shouldHaveBeenCalledTimes($amountOfPages);
+    }
+
     /**
      * @param VisitsList|VisitInterface[] $result
      */
