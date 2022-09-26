@@ -356,4 +356,29 @@ class ShlinkClientTest extends TestCase
 
         $listVisits->shouldHaveBeenCalledOnce();
     }
+
+    /** @test */
+    public function listNonOrphanVisitsDelegatesCallToProperClient(): void
+    {
+        $listVisits = $this->visitsClient->listNonOrphanVisits()->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listNonOrphanVisits();
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listNonOrphanVisitsWithFilterDelegatesCallToProperClient(): void
+    {
+        $filter = VisitsFilter::create();
+        $listVisits = $this->visitsClient->listNonOrphanVisitsWithFilter($filter)->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listNonOrphanVisitsWithFilter($filter);
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
 }
