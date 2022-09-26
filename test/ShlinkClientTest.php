@@ -187,18 +187,6 @@ class ShlinkClientTest extends TestCase
     }
 
     /** @test */
-    public function listTagsAndStatsDelegatesCallToProperClient(): void
-    {
-        $listTags = $this->tagsClient->listTagsAndStats()->willReturn(
-            TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
-        );
-
-        $this->shlinkClient->listTagsAndStats();
-
-        $listTags->shouldHaveBeenCalledOnce();
-    }
-
-    /** @test */
     public function listTagsWithStatsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = TagsFilter::create();
@@ -365,6 +353,31 @@ class ShlinkClientTest extends TestCase
         );
 
         $this->shlinkClient->listOrphanVisitsWithFilter($filter);
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listNonOrphanVisitsDelegatesCallToProperClient(): void
+    {
+        $listVisits = $this->visitsClient->listNonOrphanVisits()->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listNonOrphanVisits();
+
+        $listVisits->shouldHaveBeenCalledOnce();
+    }
+
+    /** @test */
+    public function listNonOrphanVisitsWithFilterDelegatesCallToProperClient(): void
+    {
+        $filter = VisitsFilter::create();
+        $listVisits = $this->visitsClient->listNonOrphanVisitsWithFilter($filter)->willReturn(
+            VisitsList::forTupleLoader(static fn () => [[], []]),
+        );
+
+        $this->shlinkClient->listNonOrphanVisitsWithFilter($filter);
 
         $listVisits->shouldHaveBeenCalledOnce();
     }

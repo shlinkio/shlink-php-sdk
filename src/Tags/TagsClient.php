@@ -65,19 +65,6 @@ class TagsClient implements TagsClientInterface
     }
 
     /**
-     * @deprecated Use listTagsWithStats under Shlink 3.x
-     * @return iterable<TagWithStats>
-     */
-    public function listTagsAndStats(): iterable
-    {
-        $tags = $this->httpClient->getFromShlink('/tags', ['withStats' => 'true'])['tags']['stats'] ?? [];
-
-        foreach ($tags as $index => $tag) {
-            yield $index => TagWithStats::fromArray($tag);
-        }
-    }
-
-    /**
      * @throws HttpException
      * @throws InvalidDataException
      * @throws ForbiddenTagOperationException

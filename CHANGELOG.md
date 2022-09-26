@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * [#15](https://github.com/shlinkio/shlink-php-client/issues/15) Added support for pagination in tags, including filters and ordering.
 * [#16](https://github.com/shlinkio/shlink-php-client/issues/16) Added support for new `/tags/stats` endpoint introduced in Shlink 3.0.0.
 * [#19](https://github.com/shlinkio/shlink-php-client/issues/19) Added support for `/domain/{domain}/visits` endpoint introduced in Shlink 3.1.0.
+* [#21](https://github.com/shlinkio/shlink-php-client/issues/21) Added support for `/visits/non-orphan` endpoint introduced in Shlink 3.0.0.
 
 ### Changed
 * *Nothing*
@@ -18,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Removed
 * [#18](https://github.com/shlinkio/shlink-php-client/issues/18) Dropped support for PHP 8.0.
+* Dropped support for Shlink previous to v3.0.0. Mostly everything will continue working, but issues won't be addressed if only affecting older versions.
 
 ### Fixed
 * *Nothing*

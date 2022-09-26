@@ -154,15 +154,6 @@ class ShlinkClient implements
     }
 
     /**
-     * @deprecated Use listTagsWithStats under Shlink 3.x
-     * @return iterable<TagWithStats>
-     */
-    public function listTagsAndStats(): iterable
-    {
-        return $this->tagsClient->listTagsAndStats();
-    }
-
-    /**
      * @throws HttpException
      * @throws InvalidDataException
      * @throws ForbiddenTagOperationException
@@ -284,5 +275,21 @@ class ShlinkClient implements
     public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listOrphanVisitsWithFilter($filter);
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     */
+    public function listNonOrphanVisits(): VisitsList
+    {
+        return $this->visitsClient->listNonOrphanVisits();
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     */
+    public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
+    {
+        return $this->visitsClient->listNonOrphanVisitsWithFilter($filter);
     }
 }
