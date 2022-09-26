@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Removed
 * [#18](https://github.com/shlinkio/shlink-php-client/issues/18) Dropped support for PHP 8.0.
+* Dropped support for Shlink previous to v3.0.0. Mostly everything will continue working, but issues won't be addressed if only affecting older versions.
 
 ### Fixed
 * *Nothing*

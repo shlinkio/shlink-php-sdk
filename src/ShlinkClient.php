@@ -154,15 +154,6 @@ class ShlinkClient implements
     }
 
     /**
-     * @deprecated Use listTagsWithStats under Shlink 3.x
-     * @return iterable<TagWithStats>
-     */
-    public function listTagsAndStats(): iterable
-    {
-        return $this->tagsClient->listTagsAndStats();
-    }
-
-    /**
      * @throws HttpException
      * @throws InvalidDataException
      * @throws ForbiddenTagOperationException

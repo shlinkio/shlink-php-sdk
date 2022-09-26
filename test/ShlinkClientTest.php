@@ -187,18 +187,6 @@ class ShlinkClientTest extends TestCase
     }
 
     /** @test */
-    public function listTagsAndStatsDelegatesCallToProperClient(): void
-    {
-        $listTags = $this->tagsClient->listTagsAndStats()->willReturn(
-            TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
-        );
-
-        $this->shlinkClient->listTagsAndStats();
-
-        $listTags->shouldHaveBeenCalledOnce();
-    }
-
-    /** @test */
     public function listTagsWithStatsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = TagsFilter::create();

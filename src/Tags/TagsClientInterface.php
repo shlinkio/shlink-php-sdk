@@ -37,12 +37,6 @@ interface TagsClientInterface
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList;
 
     /**
-     * @deprecated Use listTagsWithStats under Shlink 3.x
-     * @return iterable<TagWithStats>
-     */
-    public function listTagsAndStats(): iterable;
-
-    /**
      * @throws HttpException
      * @throws InvalidDataException
      * @throws ForbiddenTagOperationException
