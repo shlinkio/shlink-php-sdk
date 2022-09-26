@@ -87,4 +87,14 @@ interface VisitsClientInterface
      * @return VisitsList|OrphanVisit[]
      */
     public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList;
+
+    /**
+     * @return VisitsList|Visit[]
+     */
+    public function listNonOrphanVisits(): VisitsList;
+
+    /**
+     * @return VisitsList|Visit[]
+     */
+    public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList;
 }

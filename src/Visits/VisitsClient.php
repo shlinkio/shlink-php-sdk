@@ -165,6 +165,24 @@ class VisitsClient implements VisitsClientInterface
         );
     }
 
+    /**
+     * @return VisitsList|Visit[]
+     */
+    public function listNonOrphanVisits(): VisitsList
+    {
+        return $this->listNonOrphanVisitsWithFilter(VisitsFilter::create());
+    }
+
+    /**
+     * @return VisitsList|Visit[]
+     */
+    public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
+    {
+        return VisitsList::forTupleLoader(
+            $this->createVisitsLoaderForUrl('/visits/non-orphan', $filter->toArray()),
+        );
+    }
+
     private function createVisitsLoaderForUrl(string $url, array $query): Closure
     {
         return function (int $page, int $itemsPerPage) use ($url, $query): array {
