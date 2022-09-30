@@ -19,4 +19,9 @@ final class ShortUrlIdentifier
     {
         return new self($shortCode, $domain);
     }
+
+    public static function fromShortUrl(ShortUrl $shortUrl): self
+    {
+        return new self($shortUrl->shortCode, $shortUrl->domain);
+    }
 }

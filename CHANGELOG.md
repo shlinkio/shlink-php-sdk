@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * [#21](https://github.com/shlinkio/shlink-php-client/issues/21) Added support for `/visits/non-orphan` endpoint introduced in Shlink 3.0.0.
 
 ### Changed
-* *Nothing*
+* [#7](https://github.com/shlinkio/shlink-php-client/issues/7) Added new integration tests suite.
 
 ### Deprecated
 * *Nothing*
