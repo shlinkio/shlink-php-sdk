@@ -4,37 +4,71 @@ declare(strict_types=1);
 
 namespace ShlinkioIntegrationTest\Shlink\SDK\ShortUrls;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
-use PHPUnit\Framework\TestCase;
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
+use ShlinkioIntegrationTest\Shlink\SDK\TestCase\AbstractTestCase;
 
-use function json_decode;
+use function count;
 
-class ShortUrlsClientTest extends TestCase
+class ShortUrlsClientTest extends AbstractTestCase
 {
-    private Client $client;
+    private ShortUrlsClient $client;
 
     protected function setUp(): void
     {
-        $this->client = new Client([
-            'base_uri' => 'https://acel.me',
-            'http_errors' => false,
-            'headers' => ['x-api-key' => 'redacted'],
-        ]);
+        $this->client = new ShortUrlsClient(self::httpClient());
     }
 
     /** @test */
     public function shortUrlCanBeCreated(): void
     {
-        $resp = $this->client->post('/rest/v2/short-urls', [
-            RequestOptions::JSON => ['longUrl' => 'https://shlink.io'],
-        ]);
-        $body = json_decode($resp->getBody()->__toString(), true);
+        $createdShortUrl = $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://shlink.io'));
+        $existingShortUrl = $this->client->getShortUrl(ShortUrlIdentifier::fromShortUrl($createdShortUrl));
 
-        self::assertEquals('https://shlink.io', $body['longUrl']);
+        self::assertEquals('https://shlink.io', $existingShortUrl->longUrl);
+        self::assertEquals($createdShortUrl, $existingShortUrl);
 
-        $resp = $this->client->delete('/rest/v2/short-urls/' . $body['shortCode']);
+        $this->client->deleteShortUrl(ShortUrlIdentifier::fromShortUrl($createdShortUrl));
+    }
 
-        self::assertEquals(204, $resp->getStatusCode());
+    /**
+     * @test
+     * @dataProvider provideIdentifiableMethods
+     */
+    public function throwsExceptionWhenTryingToActOnNotFoundSHortUrl(string $method, mixed ...$extraArgs): void
+    {
+        $identifier = ShortUrlIdentifier::fromShortCode('invalid');
+
+        $this->expectException(ShortUrlNotFoundException::class);
+
+        $this->client->{$method}($identifier, ...$extraArgs);
+    }
+
+    public function provideIdentifiableMethods(): iterable
+    {
+        yield 'getShortUrl' => ['getShortUrl'];
+        yield 'deleteShortUrl' => ['deleteShortUrl'];
+        yield 'editShortUrl' => ['editShortUrl', ShortUrlEdition::create()];
+    }
+
+    /** @test */
+    public function shortUrlsCanBeListed(): void
+    {
+        $urls = [
+            $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://shlink.io')),
+            $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://shlink.io')),
+            $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://shlink.io')),
+        ];
+
+        $result = $this->client->listShortUrls();
+
+        self::assertCount(count($urls), $result);
+
+        foreach ($urls as $url) {
+            $this->client->deleteShortUrl(ShortUrlIdentifier::fromShortUrl($url));
+        }
     }
 }
