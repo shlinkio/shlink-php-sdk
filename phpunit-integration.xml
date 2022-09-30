@@ -6,8 +6,8 @@
     colors="true"
 >
     <testsuites>
-        <testsuite name="SDK Unit tests">
-            <directory>./test</directory>
+        <testsuite name="SDK Integration tests">
+            <directory>./test-integration</directory>
         </testsuite>
     </testsuites>
 
