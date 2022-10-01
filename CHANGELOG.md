@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [1.0.0] - 2022-10-01
 ### Added
 * [#15](https://github.com/shlinkio/shlink-php-client/issues/15) Added support for pagination in tags, including filters and ordering.
 * [#16](https://github.com/shlinkio/shlink-php-client/issues/16) Added support for new `/tags/stats` endpoint introduced in Shlink 3.0.0.
 * [#19](https://github.com/shlinkio/shlink-php-client/issues/19) Added support for `/domain/{domain}/visits` endpoint introduced in Shlink 3.1.0.
 * [#21](https://github.com/shlinkio/shlink-php-client/issues/21) Added support for `/visits/non-orphan` endpoint introduced in Shlink 3.0.0.
+* [#5](https://github.com/shlinkio/shlink-php-client/issues/5) Added library documentation using [docsify](https://docsify.js.org/).
 
 ### Changed
 * [#7](https://github.com/shlinkio/shlink-php-client/issues/7) Added new integration tests suite.

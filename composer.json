@@ -58,6 +58,10 @@
         "infect:test": [
             "@test:ci",
             "@infect:show:ci"
+        ],
+        "docs:serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S 0.0.0.0:8888 -t docs"
         ]
     },
     "scripts-descriptions": {
@@ -73,7 +77,8 @@
         "infect:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs</>",
         "infect:test": "<fg=blue;options=bold>Alias for \"test:ci\" and \"infect:show:ci\"</>",
         "infect:show": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing and shows applied mutators</>",
-        "infect:show:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs and shows applied mutators</>"
+        "infect:show:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs and shows applied mutators</>",
+        "docs:serve": "Allows you to access the documentation on http://localhost:8888"
     },
     "config": {
         "sort-packages": true,

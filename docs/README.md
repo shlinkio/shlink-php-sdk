@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/github/license/shlinkio/shlink-php-sdk.svg?style=flat-square)](https://github.com/shlinkio/shlink-php-sdk/blob/main/LICENSE)
 [![Paypal donate](https://img.shields.io/badge/Donate-paypal-blue.svg?style=flat-square&logo=paypal&colorA=aaaaaa)](https://slnk.to/donate)
 
-A PHP SDK to consume Shlink's REST API in a very convenient and robust way.
+A PHP SDK to consume [Shlink](https://shlink.io)'s REST API in a very convenient and robust way.
 
 * Very expressive API.
 * Decoupled from implementations. Depending only on PSR-17 and PSR-18 interfaces.
@@ -22,7 +22,3 @@ A PHP SDK to consume Shlink's REST API in a very convenient and robust way.
 Install the SDK with composer.
 
     composer install shlinkio/shlink-php-sdk
-
-## Docs
-
-Read the documentation at [https://php-sdk.shlink.io](https://php-sdk.shlink.io)
