@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [1.0.0]
+## [1.0.0] - 2022-10-01
 ### Added
 * [#15](https://github.com/shlinkio/shlink-php-client/issues/15) Added support for pagination in tags, including filters and ordering.
 * [#16](https://github.com/shlinkio/shlink-php-client/issues/16) Added support for new `/tags/stats` endpoint introduced in Shlink 3.0.0.
