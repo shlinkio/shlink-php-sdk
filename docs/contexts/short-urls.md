@@ -22,7 +22,7 @@ foreach ($allShortUrls as $shortUrl) {
 }
 ```
 
-You can also provide some filters to the list:
+You can also specify some filters for the list:
 
 ```php
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderField;
@@ -72,7 +72,7 @@ try {
     echo $shortUrl->shortUrl;
     echo $shortUrl->longUrl;
 } catch (NonUniqueSlugException) {
-    echo 'There iss already a short URL using this custom slug';
+    echo 'There is already a short URL using this custom slug';
 } catch (InvalidLongUrlException) {
     echo 'The long URL is not reachable';
 } catch (InvalidDataException) {
