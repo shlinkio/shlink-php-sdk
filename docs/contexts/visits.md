@@ -25,10 +25,181 @@ echo 'Total visits: ' . count($summary);
 
 ### Visits by short URL
 
+```php
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+
+try {
+    $shortUrlId = ShortUrlIdentifier::fromShortCode('abc123');
+    $visits = $visitsClient->listShortUrlVisits($shortUrlId);
+    
+    foreach ($visits as $visit) {
+        echo $visit->referer();
+        echo $visit->userAgent();
+        echo $visit->date()->format(DateTimeInterface::ATOM);
+    }
+} catch (ShortUrlNotFoundException) {
+    echo 'Requested short URL could not be found'
+}
+```
+
+You can also specify some filters for the list:
+
+```php
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
+
+try {
+    $shortUrlId = ShortUrlIdentifier::fromShortCode('abc123');
+    $filter = VisitsFilter::create()->excludingBots()
+                                    ->since(new DateTimeImmutable('2020-01-01'))
+    $filteredVisits = $visitsClient->listShortUrlVisitsWithFilter($shortUrlId, $filter);
+    
+    foreach ($filteredVisits as $visit) {
+        echo $visit->referer();
+        echo $visit->userAgent();
+        echo $visit->date()->format(DateTimeInterface::ATOM);
+    }
+} catch (ShortUrlNotFoundException) {
+    echo 'Requested short URL could not be found'
+}
+```
+
 ### Visits by Tag
+
+```php
+use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+
+try {
+    $visits = $visitsClient->listTagVisits('videogames');
+    
+    foreach ($visits as $visit) {
+        echo $visit->referer();
+        echo $visit->userAgent();
+        echo $visit->date()->format(DateTimeInterface::ATOM);
+    }
+} catch (TagNotFoundException) {
+    echo 'Requested tag could not be found'
+}
+```
+
+You can also specify some filters for the list:
+
+```php
+use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
+
+try {
+    $filter = VisitsFilter::create()->excludingBots()
+                                    ->since(new DateTimeImmutable('2020-01-01'))
+    $filteredVisits = $visitsClient->listTagVisitsWithFilter('videogames', $filter);
+    
+    foreach ($filteredVisits as $visit) {
+        echo $visit->referer();
+        echo $visit->userAgent();
+        echo $visit->date()->format(DateTimeInterface::ATOM);
+    }
+} catch (TagNotFoundException) {
+    echo 'Requested tag could not be found'
+}
+```
 
 ### Visits by Domain
 
+> Requires Shlink 3.1.0 or higher.
+
+```php
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
+
+try {
+    $visits = $visitsClient->listDomainVisits('examp.le');
+    
+    foreach ($visits as $visit) {
+        echo $visit->referer();
+        echo $visit->userAgent();
+        echo $visit->date()->format(DateTimeInterface::ATOM);
+    }
+} catch (DomainNotFoundException) {
+    echo 'Requested domain could not be found'
+}
+```
+
+You can also specify some filters for the list:
+
+```php
+use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
+
+try {
+    $filter = VisitsFilter::create()->excludingBots()
+                                    ->since(new DateTimeImmutable('2020-01-01'))
+    $filteredVisits = $visitsClient->listDomainVisitsWithFilter('examp.le', $filter);
+    
+    foreach ($filteredVisits as $visit) {
+        echo $visit->referer();
+        echo $visit->userAgent();
+        echo $visit->date()->format(DateTimeInterface::ATOM);
+    }
+} catch (DomainNotFoundException) {
+    echo 'Requested domain could not be found'
+}
+```
+
+> If you want to get visits for default domain, use `listDefaultDomainVisits()` and `listDefaultDomainVisitsWithFilter(...)` respectively.
+
 ### Orphan visits
 
+```php
+$visits = $visitsClient->listOrphanVisits();
+
+foreach ($visits as $visit) {
+    echo $visit->referer();
+    echo $visit->userAgent();
+    echo $visit->date()->format(DateTimeInterface::ATOM);
+}
+```
+
+You can also specify some filters for the list:
+
+```php
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
+
+$filter = VisitsFilter::create()->excludingBots()
+                                ->since(new DateTimeImmutable('2020-01-01'))
+$filteredVisits = $visitsClient->listOrphanVisitsWithFilter($filter);
+
+foreach ($filteredVisits as $visit) {
+    echo $visit->referer();
+    echo $visit->userAgent();
+    echo $visit->date()->format(DateTimeInterface::ATOM);
+}
+```
+
 ### Non-orphan visits
+
+```php
+$visits = $visitsClient->listNonOrphanVisits();
+
+foreach ($visits as $visit) {
+    echo $visit->referer();
+    echo $visit->userAgent();
+    echo $visit->date()->format(DateTimeInterface::ATOM);
+}
+```
+
+You can also specify some filters for the list:
+
+```php
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
+
+$filter = VisitsFilter::create()->excludingBots()
+                                ->since(new DateTimeImmutable('2020-01-01'))
+$filteredVisits = $visitsClient->listNonOrphanVisitsWithFilter($filter);
+
+foreach ($filteredVisits as $visit) {
+    echo $visit->referer();
+    echo $visit->userAgent();
+    echo $visit->date()->format(DateTimeInterface::ATOM);
+}
+```
