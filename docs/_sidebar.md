@@ -1,14 +1,16 @@
 - [Home](/)
-- [Getting started](/getting-started)
-- [Configuration](/configuration)
-- [Shlink "clients"](/shlink-clients)
+- **Basic**
+  - [Getting started](/basic/getting-started)
+  - [Configuration](/basic/configuration)
+  - [Shlink "clients"](/basic/shlink-clients)
 - **Contexts**
   - [Short URLs](/contexts/short-urls)
   - [Visits](/contexts/visits)
   - [Tags](/contexts/tags)
   - [Domains](/contexts/domains)
-- [Error handling](/error-handling)
-- [Debugging](/debugging)
+- **Extra**
+  - [Error handling](/extra/error-handling)
+  - [Debugging](/extra/debugging)
 
 ---
 

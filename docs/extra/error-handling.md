@@ -1,6 +1,6 @@
 # Error handling
 
-This SDK will wrap all the known errors that Shlink's API can return into meaningful exceptions.
+This SDK will wrap all the known errors that [Shlink's API](https://api-spec.shlink.io) can return into meaningful exceptions.
 
 Some examples. Deleting a short URL:
 
