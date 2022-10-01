@@ -2,6 +2,11 @@
 - [Getting started](/getting-started)
 - [Configuration](/configuration)
 - [Shlink "clients"](/shlink-clients)
+- **Contexts**
+  - [Short URLs](/contexts/short-urls)
+  - [Visits](/contexts/visits)
+  - [Tags](/contexts/tags)
+  - [Domains](/contexts/domains)
 - [Error handling](/error-handling)
 - [Debugging](/debugging)
 
