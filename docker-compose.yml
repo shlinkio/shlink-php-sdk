@@ -4,6 +4,8 @@ services:
   shlink_php_sdk:
     container_name: shlink_php_sdk
     image: composer:2
+    ports:
+      - '8888:8888'
     volumes:
       - ./:/app
     extra_hosts:
