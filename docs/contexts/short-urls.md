@@ -9,7 +9,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
 $shortUrlsClient = new ShortUrlsClient(new HttpClient(...));
 ```
 
-Once you have it, these are all the operations you can do:
+Once you have it, these are all the operations you can perform:
 
 ### List short URLs
 
