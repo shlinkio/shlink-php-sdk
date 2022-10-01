@@ -28,11 +28,10 @@ You can also provide some filters to the list:
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderField;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 
-$filteredShortUrls = $shortUrlsClient->listShortUrlsWithFilter(
-    ShortUrlsFilter::create()->searchingBy('foobar')
-                             ->containingTags('videogames', 'development')
-                             ->orderingDescBy(ShortUrlListOrderField::TITLE)
-);
+$filter = ShortUrlsFilter::create()->searchingBy('foobar')
+                                   ->containingTags('videogames', 'development')
+                                   ->orderingDescBy(ShortUrlListOrderField::TITLE);
+$filteredShortUrls = $shortUrlsClient->listShortUrlsWithFilter($filter);
 
 foreach ($filteredShortUrls as $shortUrl) {
     echo $shortUrl->shortUrl;

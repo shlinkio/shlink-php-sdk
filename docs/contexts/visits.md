@@ -6,7 +6,7 @@ In order to consume the [Visits](https://api-spec.shlink.io/#/Visits) context of
 use Shlinkio\Shlink\SDK\Http\HttpClient;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 
-$shortUrlsClient = new VisitsClient(new HttpClient(...));
+$visitsClient = new VisitsClient(new HttpClient(...));
 ```
 
 Once you have it, these are all the operations you can perform:
