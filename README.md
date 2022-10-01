@@ -25,4 +25,4 @@ Install the SDK with composer.
 
 ## Docs
 
-Read the documentation ad [https://php-sdk.shlink.io](https://php-sdk.shlink.io)
+Read the documentation at [https://php-sdk.shlink.io](https://php-sdk.shlink.io)
