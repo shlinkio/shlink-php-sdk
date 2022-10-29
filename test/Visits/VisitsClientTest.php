@@ -7,10 +7,8 @@ namespace ShlinkioTest\Shlink\SDK\Visits;
 use Closure;
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
@@ -20,6 +18,7 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
+use Throwable;
 
 use function array_key_exists;
 use function count;
@@ -27,23 +26,21 @@ use function sprintf;
 
 class VisitsClientTest extends TestCase
 {
-    use ProphecyTrait;
-
     private VisitsClient $visitsClient;
-    private ObjectProphecy $httpClient;
+    private MockObject & HttpClientInterface $httpClient;
     private string $now;
 
     public function setUp(): void
     {
-        $this->httpClient = $this->prophesize(HttpClientInterface::class);
-        $this->visitsClient = new VisitsClient($this->httpClient->reveal());
+        $this->httpClient = $this->createMock(HttpClientInterface::class);
+        $this->visitsClient = new VisitsClient($this->httpClient);
         $this->now = (new DateTimeImmutable())->format(DateTimeInterface::ATOM);
     }
 
     /** @test */
     public function getVisitsSummaryPerformsExpectedCall(): void
     {
-        $call = $this->httpClient->getFromShlink('/visits')->willReturn([
+        $this->httpClient->expects($this->once())->method('getFromShlink')->with('/visits')->willReturn([
             'visits' => [
                 'visitsCount' => 200,
                 'orphanVisitsCount' => 38,
@@ -55,7 +52,6 @@ class VisitsClientTest extends TestCase
         self::assertEquals(200, $result->visitsCount);
         self::assertEquals(38, $result->orphanVisitsCount);
         self::assertCount(238, $result);
-        $call->shouldHaveBeenCalledOnce();
     }
 
     /**
@@ -66,18 +62,17 @@ class VisitsClientTest extends TestCase
     {
         $amountOfPages = 3;
 
-        $get = $this->httpClient->getFromShlink(
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
             sprintf('/short-urls/%s/visits', $identifier->shortCode),
-            Argument::that(function (array $query) use ($identifier) {
+            $this->callback(function (array $query) use ($identifier) {
                 $domain = $identifier->domain;
                 return $domain === null ? ! array_key_exists('domain', $query) : $query['domain'] === $domain;
             }),
-        )->will($this->buildPaginationImplementation($amountOfPages));
+        )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
         $result = $this->visitsClient->listShortUrlVisits($identifier);
 
         $this->assertPaginator($result, $amountOfPages);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     public function provideShortUrls(): iterable
@@ -87,14 +82,13 @@ class VisitsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideShortUrlExceptions
      */
     public function listShortUrlVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
-
-        $get->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
         $this->expectException($expected);
 
         $this->visitsClient->listShortUrlVisits(ShortUrlIdentifier::fromShortCode('foo'));
@@ -114,25 +108,24 @@ class VisitsClientTest extends TestCase
     public function listTagVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 5;
-        $get = $this->httpClient->getFromShlink('/tags/foo/visits', Argument::cetera())->will(
-            $this->buildPaginationImplementation($amountOfPages),
-        );
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
+            '/tags/foo/visits',
+            $this->anything(),
+        )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
         $result = $this->visitsClient->listTagVisits('foo');
 
         $this->assertPaginator($result, $amountOfPages);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideTagExceptions
      */
     public function listTagVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
-
-        $get->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
         $this->expectException($expected);
 
         $this->visitsClient->listTagVisits('foo');
@@ -152,53 +145,51 @@ class VisitsClientTest extends TestCase
     public function listDomainVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 5;
-        $get = $this->httpClient->getFromShlink('/domains/foo.com/visits', Argument::cetera())->will(
-            $this->buildPaginationImplementation($amountOfPages),
-        );
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
+            '/domains/foo.com/visits',
+            $this->anything(),
+        )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
         $result = $this->visitsClient->listDomainVisits('foo.com');
 
         $this->assertPaginator($result, $amountOfPages);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     /** @test */
     public function listDefaultDomainVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 5;
-        $get = $this->httpClient->getFromShlink('/domains/DEFAULT/visits', Argument::cetera())->will(
-            $this->buildPaginationImplementation($amountOfPages),
-        );
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
+            '/domains/DEFAULT/visits',
+            $this->anything(),
+        )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
         $result = $this->visitsClient->listDefaultDomainVisits();
 
         $this->assertPaginator($result, $amountOfPages);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideDomainExceptions
      */
     public function listDomainVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
-
-        $get->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
         $this->expectException($expected);
 
         $this->visitsClient->listDomainVisits('foo.com');
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideDomainExceptions
      */
     public function listDefaultDomainVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
-
-        $get->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
         $this->expectException($expected);
 
         $this->visitsClient->listDefaultDomainVisits();
@@ -218,28 +209,28 @@ class VisitsClientTest extends TestCase
     public function listOrphanVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 1;
-        $get = $this->httpClient->getFromShlink('/visits/orphan', Argument::cetera())->will(
-            $this->buildPaginationImplementation($amountOfPages),
-        );
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
+            '/visits/orphan',
+            $this->anything(),
+        )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
         $result = $this->visitsClient->listOrphanVisits();
 
         $this->assertPaginator($result, $amountOfPages);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     /** @test */
     public function listNonOrphanVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 1;
-        $get = $this->httpClient->getFromShlink('/visits/non-orphan', Argument::cetera())->will(
-            $this->buildPaginationImplementation($amountOfPages),
-        );
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
+            '/visits/non-orphan',
+            $this->anything(),
+        )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
         $result = $this->visitsClient->listNonOrphanVisits();
 
         $this->assertPaginator($result, $amountOfPages);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     /**
@@ -265,8 +256,8 @@ class VisitsClientTest extends TestCase
     private function buildPaginationImplementation(int $amountOfPages): Closure
     {
         $now = $this->now;
-        return function (array $args) use ($amountOfPages, $now) {
-            $page = $args[1]['page'];
+        return function ($_, array $query) use ($amountOfPages, $now) {
+            $page = $query['page'];
             $data = [
                 [
                     'referer' => 'referer_' . $page . '_1',

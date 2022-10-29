@@ -6,10 +6,8 @@ namespace ShlinkioTest\Shlink\SDK;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
@@ -32,111 +30,92 @@ use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
 class ShlinkClientTest extends TestCase
 {
-    use ProphecyTrait;
-
     private ShlinkClient $shlinkClient;
-    private ObjectProphecy $shortUrlsClient;
-    private ObjectProphecy $visitsClient;
-    private ObjectProphecy $tagsClient;
-    private ObjectProphecy $domainsClient;
+    private MockObject & ShortUrlsClientInterface $shortUrlsClient;
+    private MockObject & VisitsClientInterface $visitsClient;
+    private MockObject & TagsClientInterface $tagsClient;
+    private MockObject & DomainsClientInterface $domainsClient;
 
     public function setUp(): void
     {
-        $this->shortUrlsClient = $this->prophesize(ShortUrlsClientInterface::class);
-        $this->visitsClient = $this->prophesize(VisitsClientInterface::class);
-        $this->tagsClient = $this->prophesize(TagsClientInterface::class);
-        $this->domainsClient = $this->prophesize(DomainsClientInterface::class);
+        $this->shortUrlsClient = $this->createMock(ShortUrlsClientInterface::class);
+        $this->visitsClient = $this->createMock(VisitsClientInterface::class);
+        $this->tagsClient = $this->createMock(TagsClientInterface::class);
+        $this->domainsClient = $this->createMock(DomainsClientInterface::class);
 
         $this->shlinkClient = new ShlinkClient(
-            $this->shortUrlsClient->reveal(),
-            $this->visitsClient->reveal(),
-            $this->tagsClient->reveal(),
-            $this->domainsClient->reveal(),
+            $this->shortUrlsClient,
+            $this->visitsClient,
+            $this->tagsClient,
+            $this->domainsClient,
         );
     }
 
     /** @test */
     public function listDomainsDelegatesCallToProperClient(): void
     {
-        $listDomains = $this->domainsClient->listDomains()->willReturn([]);
-
+        $this->domainsClient->expects($this->once())->method('listDomains')->willReturn([]);
         $this->shlinkClient->listDomains();
-
-        $listDomains->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function configureDomainRedirectsDelegatesCallToProperClient(): void
     {
-        $configureDomains = $this->domainsClient->configureDomainRedirects(Argument::cetera())->willReturn(
+        $this->domainsClient->expects($this->once())->method('configureDomainRedirects')->willReturn(
             DomainRedirects::fromArray([]),
         );
-
         $this->shlinkClient->configureDomainRedirects(DomainRedirectsConfig::forDomain('foo.com'));
-
-        $configureDomains->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listShortUrlsDelegatesCallToProperClient(): void
     {
-        $listUrls = $this->shortUrlsClient->listShortUrls()->willReturn(
+        $this->shortUrlsClient->expects($this->once())->method('listShortUrls')->willReturn(
             ShortUrlsList::forTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listShortUrls();
-
-        $listUrls->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listShortUrlsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = ShortUrlsFilter::create();
-        $listUrls = $this->shortUrlsClient->listShortUrlsWithFilter($filter)->willReturn(
+        $this->shortUrlsClient->expects($this->once())->method('listShortUrlsWithFilter')->with($filter)->willReturn(
             ShortUrlsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listShortUrlsWithFilter($filter);
-
-        $listUrls->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function getShortUrlDelegatesCallToProperClient(): void
     {
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
-        $getShortUrl = $this->shortUrlsClient->getShortUrl($identifier)->willReturn(
+        $this->shortUrlsClient->expects($this->once())->method('getShortUrl')->with($identifier)->willReturn(
             ShortUrl::fromArray(['dateCreated' => (new DateTimeImmutable())->format(DateTimeInterface::ATOM)]),
         );
 
         $this->shlinkClient->getShortUrl($identifier);
-
-        $getShortUrl->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function deleteShortUrlDelegatesCallToProperClient(): void
     {
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
-        $deleteShortUrl = $this->shortUrlsClient->deleteShortUrl($identifier);
+        $this->shortUrlsClient->expects($this->once())->method('deleteShortUrl')->with($identifier);
 
         $this->shlinkClient->deleteShortUrl($identifier);
-
-        $deleteShortUrl->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function createShortUrlDelegatesCallToProperClient(): void
     {
         $data = ShortUrlCreation::forLongUrl('https://foo.com');
-        $createShortUrl = $this->shortUrlsClient->createShortUrl($data)->willReturn(
+        $this->shortUrlsClient->expects($this->once())->method('createShortUrl')->with($data)->willReturn(
             ShortUrl::fromArray(['dateCreated' => (new DateTimeImmutable())->format(DateTimeInterface::ATOM)]),
         );
 
         $this->shlinkClient->createShortUrl($data);
-
-        $createShortUrl->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
@@ -144,103 +123,83 @@ class ShlinkClientTest extends TestCase
     {
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
         $data = ShortUrlEdition::create();
-        $editShortUrl = $this->shortUrlsClient->editShortUrl($identifier, $data)->willReturn(
+        $this->shortUrlsClient->expects($this->once())->method('editShortUrl')->with($identifier, $data)->willReturn(
             ShortUrl::fromArray(['dateCreated' => (new DateTimeImmutable())->format(DateTimeInterface::ATOM)]),
         );
 
         $this->shlinkClient->editShortUrl($identifier, $data);
-
-        $editShortUrl->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listTagsDelegatesCallToProperClient(): void
     {
-        $listTags = $this->tagsClient->listTags()->willReturn([]);
-
+        $this->tagsClient->expects($this->once())->method('listTags')->willReturn([]);
         $this->shlinkClient->listTags();
-
-        $listTags->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listTagsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = TagsFilter::create();
-        $listTags = $this->tagsClient->listTagsWithFilter($filter)->willReturn([]);
+        $this->tagsClient->expects($this->once())->method('listTagsWithFilter')->with($filter)->willReturn([]);
 
         $this->shlinkClient->listTagsWithFilter($filter);
-
-        $listTags->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listTagsWithStatsDelegatesCallToProperClient(): void
     {
-        $listTags = $this->tagsClient->listTagsWithStats()->willReturn(
+        $this->tagsClient->expects($this->once())->method('listTagsWithStats')->willReturn(
             TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listTagsWithStats();
-
-        $listTags->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listTagsWithStatsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = TagsFilter::create();
-        $listTags = $this->tagsClient->listTagsWithStatsWithFilter($filter)->willReturn(
+        $this->tagsClient->expects($this->once())->method('listTagsWithStatsWithFilter')->with($filter)->willReturn(
             TagsWithStatsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listTagsWithStatsWithFilter($filter);
-
-        $listTags->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function renameTagDelegatesCallToProperClient(): void
     {
         $tagRenaming = TagRenaming::fromOldNameAndNewName('foo', 'bar');
-        $rename = $this->tagsClient->renameTag($tagRenaming);
+        $this->tagsClient->expects($this->once())->method('renameTag')->with($tagRenaming);
 
         $this->shlinkClient->renameTag($tagRenaming);
-
-        $rename->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function deleteTagsDelegatesCallToProperClient(): void
     {
-        $delete = $this->tagsClient->deleteTags('foo', 'bar');
-
+        $this->tagsClient->expects($this->once())->method('deleteTags')->with('foo', 'bar');
         $this->shlinkClient->deleteTags('foo', 'bar');
-
-        $delete->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function getVisitsSummaryDelegatesCallToProperClient(): void
     {
-        $getSummary = $this->visitsClient->getVisitsSummary()->willReturn(VisitsSummary::fromArray([]));
-
+        $this->visitsClient->expects($this->once())->method('getVisitsSummary')->willReturn(
+            VisitsSummary::fromArray([]),
+        );
         $this->shlinkClient->getVisitsSummary();
-
-        $getSummary->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listShortUrlVisitsDelegatesCallToProperClient(): void
     {
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
-        $listVisits = $this->visitsClient->listShortUrlVisits($identifier)->willReturn(
+        $this->visitsClient->expects($this->once())->method('listShortUrlVisits')->with($identifier)->willReturn(
             VisitsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listShortUrlVisits($identifier);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
@@ -248,137 +207,113 @@ class ShlinkClientTest extends TestCase
     {
         $identifier = ShortUrlIdentifier::fromShortCode('foo');
         $filter = VisitsFilter::create();
-        $listVisits = $this->visitsClient->listShortUrlVisitsWithFilter($identifier, $filter)->willReturn(
-            VisitsList::forTupleLoader(static fn () => [[], []]),
-        );
+        $this->visitsClient->expects($this->once())->method('listShortUrlVisitsWithFilter')->with(
+            $identifier,
+            $filter,
+        )->willReturn(VisitsList::forTupleLoader(static fn () => [[], []]));
 
         $this->shlinkClient->listShortUrlVisitsWithFilter($identifier, $filter);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listTagVisitsDelegatesCallToProperClient(): void
     {
-        $listVisits = $this->visitsClient->listTagVisits('foo')->willReturn(
+        $this->visitsClient->expects($this->once())->method('listTagVisits')->with('foo')->willReturn(
             VisitsList::forTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listTagVisits('foo');
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listTagVisitsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = VisitsFilter::create();
-        $listVisits = $this->visitsClient->listTagVisitsWithFilter('foo', $filter)->willReturn(
-            VisitsList::forTupleLoader(static fn () => [[], []]),
-        );
+        $this->visitsClient->expects($this->once())->method('listTagVisitsWithFilter')->with(
+            'foo',
+            $filter,
+        )->willReturn(VisitsList::forTupleLoader(static fn () => [[], []]));
 
         $this->shlinkClient->listTagVisitsWithFilter('foo', $filter);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listDefaultDomainVisitsDelegatesCallToProperClient(): void
     {
-        $listVisits = $this->visitsClient->listDefaultDOmainVisits()->willReturn(
+        $this->visitsClient->expects($this->once())->method('listDefaultDOmainVisits')->willReturn(
             VisitsList::forTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listDefaultDOmainVisits();
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listDefaultDomainVisitsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = VisitsFilter::create();
-        $listVisits = $this->visitsClient->listDefaultDOmainVisitsWithFilter($filter)->willReturn(
-            VisitsList::forTupleLoader(static fn () => [[], []]),
-        );
+        $this->visitsClient->expects($this->once())->method('listDefaultDOmainVisitsWithFilter')->with(
+            $filter,
+        )->willReturn(VisitsList::forTupleLoader(static fn () => [[], []]));
 
         $this->shlinkClient->listDefaultDOmainVisitsWithFilter($filter);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listDomainVisitsDelegatesCallToProperClient(): void
     {
-        $listVisits = $this->visitsClient->listDomainVisits('foo.com')->willReturn(
+        $this->visitsClient->expects($this->once())->method('listDomainVisits')->with('foo.com')->willReturn(
             VisitsList::forTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listDomainVisits('foo.com');
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listDomainVisitsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = VisitsFilter::create();
-        $listVisits = $this->visitsClient->listDomainVisitsWithFilter('foo.com', $filter)->willReturn(
-            VisitsList::forTupleLoader(static fn () => [[], []]),
-        );
+        $this->visitsClient->expects($this->once())->method('listDomainVisitsWithFilter')->with(
+            'foo.com',
+            $filter,
+        )->willReturn(VisitsList::forTupleLoader(static fn () => [[], []]));
 
         $this->shlinkClient->listDomainVisitsWithFilter('foo.com', $filter);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listOrphanVisitsDelegatesCallToProperClient(): void
     {
-        $listVisits = $this->visitsClient->listOrphanVisits()->willReturn(
+        $this->visitsClient->expects($this->once())->method('listOrphanVisits')->willReturn(
             VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listOrphanVisits();
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listOrphanVisitsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = VisitsFilter::create();
-        $listVisits = $this->visitsClient->listOrphanVisitsWithFilter($filter)->willReturn(
+        $this->visitsClient->expects($this->once())->method('listOrphanVisitsWithFilter')->with($filter)->willReturn(
             VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listOrphanVisitsWithFilter($filter);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listNonOrphanVisitsDelegatesCallToProperClient(): void
     {
-        $listVisits = $this->visitsClient->listNonOrphanVisits()->willReturn(
+        $this->visitsClient->expects($this->once())->method('listNonOrphanVisits')->willReturn(
             VisitsList::forTupleLoader(static fn () => [[], []]),
         );
-
         $this->shlinkClient->listNonOrphanVisits();
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
     public function listNonOrphanVisitsWithFilterDelegatesCallToProperClient(): void
     {
         $filter = VisitsFilter::create();
-        $listVisits = $this->visitsClient->listNonOrphanVisitsWithFilter($filter)->willReturn(
+        $this->visitsClient->expects($this->once())->method('listNonOrphanVisitsWithFilter')->with($filter)->willReturn(
             VisitsList::forTupleLoader(static fn () => [[], []]),
         );
 
         $this->shlinkClient->listNonOrphanVisitsWithFilter($filter);
-
-        $listVisits->shouldHaveBeenCalledOnce();
     }
 }

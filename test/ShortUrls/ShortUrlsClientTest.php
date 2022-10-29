@@ -6,10 +6,8 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
@@ -22,22 +20,21 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
+use Throwable;
 
 use function count;
 use function sprintf;
 
 class ShortUrlsClientTest extends TestCase
 {
-    use ProphecyTrait;
-
     private ShortUrlsClient $client;
-    private ObjectProphecy $httpClient;
+    private MockObject & HttpClientInterface $httpClient;
     private string $now;
 
     public function setUp(): void
     {
-        $this->httpClient = $this->prophesize(HttpClientInterface::class);
-        $this->client = new ShortUrlsClient($this->httpClient->reveal());
+        $this->httpClient = $this->createMock(HttpClientInterface::class);
+        $this->client = new ShortUrlsClient($this->httpClient);
         $this->now = (new DateTimeImmutable())->format(DateTimeInterface::ATOM);
         ;
     }
@@ -48,9 +45,12 @@ class ShortUrlsClientTest extends TestCase
         $amountOfPages = 3;
         $now = $this->now;
 
-        $get = $this->httpClient->getFromShlink('/short-urls', Argument::any())->will(
-            function (array $args) use ($amountOfPages, $now) {
-                $page = $args[1]['page'];
+        $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
+            '/short-urls',
+            $this->anything(),
+        )->willReturnCallback(
+            function ($_, array $query) use ($amountOfPages, $now) {
+                $page = $query['page'];
                 $data = [
                     [
                         'shortCode' => 'shortCode_' . $page . '_1',
@@ -92,7 +92,6 @@ class ShortUrlsClientTest extends TestCase
         }
 
         self::assertEquals($amountOfPages * 2, $count);
-        $get->shouldHaveBeenCalledTimes($amountOfPages);
     }
 
     /**
@@ -102,14 +101,14 @@ class ShortUrlsClientTest extends TestCase
     public function getShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $expected = ['dateCreated' => $this->now];
-        $get = $this->httpClient->getFromShlink(sprintf('/short-urls/%s', $identifier->shortCode), Argument::that(
-            fn (array $query): bool => $query['domain'] === $identifier->domain,
-        ))->willReturn($expected);
+        $this->httpClient->expects($this->once())->method('getFromShlink')->with(
+            sprintf('/short-urls/%s', $identifier->shortCode),
+            $this->callback(fn (array $query): bool => $query['domain'] === $identifier->domain),
+        )->willReturn($expected);
 
         $result = $this->client->getShortUrl($identifier);
 
         self::assertEquals(ShortUrl::fromArray($expected), $result);
-        $get->shouldHaveBeenCalledOnce();
     }
 
     /**
@@ -118,16 +117,14 @@ class ShortUrlsClientTest extends TestCase
      */
     public function deleteShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
-        $call = $this->httpClient->callShlinkWithBody(
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
             sprintf('/short-urls/%s', $identifier->shortCode),
             'DELETE',
             [],
-            Argument::that(fn (array $query): bool => $query['domain'] === $identifier->domain),
+            $this->callback(fn (array $query): bool => $query['domain'] === $identifier->domain),
         );
 
         $this->client->deleteShortUrl($identifier);
-
-        $call->shouldHaveBeenCalledOnce();
     }
 
     /**
@@ -138,17 +135,16 @@ class ShortUrlsClientTest extends TestCase
     {
         $expected = ['dateCreated' => $this->now];
         $edit = ShortUrlEdition::create();
-        $call = $this->httpClient->callShlinkWithBody(
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
             sprintf('/short-urls/%s', $identifier->shortCode),
             'PATCH',
             $edit,
-            Argument::that(fn (array $query): bool => $query['domain'] === $identifier->domain),
+            $this->callback(fn (array $query): bool => $query['domain'] === $identifier->domain),
         )->willReturn($expected);
 
         $result = $this->client->editShortUrl($identifier, $edit);
 
         self::assertEquals(ShortUrl::fromArray($expected), $result);
-        $call->shouldHaveBeenCalledOnce();
     }
 
     public function provideIdentifiers(): iterable
@@ -162,23 +158,25 @@ class ShortUrlsClientTest extends TestCase
     {
         $expected = ['dateCreated' => $this->now];
         $create = ShortUrlCreation::forLongUrl('https://foo.com');
-        $call = $this->httpClient->callShlinkWithBody('/short-urls', 'POST', $create)->willReturn($expected);
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
+            '/short-urls',
+            'POST',
+            $create,
+        )->willReturn($expected);
 
         $result = $this->client->createShortUrl($create);
 
         self::assertEquals(ShortUrl::fromArray($expected), $result);
-        $call->shouldHaveBeenCalledOnce();
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideGetExceptions
      */
     public function getShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $get = $this->httpClient->getFromShlink(Argument::cetera())->willThrow($original);
-
-        $get->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
         $this->expectException($expected);
 
         $this->client->getShortUrl(ShortUrlIdentifier::fromShortCode('foo'));
@@ -195,14 +193,13 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideDeleteExceptions
      */
     public function deleteShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $call = $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($original);
-
-        $call->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
         $this->expectException($expected);
 
         $this->client->deleteShortUrl(ShortUrlIdentifier::fromShortCode('foo'));
@@ -223,14 +220,13 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideCreateExceptions
      */
     public function createShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $call = $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($original);
-
-        $call->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
         $this->expectException($expected);
 
         $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://foof.com'));
@@ -255,14 +251,13 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideEditExceptions
      */
     public function editShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
-        $call = $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($original);
-
-        $call->shouldBeCalledOnce();
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
         $this->expectException($expected);
 
         $this->client->editShortUrl(ShortUrlIdentifier::fromShortCode('foo'), ShortUrlEdition::create());

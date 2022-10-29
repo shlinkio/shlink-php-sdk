@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Builder;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilderInterface;
 use Shlinkio\Shlink\SDK\Builder\SingletonShlinkClientBuilder;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
@@ -17,16 +15,14 @@ use Shlinkio\Shlink\SDK\ShlinkClient;
 class SingletonShlinkClientBuilderTest extends TestCase
 {
     use ClientBuilderMethodsProviderTrait;
-    use ProphecyTrait;
 
     private SingletonShlinkClientBuilder $builder;
-    private ObjectProphecy $wrapped;
+    private MockObject & ShlinkClientBuilderInterface $wrapped;
 
     public function setUp(): void
     {
-        $this->wrapped = $this->prophesize(ShlinkClientBuilderInterface::class);
-        $this->builder = new SingletonShlinkClientBuilder($this->wrapped->reveal());
-        $this->config = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');
+        $this->wrapped = $this->createMock(ShlinkClientBuilderInterface::class);
+        $this->builder = new SingletonShlinkClientBuilder($this->wrapped);
     }
 
     /**
@@ -35,9 +31,9 @@ class SingletonShlinkClientBuilderTest extends TestCase
      */
     public function buildClientReturnsAlwaysNewInstances(string $method): void
     {
-        $call = $this->wrapped->__call($method, [Argument::type(ShlinkConfigInterface::class)])->willReturn(
-            $this->prophesize(ShlinkClient::class)->reveal(),
-        );
+        $this->wrapped->expects($this->exactly(2))->method($method)->with(
+            $this->isInstanceOf(ShlinkConfigInterface::class),
+        )->willReturn($this->createMock(ShlinkClient::class));
 
         $configOne = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');
         $instance1 = $this->builder->{$method}($configOne);
@@ -51,7 +47,5 @@ class SingletonShlinkClientBuilderTest extends TestCase
         self::assertSame($instance1, $instance2);
         self::assertSame($instance1, $instance3);
         self::assertSame($instance2, $instance3);
-
-        $call->shouldHaveBeenCalledTimes(2);
     }
 }

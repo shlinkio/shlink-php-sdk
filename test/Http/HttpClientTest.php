@@ -9,14 +9,13 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use JsonSerializable;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriInterface;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClient;
@@ -24,25 +23,25 @@ use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
 class HttpClientTest extends TestCase
 {
-    use ProphecyTrait;
-
     private HttpClient $httpClient;
-    private ObjectProphecy $client;
+    private MockObject & ClientInterface $client;
 
     public function setUp(): void
     {
-        $this->client = $this->prophesize(ClientInterface::class);
+        $this->client = $this->createMock(ClientInterface::class);
 
-        $requestFactory = $this->prophesize(RequestFactoryInterface::class);
-        $requestFactory->createRequest(Argument::cetera())->will(fn (array $args) => new Request($args[0], $args[1]));
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory->method('createRequest')->willReturnCallback(
+            fn (string $method, string|UriInterface $uri) => new Request($method, $uri),
+        );
 
-        $streamFactory = $this->prophesize(StreamFactoryInterface::class);
-        $streamFactory->createStream(Argument::any())->will(fn (array $args) => Utils::streamFor($args[0]));
+        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $streamFactory->method('createStream')->willReturnCallback(fn (string $content) => Utils::streamFor($content));
 
         $this->httpClient = new HttpClient(
-            $this->client->reveal(),
-            $requestFactory->reveal(),
-            $streamFactory->reveal(),
+            $this->client,
+            $requestFactory,
+            $streamFactory,
             ShlinkConfig::fromBaseUrlAndApiKey('https://doma.in', '123'),
         );
     }
@@ -56,18 +55,18 @@ class HttpClientTest extends TestCase
         array|ArraySerializable $query,
         string $expectedUri,
     ): void {
-        $sendRequest = $this->client->sendRequest(Argument::that(function (RequestInterface $req) use ($expectedUri) {
-            Assert::assertEquals($expectedUri, $req->getUri()->__toString());
-            Assert::assertEquals('GET', $req->getMethod());
-            Assert::assertTrue($req->hasHeader('X-Api-Key'));
-            Assert::assertEquals('123', $req->getHeaderLine('X-Api-Key'));
+        $this->client->expects($this->once())->method('sendRequest')->with($this->callback(
+            function (RequestInterface $req) use ($expectedUri) {
+                Assert::assertEquals($expectedUri, $req->getUri()->__toString());
+                Assert::assertEquals('GET', $req->getMethod());
+                Assert::assertTrue($req->hasHeader('X-Api-Key'));
+                Assert::assertEquals('123', $req->getHeaderLine('X-Api-Key'));
 
-            return true;
-        }))->willReturn(new Response(200, [], '{}'));
+                return true;
+            },
+        ))->willReturn(new Response(200, [], '{}'));
 
         $this->httpClient->getFromShlink($path, $query);
-
-        $sendRequest->shouldHaveBeenCalledOnce();
     }
 
     public function provideGetRequests(): iterable
@@ -92,9 +91,8 @@ class HttpClientTest extends TestCase
      */
     public function nonSuccessfulResponseResultsInException(int $status): void
     {
-        $sendRequest = $this->client->sendRequest(Argument::cetera())->willReturn(new Response($status, [], '{}'));
+        $this->client->expects($this->once())->method('sendRequest')->willReturn(new Response($status, [], '{}'));
 
-        $sendRequest->shouldBeCalledOnce();
         $this->expectException(HttpException::class);
 
         $this->httpClient->getFromShlink('');
@@ -116,14 +114,13 @@ class HttpClientTest extends TestCase
      */
     public function returnsExpectedResultBasedOnResponseStatus(int $status, array $expectedResult): void
     {
-        $sendRequest = $this->client->sendRequest(Argument::cetera())->willReturn(
+        $this->client->expects($this->once())->method('sendRequest')->willReturn(
             new Response($status, [], '{"foo": "bar"}'),
         );
 
         $result = $this->httpClient->getFromShlink('');
 
         self::assertEquals($expectedResult, $result);
-        $sendRequest->shouldHaveBeenCalledOnce();
     }
 
     public function provideSuccessfulStatuses(): iterable
@@ -143,8 +140,8 @@ class HttpClientTest extends TestCase
         array|JsonSerializable $body,
         string $expectedBody,
     ): void {
-        $sendRequest = $this->client->sendRequest(
-            Argument::that(function (RequestInterface $req) use ($expectedBody, $method) {
+        $this->client->expects($this->once())->method('sendRequest')->with(
+            $this->callback(function (RequestInterface $req) use ($expectedBody, $method) {
                 Assert::assertEquals($expectedBody, $req->getBody()->__toString());
                 Assert::assertEquals($method, $req->getMethod());
                 Assert::assertTrue($req->hasHeader('X-Api-Key'));
@@ -155,8 +152,6 @@ class HttpClientTest extends TestCase
         )->willReturn(new Response(200, [], '{}'));
 
         $this->httpClient->callShlinkWithBody('/foo/bar', $method, $body);
-
-        $sendRequest->shouldHaveBeenCalledOnce();
     }
 
     public function provideNonGetRequests(): iterable
