@@ -19,7 +19,6 @@
         "dms/phpunit-arraysubset-asserts": "^0.4.0",
         "guzzlehttp/guzzle": "^7.4",
         "infection/infection": "^0.26.15",
-        "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.5.4",
         "roave/security-advisories": "dev-master",
