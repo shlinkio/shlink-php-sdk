@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Domains;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Shlinkio\Shlink\SDK\Domains\DomainsClient;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectProps;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
@@ -19,15 +17,13 @@ use function count;
 
 class DomainsClientTest extends TestCase
 {
-    use ProphecyTrait;
-
     private DomainsClient $domainsClient;
-    private ObjectProphecy $httpClient;
+    private MockObject & HttpClientInterface $httpClient;
 
     public function setUp(): void
     {
-        $this->httpClient = $this->prophesize(HttpClientInterface::class);
-        $this->domainsClient = new DomainsClient($this->httpClient->reveal());
+        $this->httpClient = $this->createMock(HttpClientInterface::class);
+        $this->domainsClient = new DomainsClient($this->httpClient);
     }
 
     /** @test */
@@ -63,7 +59,7 @@ class DomainsClientTest extends TestCase
             ],
         ];
 
-        $get = $this->httpClient->getFromShlink('/domains')->willReturn([
+        $this->httpClient->expects($this->once())->method('getFromShlink')->with('/domains')->willReturn([
             'domains' => ['data' => $payload],
         ]);
 
@@ -89,7 +85,6 @@ class DomainsClientTest extends TestCase
         }
 
         self::assertEquals(count($payload), $count);
-        $get->shouldHaveBeenCalledOnce();
     }
 
     /** @test */
@@ -100,7 +95,11 @@ class DomainsClientTest extends TestCase
             ->removingBaseUrlRedirect()
             ->removingInvalidShortUrlRedirect();
 
-        $call = $this->httpClient->callShlinkWithBody('/domains/redirects', 'PATCH', $config)->willReturn([
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
+            '/domains/redirects',
+            'PATCH',
+            $config,
+        )->willReturn([
             DomainRedirectProps::BASE_URL->value => null,
             DomainRedirectProps::REGULAR_NOT_FOUND->value => 'somewhere.com',
             DomainRedirectProps::INVALID_SHORT_URL->value => null,
@@ -111,7 +110,6 @@ class DomainsClientTest extends TestCase
         self::assertNull($result->baseUrlRedirect);
         self::assertNull($result->invalidShortUrlRedirect);
         self::assertEquals('somewhere.com', $result->regularNotFoundRedirect);
-        $call->shouldHaveBeenCalledOnce();
     }
 
     /**
@@ -122,9 +120,8 @@ class DomainsClientTest extends TestCase
         HttpException $originalException,
         string $expectedException,
     ): void {
-        $call = $this->httpClient->callShlinkWithBody(Argument::cetera())->willThrow($originalException);
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($originalException);
 
-        $call->shouldBeCalledOnce();
         $this->expectException($expectedException);
 
         $this->domainsClient->configureDomainRedirects(DomainRedirectsConfig::forDomain('foo'));
