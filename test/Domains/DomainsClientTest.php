@@ -12,6 +12,7 @@ use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Throwable;
 
 use function count;
 
@@ -113,6 +114,7 @@ class DomainsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expectedException
      * @test
      * @dataProvider provideExceptions
      */
@@ -121,7 +123,6 @@ class DomainsClientTest extends TestCase
         string $expectedException,
     ): void {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($originalException);
-
         $this->expectException($expectedException);
 
         $this->domainsClient->configureDomainRedirects(DomainRedirectsConfig::forDomain('foo'));

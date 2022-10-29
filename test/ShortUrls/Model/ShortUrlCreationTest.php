@@ -35,13 +35,13 @@ class ShortUrlCreationTest extends TestCase
         yield [
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')
                 ->withTags('foo', 'bar')
-                ->validSince($date)
+                ->validSince($date) // @phpstan-ignore-line
                 ->withCustomSlug('some-slug'),
             [
                 'longUrl' => 'https://foo.com',
                 'tags' => ['foo', 'bar'],
                 'customSlug' => 'some-slug',
-                'validSince' => $date->format(DateTimeInterface::ATOM),
+                'validSince' => $date->format(DateTimeInterface::ATOM), // @phpstan-ignore-line
             ],
         ];
         yield [

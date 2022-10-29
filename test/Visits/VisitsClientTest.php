@@ -18,6 +18,7 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
+use Throwable;
 
 use function array_key_exists;
 use function count;
@@ -81,6 +82,7 @@ class VisitsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideShortUrlExceptions
      */
@@ -117,6 +119,7 @@ class VisitsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideTagExceptions
      */
@@ -167,6 +170,7 @@ class VisitsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideDomainExceptions
      */
@@ -179,6 +183,7 @@ class VisitsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideDomainExceptions
      */

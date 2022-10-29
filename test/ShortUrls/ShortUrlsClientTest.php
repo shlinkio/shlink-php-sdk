@@ -20,6 +20,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
+use Throwable;
 
 use function count;
 use function sprintf;
@@ -169,6 +170,7 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideGetExceptions
      */
@@ -191,6 +193,7 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideDeleteExceptions
      */
@@ -217,6 +220,7 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideCreateExceptions
      */
@@ -247,6 +251,7 @@ class ShortUrlsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expected
      * @test
      * @dataProvider provideEditExceptions
      */

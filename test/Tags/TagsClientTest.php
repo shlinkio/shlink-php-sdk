@@ -17,6 +17,7 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
+use Throwable;
 
 class TagsClientTest extends TestCase
 {
@@ -118,6 +119,7 @@ class TagsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expectedException
      * @test
      * @dataProvider provideRenameExceptions
      */
@@ -166,6 +168,7 @@ class TagsClientTest extends TestCase
     }
 
     /**
+     * @param class-string<Throwable> $expectedException
      * @test
      * @dataProvider provideDeleteExceptions
      */

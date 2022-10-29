@@ -23,7 +23,6 @@ class SingletonShlinkClientBuilderTest extends TestCase
     {
         $this->wrapped = $this->createMock(ShlinkClientBuilderInterface::class);
         $this->builder = new SingletonShlinkClientBuilder($this->wrapped);
-        $this->config = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');
     }
 
     /**

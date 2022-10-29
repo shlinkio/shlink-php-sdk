@@ -41,7 +41,7 @@ class OrphanVisitTest extends TestCase
     public function providePayloads(): iterable
     {
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
-        $formattedDate = $now->format(DateTimeInterface::ATOM);
+        $formattedDate = $now->format(DateTimeInterface::ATOM); // @phpstan-ignore-line
 
         yield 'defaults' => [[
             'date' => $formattedDate,

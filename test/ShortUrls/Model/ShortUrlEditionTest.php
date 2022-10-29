@@ -31,13 +31,13 @@ class ShortUrlEditionTest extends TestCase
         yield [
             fn () => ShortUrlEdition::create()
                 ->withTags('foo', 'bar')
-                ->validUntil($date)
+                ->validUntil($date) // @phpstan-ignore-line
                 ->withTitle('the title')
                 ->withMaxVisits(50),
             [
                 'tags' => ['foo', 'bar'],
                 'maxVisits' => 50,
-                'validUntil' => $date->format(DateTimeInterface::ATOM),
+                'validUntil' => $date->format(DateTimeInterface::ATOM), // @phpstan-ignore-line
                 'title' => 'the title',
             ],
         ];
