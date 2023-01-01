@@ -18,6 +18,7 @@ class EnvShlinkConfigTest extends TestCase
     {
         putenv(sprintf('%s=', EnvShlinkConfig::API_KEY_ENV_VAR));
         putenv(sprintf('%s=', EnvShlinkConfig::BASE_URL_ENV_VAR));
+        putenv(sprintf('%s=', EnvShlinkConfig::VERSION_ENV_VAR));
     }
 
     /**
