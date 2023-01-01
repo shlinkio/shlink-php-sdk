@@ -2,11 +2,13 @@
 
 if [ "$#" -lt 1 ]; then
   echo "Usage:" >&2
-  echo "   $0 {version}" >&2
+  echo "   $0 {version} [{api_version}]" >&2
   exit 1
 fi
 
 export SHLINK_VERSION=$1
+SECOND_PARAM=$2
+export SHLINK_API_VERSION=${SECOND_PARAM:='2'}
 PORT="8765"
 export SHLINK_BASE_URL="http://localhost:${PORT}"
 CONTAINER=$(docker run --rm -d -p ${PORT}:8080 -e DEFAULT_DOMAIN=localhost:${PORT} -e IS_HTTPS_ENABLED=false ghcr.io/shlinkio/shlink:${SHLINK_VERSION})
