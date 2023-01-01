@@ -8,6 +8,7 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
@@ -135,20 +136,36 @@ class TagsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_ARGUMENT type' =>  [
+        yield 'INVALID_ARGUMENT v2 type' =>  [
             HttpException::fromPayload(['type' => 'INVALID_ARGUMENT']),
             InvalidDataException::class,
         ];
-        yield 'FORBIDDEN_OPERATION type' =>  [
+        yield 'INVALID_ARGUMENT v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::INVALID_ARGUMENT->value]),
+            InvalidDataException::class,
+        ];
+        yield 'FORBIDDEN_OPERATION v2 type' =>  [
             HttpException::fromPayload(['type' => 'FORBIDDEN_OPERATION']),
             ForbiddenTagOperationException::class,
         ];
-        yield 'TAG_NOT_FOUND type' =>  [
+        yield 'FORBIDDEN_OPERATION v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::FORBIDDEN_OPERATION->value]),
+            ForbiddenTagOperationException::class,
+        ];
+        yield 'TAG_NOT_FOUND v2 type' =>  [
             HttpException::fromPayload(['type' => 'TAG_NOT_FOUND']),
             TagNotFoundException::class,
         ];
-        yield 'TAG_CONFLICT type' =>  [
+        yield 'TAG_NOT_FOUND v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::TAG_NOT_FOUND->value]),
+            TagNotFoundException::class,
+        ];
+        yield 'TAG_CONFLICT v2 type' =>  [
             HttpException::fromPayload(['type' => 'TAG_CONFLICT']),
+            TagConflictException::class,
+        ];
+        yield 'TAG_CONFLICT v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::TAG_CONFLICT->value]),
             TagConflictException::class,
         ];
     }
@@ -184,8 +201,12 @@ class TagsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'FORBIDDEN_OPERATION type' =>  [
+        yield 'FORBIDDEN_OPERATION v2 type' =>  [
             HttpException::fromPayload(['type' => 'FORBIDDEN_OPERATION']),
+            ForbiddenTagOperationException::class,
+        ];
+        yield 'FORBIDDEN_OPERATION v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::FORBIDDEN_OPERATION->value]),
             ForbiddenTagOperationException::class,
         ];
     }

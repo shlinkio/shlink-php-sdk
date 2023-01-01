@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
 use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
+use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
@@ -63,7 +64,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                'INVALID_SHORTCODE' => ShortUrlNotFoundException::fromHttpException($e),
+                ErrorType::INVALID_SHORTCODE->value => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -92,7 +93,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                'TAG_NOT_FOUND' => TagNotFoundException::fromHttpException($e),
+                ErrorType::TAG_NOT_FOUND->value => TagNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -141,7 +142,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                'DOMAIN_NOT_FOUND' => DomainNotFoundException::fromHttpException($e),
+                ErrorType::DOMAIN_NOT_FOUND->value => DomainNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }

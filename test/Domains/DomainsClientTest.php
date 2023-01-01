@@ -10,6 +10,7 @@ use Shlinkio\Shlink\SDK\Domains\DomainsClient;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectProps;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Throwable;
@@ -132,8 +133,12 @@ class DomainsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_ARGUMENT type' =>  [
+        yield 'INVALID_ARGUMENT v2 type' =>  [
             HttpException::fromPayload(['type' => 'INVALID_ARGUMENT']),
+            InvalidDataException::class,
+        ];
+        yield 'INVALID_ARGUMENT v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::INVALID_ARGUMENT->value]),
             InvalidDataException::class,
         ];
     }
