@@ -8,7 +8,9 @@ use RuntimeException;
 use Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\EnvShlinkConfig;
 use Shlinkio\Shlink\SDK\Exception\ExceptionInterface;
+use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
+use function implode;
 use function sprintf;
 
 class InvalidConfigException extends RuntimeException implements ExceptionInterface
@@ -29,6 +31,18 @@ class InvalidConfigException extends RuntimeException implements ExceptionInterf
             . 'with strings.',
             ArrayShlinkConfig::BASE_URL_PROP,
             ArrayShlinkConfig::API_KEY_PROP,
+        ));
+    }
+
+    /**
+     * @param non-empty-string $invalidVersion
+     */
+    public static function forInvalidVersion(string $invalidVersion): self
+    {
+        return new self(sprintf(
+            'Provided version "%s" is invalid. Expected one of ["%s"]',
+            $invalidVersion,
+            implode('", "', ApiVersion::values()),
         ));
     }
 }

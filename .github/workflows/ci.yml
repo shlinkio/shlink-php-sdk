@@ -17,7 +17,21 @@ jobs:
     strategy:
       matrix:
         php-version: ['8.2', '8.1']
-        shlink-version: ['3.3.1', '3.2.1', '3.1.2', '3.0.3']
+        shlink-version: ['3.4.0', '3.3.2', '3.2.1', '3.1.2', '3.0.3']
+        shlink-api-version: ['2']
+        include:
+          - shlink-version: '3.4.0'
+            php-version: '8.1'
+            shlink-api-version: '3'
+          - shlink-version: '3.3.2'
+            php-version: '8.1'
+            shlink-api-version: '3'
+          - shlink-version: '3.4.0'
+            php-version: '8.2'
+            shlink-api-version: '3'
+          - shlink-version: '3.3.2'
+            php-version: '8.2'
+            shlink-api-version: '3'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,4 +41,4 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: composer
       - run: composer install --no-interaction --prefer-dist ${{ matrix.php-version == '8.2' && '--ignore-platform-req=php' || '' }}
-      - run: composer test:integration -- ${{ matrix.shlink-version }}
+      - run: composer test:integration -- ${{ matrix.shlink-version }} ${{ matrix.shlink-api-version }}

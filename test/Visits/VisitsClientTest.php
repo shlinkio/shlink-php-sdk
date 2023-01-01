@@ -10,6 +10,7 @@ use DateTimeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
+use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
@@ -98,8 +99,12 @@ class VisitsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_SHORTCODE type' =>  [
+        yield 'INVALID_SHORTCODE v2 type' =>  [
             HttpException::fromPayload(['type' => 'INVALID_SHORTCODE']),
+            ShortUrlNotFoundException::class,
+        ];
+        yield 'INVALID_SHORTCODE v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
             ShortUrlNotFoundException::class,
         ];
     }
@@ -135,8 +140,12 @@ class VisitsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'TAG_NOT_FOUND type' =>  [
+        yield 'TAG_NOT_FOUND v2 type' =>  [
             HttpException::fromPayload(['type' => 'TAG_NOT_FOUND']),
+            TagNotFoundException::class,
+        ];
+        yield 'TAG_NOT_FOUND v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::TAG_NOT_FOUND->value]),
             TagNotFoundException::class,
         ];
     }
@@ -199,8 +208,12 @@ class VisitsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'TAG_NOT_FOUND type' =>  [
+        yield 'DOMAIN_NOT_FOUND v2 type' =>  [
             HttpException::fromPayload(['type' => 'DOMAIN_NOT_FOUND']),
+            DomainNotFoundException::class,
+        ];
+        yield 'DOMAIN_NOT_FOUND v3 type' =>  [
+            HttpException::fromPayload(['type' => ErrorType::DOMAIN_NOT_FOUND->value]),
             DomainNotFoundException::class,
         ];
     }

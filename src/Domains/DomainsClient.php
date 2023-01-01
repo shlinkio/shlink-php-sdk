@@ -8,6 +8,7 @@ use Shlinkio\Shlink\SDK\Domains\Model\Domain;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
+use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 
@@ -40,7 +41,7 @@ class DomainsClient implements DomainsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                'INVALID_ARGUMENT' => InvalidDataException::fromHttpException($e),
+                ErrorType::INVALID_ARGUMENT->value => InvalidDataException::fromHttpException($e),
                 default => $e,
             };
         }
