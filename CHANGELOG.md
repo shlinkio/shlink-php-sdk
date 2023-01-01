@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* [#23](https://github.com/shlinkio/shlink-php-client/issues/23) Added support for API v3.
 
 ### Changed
 * Migrated from prophecy to PHPUnit mocks.
