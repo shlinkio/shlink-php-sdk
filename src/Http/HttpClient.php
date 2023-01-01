@@ -62,7 +62,7 @@ class HttpClient implements HttpClientInterface
         array|JsonSerializable|null $body = null,
         array $query = [],
     ): array {
-        $uri = sprintf('%s/rest/v2%s', $this->config->baseUrl(), $path);
+        $uri = sprintf('%s/rest/v%s%s', $this->config->baseUrl(), $this->config->version()->value, $path);
         if (! empty($query)) {
             $uri = sprintf('%s?%s', $uri, http_build_query($query));
         }

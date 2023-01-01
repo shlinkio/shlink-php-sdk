@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Config;
 
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
+use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
 use function trim;
 
@@ -12,6 +13,7 @@ final class ArrayShlinkConfig implements ShlinkConfigInterface
 {
     public const BASE_URL_PROP = 'baseUrl';
     public const API_KEY_PROP = 'apiKey';
+    public const VERSION_PROP = 'version';
 
     private function __construct(private readonly ShlinkConfigInterface $wrapped)
     {
@@ -22,14 +24,31 @@ final class ArrayShlinkConfig implements ShlinkConfigInterface
      */
     public static function fromArray(array $config): self
     {
-        if (! isset($config[self::BASE_URL_PROP], $config[self::API_KEY_PROP])) {
-            throw InvalidConfigException::forInvalidConfig();
-        }
+        return new self(ShlinkConfig::fromRawConfig(new class ($config) implements RawConfigInterface {
+            public function __construct(private readonly array $config)
+            {
+            }
 
-        $baseUrl = trim($config[self::BASE_URL_PROP]);
-        $apiKey = trim($config[self::API_KEY_PROP]);
+            public function baseUrl(): string
+            {
+                return trim($this->config[ArrayShlinkConfig::BASE_URL_PROP] ?? '');
+            }
 
-        return new self(ShlinkConfig::fromBaseUrlAndApiKey($baseUrl, $apiKey));
+            public function apiKey(): string
+            {
+                return trim($this->config[ArrayShlinkConfig::API_KEY_PROP] ?? '');
+            }
+
+            public function version(): string
+            {
+                return trim($this->config[ArrayShlinkConfig::VERSION_PROP] ?? '');
+            }
+
+            public function missingConfigException(): InvalidConfigException
+            {
+                return InvalidConfigException::forInvalidConfig();
+            }
+        }));
     }
 
     public function baseUrl(): string
@@ -40,5 +59,10 @@ final class ArrayShlinkConfig implements ShlinkConfigInterface
     public function apiKey(): string
     {
         return $this->wrapped->apiKey();
+    }
+
+    public function version(): ApiVersion
+    {
+        return $this->wrapped->version();
     }
 }
