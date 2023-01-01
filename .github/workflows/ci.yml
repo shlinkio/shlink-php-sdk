@@ -21,8 +21,16 @@ jobs:
         shlink-api-version: ['2']
         include:
           - shlink-version: '3.4.0'
+            php-version: '8.1'
             shlink-api-version: '3'
           - shlink-version: '3.3.2'
+            php-version: '8.1'
+            shlink-api-version: '3'
+          - shlink-version: '3.4.0'
+            php-version: '8.2'
+            shlink-api-version: '3'
+          - shlink-version: '3.3.2'
+            php-version: '8.2'
             shlink-api-version: '3'
     steps:
       - name: Checkout code
