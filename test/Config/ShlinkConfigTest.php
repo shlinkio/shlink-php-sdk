@@ -8,19 +8,32 @@ use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\EnvShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
+use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
 use function putenv;
 use function sprintf;
 
 class ShlinkConfigTest extends TestCase
 {
-    /** @test */
-    public function configIsInitializedFromBaseUrlAndApiKey(): void
+    /**
+     * @param callable(string, string): ShlinkConfig $createConfig
+     * @test
+     * @dataProvider provideMethods
+     */
+    public function configIsInitializedForV2(callable $createConfig, ApiVersion $expectedVersion): void
     {
-        $config = ShlinkConfig::fromBaseUrlAndApiKey('baseUrl', 'apiKey');
+        $config = $createConfig('baseUrl', 'apiKey');
 
         self::assertEquals('baseUrl', $config->baseUrl());
         self::assertEquals('apiKey', $config->apiKey());
+        self::assertEquals($expectedVersion, $config->version());
+    }
+
+    public function provideMethods(): iterable
+    {
+        yield 'deprecated' => [ShlinkConfig::fromBaseUrlAndApiKey(...), ApiVersion::V2];
+        yield 'v2' => [ShlinkConfig::fromV2BaseUrlAndApiKey(...), ApiVersion::V2];
+        yield 'v3' => [ShlinkConfig::fromV3BaseUrlAndApiKey(...), ApiVersion::V3];
     }
 
     /** @test */
