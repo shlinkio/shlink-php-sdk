@@ -40,6 +40,16 @@ final class ShortUrlsFilter implements ArraySerializable
         return $this->cloneWithProp('tags', $tags);
     }
 
+    public function excludingMaxVisitsReached(): self
+    {
+        return $this->cloneWithProp('excludeMaxVisitsReached', 'true');
+    }
+
+    public function excludingPastValidUntil(): self
+    {
+        return $this->cloneWithProp('excludePastValidUntil', 'true');
+    }
+
     public function orderingAscBy(ShortUrlListOrderField $field): self
     {
         return $this->cloneWithProp('orderBy', sprintf('%s-ASC', $field->value));

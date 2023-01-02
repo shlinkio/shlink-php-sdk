@@ -49,5 +49,9 @@ class ShortUrlsFilterTest extends TestCase
             fn () => ShortUrlsFilter::create()->orderingDescBy(ShortUrlListOrderField::LONG_URL),
             ['orderBy' => 'longUrl-DESC'],
         ];
+        yield [
+            fn () => ShortUrlsFilter::create()->excludingMaxVisitsReached()->excludingPastValidUntil(),
+            ['excludeMaxVisitsReached' => 'true', 'excludePastValidUntil' => 'true'],
+        ];
     }
 }

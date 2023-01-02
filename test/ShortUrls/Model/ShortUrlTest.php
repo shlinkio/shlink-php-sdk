@@ -9,6 +9,7 @@ use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlVisitsSummary;
 
 class ShortUrlTest extends TestCase
 {
@@ -29,6 +30,7 @@ class ShortUrlTest extends TestCase
         bool $expectedForwardQuery,
         array $expectedTags,
         ShortUrlMeta $expectedMeta,
+        ShortUrlVisitsSummary $expectedVisitsSummary,
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 
@@ -43,6 +45,7 @@ class ShortUrlTest extends TestCase
         self::assertEquals($expectedForwardQuery, $shortUrl->forwardQuery);
         self::assertEquals($expectedTags, $shortUrl->tags);
         self::assertEquals($expectedMeta, $shortUrl->meta);
+        self::assertEquals($expectedVisitsSummary, $shortUrl->visitsSummary);
     }
 
     public function providePayloads(): iterable
@@ -63,6 +66,7 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
+            ShortUrlVisitsSummary::fromArrayWithFallback([], 0),
         ];
         yield 'all values' => [
             [
@@ -79,6 +83,11 @@ class ShortUrlTest extends TestCase
                 'meta' => $meta = [
                     'maxVisits' => 30,
                 ],
+                'visitsSummary' => $visitsSummary = [
+                    'total' => 3,
+                    'nonBots' => 3,
+                    'bots' => 3,
+                ],
             ],
             'foo',
             'https://doma.in/foo',
@@ -91,6 +100,22 @@ class ShortUrlTest extends TestCase
             true,
             ['foo', 'bar'],
             ShortUrlMeta::fromArray($meta),
+            ShortUrlVisitsSummary::fromArrayWithFallback($visitsSummary, 5),
+        ];
+        yield 'visits total fallback' => [
+            ['dateCreated' => $formattedDate, 'visitsCount' => 35],
+            '',
+            '',
+            '',
+            $now,
+            35,
+            null,
+            null,
+            false,
+            false,
+            [],
+            ShortUrlMeta::fromArray([]),
+            ShortUrlVisitsSummary::fromArrayWithFallback([], 35),
         ];
     }
 }
