@@ -4,13 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [1.1.0] - 2023-01-02
 ### Added
 * [#23](https://github.com/shlinkio/shlink-php-client/issues/23) Added support for API v3.
 * [#32](https://github.com/shlinkio/shlink-php-client/issues/32) Added support for features introduced in Shlink 3.4.0.
 
 ### Changed
-* Migrated from prophecy to PHPUnit mocks.
+* [#28](https://github.com/shlinkio/shlink-php-client/issues/28) Improved documentation style.
 
 ### Deprecated
 * *Nothing*
