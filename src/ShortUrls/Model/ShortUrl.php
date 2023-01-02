@@ -39,7 +39,7 @@ final class ShortUrl
             $payload['longUrl'] ?? '',
             // @phpstan-ignore-next-line
             DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['dateCreated']),
-                $visitsCount,
+            $visitsCount,
             $payload['domain'] ?? null,
             $payload['title'] ?? null,
             $payload['crawlable'] ?? false,
