@@ -34,6 +34,6 @@ echo 'The total amount of short URLs is ' . count($shortUrls);
 
 foreach ($shortUrls as $shortUrl) {
     echo 'Short URL: ' . $shortUrl->shortUrl;
-    echo 'Amount of visits: ' . $shortUrl->visitsCount;
+    echo 'Amount of visits: ' . $shortUrl->visitsSummary->total;
 }
 ```
