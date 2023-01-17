@@ -151,7 +151,7 @@ class ShortUrlsClientTest extends TestCase
     public function provideIdentifiers(): iterable
     {
         yield 'no domain' => [ShortUrlIdentifier::fromShortCode('foo')];
-        yield 'domain' => [ShortUrlIdentifier::fromShortCodeAndDomain('foo', 'doma.in')];
+        yield 'domain' => [ShortUrlIdentifier::fromShortCodeAndDomain('foo', 's.test')];
     }
 
     /** @test */

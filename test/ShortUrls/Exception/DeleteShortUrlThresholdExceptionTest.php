@@ -41,7 +41,7 @@ class DeleteShortUrlThresholdExceptionTest extends TestCase
             'detail' => $message = 'This is the message',
             'status' => $code = 400,
             'shortCode' => $shortCode = 'foo',
-            'domain' => $domain = 'doma.in',
+            'domain' => $domain = 's.test',
             'threshold' => $threshold = 15,
         ]), ShortUrlIdentifier::fromShortCodeAndDomain($shortCode, $domain), $threshold, $message, $code];
     }

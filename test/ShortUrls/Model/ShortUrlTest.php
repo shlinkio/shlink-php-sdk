@@ -71,7 +71,7 @@ class ShortUrlTest extends TestCase
         yield 'all values' => [
             [
                 'shortCode' => 'foo',
-                'shortUrl' => 'https://doma.in/foo',
+                'shortUrl' => 'https://s.test/foo',
                 'longUrl' => 'https://foo.com/bar',
                 'dateCreated' => $formattedDate,
                 'visitsCount' => 35,
@@ -90,7 +90,7 @@ class ShortUrlTest extends TestCase
                 ],
             ],
             'foo',
-            'https://doma.in/foo',
+            'https://s.test/foo',
             'https://foo.com/bar',
             $now,
             35,

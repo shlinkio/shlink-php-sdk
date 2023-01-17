@@ -69,8 +69,8 @@ class ShortUrlCreationTest extends TestCase
         yield [
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')
                 ->withoutQueryForwardingOnRedirect()
-                ->forDomain('doma.in'),
-            ['longUrl' => 'https://foo.com', 'forwardQuery' => false, 'domain' => 'doma.in'],
+                ->forDomain('s.test'),
+            ['longUrl' => 'https://foo.com', 'forwardQuery' => false, 'domain' => 's.test'],
         ];
     }
 }

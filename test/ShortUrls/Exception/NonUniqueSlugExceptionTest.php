@@ -40,7 +40,7 @@ class NonUniqueSlugExceptionTest extends TestCase
             'detail' => $message = 'This is the message',
             'status' => $code = 404,
             'customSlug' => $customSlug = 'baz',
-            'domain' => $domain = 'doma.in',
+            'domain' => $domain = 's.test',
         ]), $customSlug, $domain, $message, $code];
     }
 }

@@ -42,7 +42,7 @@ class HttpClientTest extends TestCase
             $this->client,
             $requestFactory,
             $streamFactory,
-            ShlinkConfig::fromBaseUrlAndApiKey('https://doma.in', '123'),
+            ShlinkConfig::fromBaseUrlAndApiKey('https://s.test', '123'),
         );
     }
 
@@ -71,8 +71,8 @@ class HttpClientTest extends TestCase
 
     public function provideGetRequests(): iterable
     {
-        yield 'no query' => ['/foo/bar', [], 'https://doma.in/rest/v2/foo/bar'];
-        yield 'array query' => ['/foo/bar', ['some' => 'thing'], 'https://doma.in/rest/v2/foo/bar?some=thing'];
+        yield 'no query' => ['/foo/bar', [], 'https://s.test/rest/v2/foo/bar'];
+        yield 'array query' => ['/foo/bar', ['some' => 'thing'], 'https://s.test/rest/v2/foo/bar?some=thing'];
         yield 'serializable query' => [
             '/foo/bar',
             new class implements ArraySerializable {
@@ -81,7 +81,7 @@ class HttpClientTest extends TestCase
                     return ['foo' => 'bar', 'tags' => ['one', 'two']];
                 }
             },
-            'https://doma.in/rest/v2/foo/bar?foo=bar&tags%5B0%5D=one&tags%5B1%5D=two',
+            'https://s.test/rest/v2/foo/bar?foo=bar&tags%5B0%5D=one&tags%5B1%5D=two',
         ];
     }
 
