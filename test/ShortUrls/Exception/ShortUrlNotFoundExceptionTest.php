@@ -44,7 +44,7 @@ class ShortUrlNotFoundExceptionTest extends TestCase
             'detail' => $message = 'This is the message',
             'status' => $code = 400,
             'shortCode' => $shortCode = 'foo',
-            'domain' => $domain = 'doma.in',
+            'domain' => $domain = 's.test',
         ]), ShortUrlIdentifier::fromShortCodeAndDomain($shortCode, $domain), $message, $code];
     }
 }

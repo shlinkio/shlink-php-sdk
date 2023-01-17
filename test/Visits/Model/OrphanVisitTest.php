@@ -53,7 +53,7 @@ class OrphanVisitTest extends TestCase
                 'userAgent' => 'userAgent',
                 'potentialBot' => true,
                 'visitLocation' => [],
-                'visitedUrl' => 'https://doma.in/foo/bar',
+                'visitedUrl' => 'https://s.test/foo/bar',
                 'type' => OrphanVisitType::BASE_URL->value,
             ],
             'referer',
@@ -61,7 +61,7 @@ class OrphanVisitTest extends TestCase
             'userAgent',
             true,
             VisitLocation::fromArray([]),
-            'https://doma.in/foo/bar',
+            'https://s.test/foo/bar',
             OrphanVisitType::BASE_URL,
         ];
     }

@@ -79,7 +79,7 @@ class VisitsClientTest extends TestCase
     public function provideShortUrls(): iterable
     {
         yield [ShortUrlIdentifier::fromShortCode('foo')];
-        yield [ShortUrlIdentifier::fromShortCodeAndDomain('bar', 'doma.in')];
+        yield [ShortUrlIdentifier::fromShortCodeAndDomain('bar', 's.test')];
     }
 
     /**
