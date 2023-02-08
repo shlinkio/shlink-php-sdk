@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Config\Exception;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
 
 class InvalidConfigExceptionTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function createsExceptionForMissingEnvVars(): void
     {
         $e = InvalidConfigException::forMissingEnvVars();
@@ -20,7 +21,7 @@ class InvalidConfigExceptionTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function createsExceptionForInvalidConfig(): void
     {
         $e = InvalidConfigException::forInvalidConfig();

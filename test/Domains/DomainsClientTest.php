@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Domains;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Domains\DomainsClient;
@@ -28,7 +30,7 @@ class DomainsClientTest extends TestCase
         $this->domainsClient = new DomainsClient($this->httpClient);
     }
 
-    /** @test */
+    #[Test]
     public function expectedDomainsAreReturnedOnList(): void
     {
         $payload = [
@@ -89,7 +91,7 @@ class DomainsClientTest extends TestCase
         self::assertEquals(count($payload), $count);
     }
 
-    /** @test */
+    #[Test]
     public function configureDomainRedirectsSendsExpectedRequestAndReceivesExpectedResponse(): void
     {
         $config = DomainRedirectsConfig::forDomain('foo.com')
@@ -116,9 +118,8 @@ class DomainsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expectedException
-     * @test
-     * @dataProvider provideExceptions
      */
+    #[Test, DataProvider('provideExceptions')]
     public function configureDomainRedirectsThrowsProperExceptionIfSomethingGoesWrong(
         HttpException $originalException,
         string $expectedException,

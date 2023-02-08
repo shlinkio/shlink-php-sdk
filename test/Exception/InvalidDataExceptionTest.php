@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Exception;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 class InvalidDataExceptionTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider provideExceptions
-     */
+    #[Test, DataProvider('provideExceptions')]
     public function exceptionIsBuiltAsExpected(
         HttpException $prev,
         string $expectedMessage,

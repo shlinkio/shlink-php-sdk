@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Config;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
@@ -11,10 +13,7 @@ use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
 class ArrayShlinkConfigTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider provideInvalidData
-     */
+    #[Test, DataProvider('provideInvalidData')]
     public function exceptionIsThrownIfProvidedDataIsInvalid(
         array $rawConfig,
         string $expectedMessage,
@@ -40,10 +39,7 @@ class ArrayShlinkConfigTest extends TestCase
         ], 'Provided version "4" is invalid. Expected one of ["2", "3"]'];
     }
 
-    /**
-     * @test
-     * @dataProvider provideVersions
-     */
+    #[Test, DataProvider('provideVersions')]
     public function expectedParamsAreSet(?string $version, ApiVersion $expectedVersion): void
     {
         $rawConfig = [

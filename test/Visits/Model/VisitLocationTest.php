@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Visits\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitLocation;
 
 class VisitLocationTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
         string $expectedCountryCode,

@@ -7,6 +7,8 @@ namespace ShlinkioTest\Shlink\SDK\Visits;
 use Closure;
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
@@ -38,7 +40,7 @@ class VisitsClientTest extends TestCase
         $this->now = (new DateTimeImmutable())->format(DateTimeInterface::ATOM);
     }
 
-    /** @test */
+    #[Test]
     public function getVisitsSummaryPerformsExpectedCall(): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->with('/visits')->willReturn([
@@ -55,10 +57,7 @@ class VisitsClientTest extends TestCase
         self::assertCount(238, $result);
     }
 
-    /**
-     * @test
-     * @dataProvider provideShortUrls
-     */
+    #[Test, DataProvider('provideShortUrls')]
     public function listShortUrlVisitsPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $amountOfPages = 3;
@@ -84,9 +83,8 @@ class VisitsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideShortUrlExceptions
      */
+    #[Test, DataProvider('provideShortUrlExceptions')]
     public function listShortUrlVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
@@ -109,7 +107,7 @@ class VisitsClientTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function listTagVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 5;
@@ -125,9 +123,8 @@ class VisitsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideTagExceptions
      */
+    #[Test, DataProvider('provideTagExceptions')]
     public function listTagVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
@@ -150,7 +147,7 @@ class VisitsClientTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function listDomainVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 5;
@@ -164,7 +161,7 @@ class VisitsClientTest extends TestCase
         $this->assertPaginator($result, $amountOfPages);
     }
 
-    /** @test */
+    #[Test]
     public function listDefaultDomainVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 5;
@@ -180,9 +177,8 @@ class VisitsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideDomainExceptions
      */
+    #[Test, DataProvider('provideDomainExceptions')]
     public function listDomainVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
@@ -193,9 +189,8 @@ class VisitsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideDomainExceptions
      */
+    #[Test, DataProvider('provideDomainExceptions')]
     public function listDefaultDomainVisitsThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
@@ -218,7 +213,7 @@ class VisitsClientTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function listOrphanVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 1;
@@ -232,7 +227,7 @@ class VisitsClientTest extends TestCase
         $this->assertPaginator($result, $amountOfPages);
     }
 
-    /** @test */
+    #[Test]
     public function listNonOrphanVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 1;

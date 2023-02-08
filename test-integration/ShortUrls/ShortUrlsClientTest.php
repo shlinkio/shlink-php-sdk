@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioIntegrationTest\Shlink\SDK\ShortUrls;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
@@ -22,7 +24,7 @@ class ShortUrlsClientTest extends AbstractTestCase
         $this->client = new ShortUrlsClient(self::httpClient());
     }
 
-    /** @test */
+    #[Test]
     public function shortUrlCanBeCreated(): void
     {
         $createdShortUrl = $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://shlink.io'));
@@ -34,10 +36,7 @@ class ShortUrlsClientTest extends AbstractTestCase
         $this->client->deleteShortUrl(ShortUrlIdentifier::fromShortUrl($createdShortUrl));
     }
 
-    /**
-     * @test
-     * @dataProvider provideIdentifiableMethods
-     */
+    #[Test, DataProvider('provideIdentifiableMethods')]
     public function throwsExceptionWhenTryingToActOnNotFoundSHortUrl(string $method, mixed ...$extraArgs): void
     {
         $identifier = ShortUrlIdentifier::fromShortCode('invalid');
@@ -54,7 +53,7 @@ class ShortUrlsClientTest extends AbstractTestCase
         yield 'editShortUrl' => ['editShortUrl', ShortUrlEdition::create()];
     }
 
-    /** @test */
+    #[Test]
     public function shortUrlsCanBeListed(): void
     {
         $urls = [

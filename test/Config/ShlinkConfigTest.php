@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Config;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\EnvShlinkConfig;
@@ -17,9 +19,8 @@ class ShlinkConfigTest extends TestCase
 {
     /**
      * @param callable(string, string): ShlinkConfig $createConfig
-     * @test
-     * @dataProvider provideMethods
      */
+    #[Test, DataProvider('provideMethods')]
     public function configIsInitializedForV2(callable $createConfig, ApiVersion $expectedVersion): void
     {
         $config = $createConfig('baseUrl', 'apiKey');
@@ -36,7 +37,7 @@ class ShlinkConfigTest extends TestCase
         yield 'v3' => [ShlinkConfig::fromV3BaseUrlAndApiKey(...), ApiVersion::V3];
     }
 
-    /** @test */
+    #[Test]
     public function createsAnEnvShlinkConfigFromEnv(): void
     {
         putenv(sprintf('%s=API_KEY', EnvShlinkConfig::API_KEY_ENV_VAR));
@@ -52,7 +53,7 @@ class ShlinkConfigTest extends TestCase
         putenv(sprintf('%s=', EnvShlinkConfig::BASE_URL_ENV_VAR));
     }
 
-    /** @test */
+    #[Test]
     public function createsAnArrayShlinkConfigFromArray(): void
     {
         $rawConfig = [

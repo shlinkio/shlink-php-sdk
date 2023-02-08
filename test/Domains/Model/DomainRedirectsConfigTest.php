@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Domains\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectProps;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 
 class DomainRedirectsConfigTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider provideConfigs
-     */
+    #[Test, DataProvider('provideConfigs')]
     public function payloadIsBuiltAsExpected(callable $createConfig, array $expectedPayload): void
     {
         /** @var DomainRedirectsConfig $config */

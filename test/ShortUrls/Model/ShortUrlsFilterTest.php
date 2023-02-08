@@ -6,16 +6,15 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderField;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 
 class ShortUrlsFilterTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function payloadIsBuiltAsExpected(callable $createFilter, array $expected): void
     {
         /** @var ShortUrlsFilter $filter */

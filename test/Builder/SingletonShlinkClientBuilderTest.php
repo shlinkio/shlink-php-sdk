@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Builder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilderInterface;
@@ -25,10 +27,7 @@ class SingletonShlinkClientBuilderTest extends TestCase
         $this->builder = new SingletonShlinkClientBuilder($this->wrapped);
     }
 
-    /**
-     * @test
-     * @dataProvider provideMethods
-     */
+    #[Test, DataProvider('provideMethods')]
     public function buildClientReturnsAlwaysNewInstances(string $method): void
     {
         $this->wrapped->expects($this->exactly(2))->method($method)->with(

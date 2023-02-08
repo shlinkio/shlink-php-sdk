@@ -6,15 +6,14 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
 
 class ShortUrlMetaTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
         ?DateTimeInterface $expectedValidSince,

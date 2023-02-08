@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
@@ -30,7 +32,7 @@ class TagsClientTest extends TestCase
         $this->tagsClient = new TagsClient($this->httpClient);
     }
 
-    /** @test */
+    #[Test]
     public function listTagsReturnsExpectedResponse(): void
     {
         $this->assertListTags(
@@ -40,7 +42,7 @@ class TagsClientTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function listTagsWithFilterReturnsExpectedResponse(): void
     {
         $filter = TagsFilter::create()->searchingBy('foo');
@@ -51,7 +53,7 @@ class TagsClientTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function listTagsWithStatsReturnsExpectedResponse(): void
     {
         $this->assertListTags(
@@ -70,7 +72,7 @@ class TagsClientTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function listTagsWithStatsWithFilterReturnsExpectedResponse(): void
     {
         $filter = TagsFilter::create()->searchingBy('foo')->orderingAscBy(TagsListOrderField::TAG);
@@ -111,7 +113,7 @@ class TagsClientTest extends TestCase
         self::assertEquals($expectedData, $result);
     }
 
-    /** @test */
+    #[Test]
     public function renameTagCallsApi(): void
     {
         $renaming = TagRenaming::fromOldNameAndNewName('foo', 'bar');
@@ -122,9 +124,8 @@ class TagsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expectedException
-     * @test
-     * @dataProvider provideRenameExceptions
      */
+    #[Test, DataProvider('provideRenameExceptions')]
     public function renameTagThrowsProperExceptionOnError(HttpException $original, string $expectedException): void
     {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
@@ -171,7 +172,7 @@ class TagsClientTest extends TestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function deleteTagsCallsApi(): void
     {
         $tags = ['foo', 'bar', 'baz'];
@@ -187,9 +188,8 @@ class TagsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expectedException
-     * @test
-     * @dataProvider provideDeleteExceptions
      */
+    #[Test, DataProvider('provideDeleteExceptions')]
     public function deleteTagsThrowsProperExceptionOnError(HttpException $original, string $expectedException): void
     {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);

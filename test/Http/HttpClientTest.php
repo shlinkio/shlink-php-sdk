@@ -9,6 +9,8 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use JsonSerializable;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -46,10 +48,7 @@ class HttpClientTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider provideGetRequests
-     */
+    #[Test, DataProvider('provideGetRequests')]
     public function getFromShlinkSendsExpectedRequest(
         string $path,
         array|ArraySerializable $query,
@@ -85,10 +84,7 @@ class HttpClientTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider provideNonSuccessfulStatuses
-     */
+    #[Test, DataProvider('provideNonSuccessfulStatuses')]
     public function nonSuccessfulResponseResultsInException(int $status): void
     {
         $this->client->expects($this->once())->method('sendRequest')->willReturn(new Response($status, [], '{}'));
@@ -108,10 +104,7 @@ class HttpClientTest extends TestCase
         yield 'status 501' => [501];
     }
 
-    /**
-     * @test
-     * @dataProvider provideSuccessfulStatuses
-     */
+    #[Test, DataProvider('provideSuccessfulStatuses')]
     public function returnsExpectedResultBasedOnResponseStatus(int $status, array $expectedResult): void
     {
         $this->client->expects($this->once())->method('sendRequest')->willReturn(
@@ -131,10 +124,7 @@ class HttpClientTest extends TestCase
         yield 'status 399' => [399, ['foo' => 'bar']];
     }
 
-    /**
-     * @test
-     * @dataProvider provideNonGetRequests
-     */
+    #[Test, DataProvider('provideNonGetRequests')]
     public function callShlinkWithBodySendsExpectedRequest(
         string $method,
         array|JsonSerializable $body,
