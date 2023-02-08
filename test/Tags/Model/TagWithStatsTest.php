@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 class TagWithStatsTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
         string $expectedTag,
@@ -26,7 +25,7 @@ class TagWithStatsTest extends TestCase
         self::assertEquals($expectedVisitsCount, $stats->visitsCount);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         yield [[], '', 0, 0];
         yield [

@@ -6,15 +6,14 @@ namespace ShlinkioTest\Shlink\SDK\Visits\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 
 class VisitsFilterTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function payloadIsBuiltAsExpected(callable $createFilter, array $expected): void
     {
         /** @var VisitsFilter $filter */
@@ -22,7 +21,7 @@ class VisitsFilterTest extends TestCase
         self::assertEquals($expected, $filter->toArray());
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = new DateTimeImmutable();
 

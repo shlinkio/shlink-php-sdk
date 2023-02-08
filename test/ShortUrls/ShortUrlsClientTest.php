@@ -6,6 +6,8 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
@@ -40,7 +42,7 @@ class ShortUrlsClientTest extends TestCase
         ;
     }
 
-    /** @test */
+    #[Test]
     public function listShortUrlVisitsPerformsExpectedCall(): void
     {
         $amountOfPages = 3;
@@ -95,10 +97,7 @@ class ShortUrlsClientTest extends TestCase
         self::assertEquals($amountOfPages * 2, $count);
     }
 
-    /**
-     * @test
-     * @dataProvider provideIdentifiers
-     */
+    #[Test, DataProvider('provideIdentifiers')]
     public function getShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $expected = ['dateCreated' => $this->now];
@@ -112,10 +111,7 @@ class ShortUrlsClientTest extends TestCase
         self::assertEquals(ShortUrl::fromArray($expected), $result);
     }
 
-    /**
-     * @test
-     * @dataProvider provideIdentifiers
-     */
+    #[Test, DataProvider('provideIdentifiers')]
     public function deleteShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
@@ -128,10 +124,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->deleteShortUrl($identifier);
     }
 
-    /**
-     * @test
-     * @dataProvider provideIdentifiers
-     */
+    #[Test, DataProvider('provideIdentifiers')]
     public function editShortUrlPerformsExpectedCall(ShortUrlIdentifier $identifier): void
     {
         $expected = ['dateCreated' => $this->now];
@@ -148,13 +141,13 @@ class ShortUrlsClientTest extends TestCase
         self::assertEquals(ShortUrl::fromArray($expected), $result);
     }
 
-    public function provideIdentifiers(): iterable
+    public static function provideIdentifiers(): iterable
     {
         yield 'no domain' => [ShortUrlIdentifier::fromShortCode('foo')];
         yield 'domain' => [ShortUrlIdentifier::fromShortCodeAndDomain('foo', 's.test')];
     }
 
-    /** @test */
+    #[Test]
     public function createShortUrlPerformsExpectedCall(): void
     {
         $expected = ['dateCreated' => $this->now];
@@ -172,9 +165,8 @@ class ShortUrlsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideGetExceptions
      */
+    #[Test, DataProvider('provideGetExceptions')]
     public function getShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->willThrowException($original);
@@ -183,7 +175,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->getShortUrl(ShortUrlIdentifier::fromShortCode('foo'));
     }
 
-    public function provideGetExceptions(): iterable
+    public static function provideGetExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -199,9 +191,8 @@ class ShortUrlsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideDeleteExceptions
      */
+    #[Test, DataProvider('provideDeleteExceptions')]
     public function deleteShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
@@ -210,7 +201,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->deleteShortUrl(ShortUrlIdentifier::fromShortCode('foo'));
     }
 
-    public function provideDeleteExceptions(): iterable
+    public static function provideDeleteExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -238,9 +229,8 @@ class ShortUrlsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideCreateExceptions
      */
+    #[Test, DataProvider('provideCreateExceptions')]
     public function createShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
@@ -249,7 +239,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://foof.com'));
     }
 
-    public function provideCreateExceptions(): iterable
+    public static function provideCreateExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -281,9 +271,8 @@ class ShortUrlsClientTest extends TestCase
 
     /**
      * @param class-string<Throwable> $expected
-     * @test
-     * @dataProvider provideEditExceptions
      */
+    #[Test, DataProvider('provideEditExceptions')]
     public function editShortUrlThrowsProperExceptionOnError(HttpException $original, string $expected): void
     {
         $this->httpClient->expects($this->once())->method('callShlinkWithBody')->willThrowException($original);
@@ -292,7 +281,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->editShortUrl(ShortUrlIdentifier::fromShortCode('foo'), ShortUrlEdition::create());
     }
 
-    public function provideEditExceptions(): iterable
+    public static function provideEditExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];

@@ -6,16 +6,15 @@ namespace ShlinkioTest\Shlink\SDK\Visits\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitLocation;
 
 class VisitTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
         string $expectedReferer,
@@ -33,7 +32,7 @@ class VisitTest extends TestCase
         self::assertEquals($expectedLocation, $visit->location());
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
         $formattedDate = $now->format(DateTimeInterface::ATOM); // @phpstan-ignore-line

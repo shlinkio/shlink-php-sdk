@@ -6,6 +6,8 @@ namespace ShlinkioTest\Shlink\SDK\Visits\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
@@ -13,10 +15,7 @@ use Shlinkio\Shlink\SDK\Visits\Model\VisitLocation;
 
 class OrphanVisitTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
         string $expectedReferer,
@@ -38,7 +37,7 @@ class OrphanVisitTest extends TestCase
         self::assertEquals($expectedType, $visit->type());
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
         $formattedDate = $now->format(DateTimeInterface::ATOM); // @phpstan-ignore-line

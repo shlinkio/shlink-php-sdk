@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Config;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Config\EnvShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
@@ -21,10 +23,7 @@ class EnvShlinkConfigTest extends TestCase
         putenv(sprintf('%s=', EnvShlinkConfig::VERSION_ENV_VAR));
     }
 
-    /**
-     * @test
-     * @dataProvider provideWrongEnvSetUps
-     */
+    #[Test, DataProvider('provideWrongEnvSetUps')]
     public function exceptionIsThrownIfSomeEnvVarIsMissing(callable $setUp, string $expectedMessage): void
     {
         $setUp();
@@ -35,7 +34,7 @@ class EnvShlinkConfigTest extends TestCase
         EnvShlinkConfig::fromEnv();
     }
 
-    public function provideWrongEnvSetUps(): iterable
+    public static function provideWrongEnvSetUps(): iterable
     {
         $buildSetUpWithEnvVars = static fn (array $envVars = []) => static function () use ($envVars): void {
             foreach ($envVars as $key => $value) {
@@ -61,7 +60,7 @@ class EnvShlinkConfigTest extends TestCase
         ]), 'Provided version "1" is invalid. Expected one of ["2", "3"]'];
     }
 
-    /** @test */
+    #[Test]
     public function configIsProperlyInitializedIfBothEnvVarsAreSet(): void
     {
         putenv(sprintf('%s=API_KEY', EnvShlinkConfig::API_KEY_ENV_VAR));

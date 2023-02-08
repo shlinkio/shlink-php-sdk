@@ -6,15 +6,14 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
 
 class ShortUrlMetaTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
         ?DateTimeInterface $expectedValidSince,
@@ -28,7 +27,7 @@ class ShortUrlMetaTest extends TestCase
         self::assertEquals($expectedMaxVisits, $meta->maxVisits);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
         $formattedDate = $now->format(DateTimeInterface::ATOM); // @phpstan-ignore-line

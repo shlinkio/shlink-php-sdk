@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Builder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -29,10 +31,7 @@ class ShlinkClientBuilderTest extends TestCase
         $this->config = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');
     }
 
-    /**
-     * @test
-     * @dataProvider provideMethods
-     */
+    #[Test, DataProvider('provideMethods')]
     public function buildClientReturnsAlwaysNewInstances(string $method): void
     {
         $instance1 = $this->builder->{$method}($this->config);

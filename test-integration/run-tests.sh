@@ -2,7 +2,7 @@
 
 if [ "$#" -lt 1 ]; then
   echo "Usage:" >&2
-  echo "   $0 {version} [{api_version}]" >&2
+  echo "   $0 {shlink_version} [{api_version}]" >&2
   exit 1
 fi
 

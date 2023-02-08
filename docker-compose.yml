@@ -3,7 +3,8 @@ version: '3'
 services:
   shlink_php_sdk:
     container_name: shlink_php_sdk
-    image: composer:2
+    build:
+      context: .
     ports:
       - '8888:8888'
     volumes:

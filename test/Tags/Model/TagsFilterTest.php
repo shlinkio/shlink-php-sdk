@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
@@ -11,17 +13,16 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
 class TagsFilterTest extends TestCase
 {
     /**
-     * @test
-     * @dataProvider provideOrderings
      * @param callable(): TagsFilter $buildFilter
      */
+    #[Test, DataProvider('provideOrderings')]
     public function requiresPaginationBasedOnTheOrderingFields(callable $buildFilter, bool $shouldPaginate): void
     {
         $tagsFilter = $buildFilter();
         self::assertEquals($shouldPaginate, $tagsFilter->shouldPaginateRequest());
     }
 
-    public function provideOrderings(): iterable
+    public static function provideOrderings(): iterable
     {
         yield 'no order' => [fn () => TagsFilter::create(), true];
         yield 'tag ASC' => [fn () => TagsFilter::create()->orderingAscBy(TagsListOrderField::TAG), true];

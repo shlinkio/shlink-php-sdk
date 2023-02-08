@@ -6,6 +6,8 @@ namespace ShlinkioTest\Shlink\SDK\Http\Exception;
 
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
@@ -15,10 +17,7 @@ use const JSON_THROW_ON_ERROR;
 
 class HttpExceptionTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function exceptionIsCreatedAsExpectedFromPayload(
         array $payload,
         string $expectedType,
@@ -31,10 +30,7 @@ class HttpExceptionTest extends TestCase
         $this->runAssertions($e, $expectedType, $expectedTitle, $expectedDetail, $expectedStatus, $expectedAdditional);
     }
 
-    /**
-     * @test
-     * @dataProvider providePayloads
-     */
+    #[Test, DataProvider('providePayloads')]
     public function exceptionIsCreatedAsExpectedFromResponse(
         array $payload,
         string $expectedType,
@@ -71,7 +67,7 @@ class HttpExceptionTest extends TestCase
         self::assertEquals($expectedAdditional, $e->additional);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         yield 'no payload' => [[], '', '', '', -1, []];
         yield 'no additional props' => [

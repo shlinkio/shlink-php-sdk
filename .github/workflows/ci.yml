@@ -9,6 +9,8 @@ on:
 jobs:
   ci:
     uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main
+    with:
+      coverage-driver: pcov
     secrets:
       INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
 
@@ -17,14 +19,20 @@ jobs:
     strategy:
       matrix:
         php-version: ['8.2', '8.1']
-        shlink-version: ['3.4.0', '3.3.2', '3.2.1', '3.1.2', '3.0.3']
+        shlink-version: ['3.5.1', '3.4.0', '3.3.2', '3.2.1', '3.1.2', '3.0.3']
         shlink-api-version: ['2']
         include:
+          - shlink-version: '3.5.1'
+            php-version: '8.1'
+            shlink-api-version: '3'
           - shlink-version: '3.4.0'
             php-version: '8.1'
             shlink-api-version: '3'
           - shlink-version: '3.3.2'
             php-version: '8.1'
+            shlink-api-version: '3'
+          - shlink-version: '3.5.1'
+            php-version: '8.2'
             shlink-api-version: '3'
           - shlink-version: '3.4.0'
             php-version: '8.2'
