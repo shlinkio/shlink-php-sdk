@@ -35,7 +35,7 @@ class EnvShlinkConfigTest extends TestCase
         EnvShlinkConfig::fromEnv();
     }
 
-    public function provideWrongEnvSetUps(): iterable
+    public static function provideWrongEnvSetUps(): iterable
     {
         $buildSetUpWithEnvVars = static fn (array $envVars = []) => static function () use ($envVars): void {
             foreach ($envVars as $key => $value) {

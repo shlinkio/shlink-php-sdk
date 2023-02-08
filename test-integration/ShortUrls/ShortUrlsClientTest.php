@@ -47,7 +47,7 @@ class ShortUrlsClientTest extends AbstractTestCase
         $this->client->{$method}($identifier, ...$extraArgs);
     }
 
-    public function provideIdentifiableMethods(): iterable
+    public static function provideIdentifiableMethods(): iterable
     {
         yield 'getShortUrl' => ['getShortUrl'];
         yield 'deleteShortUrl' => ['deleteShortUrl'];

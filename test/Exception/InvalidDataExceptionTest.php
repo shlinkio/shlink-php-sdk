@@ -27,7 +27,7 @@ class InvalidDataExceptionTest extends TestCase
         self::assertEquals($expectedInvalidElements, $e->invalidElements);
     }
 
-    public function provideExceptions(): iterable
+    public static function provideExceptions(): iterable
     {
         yield 'no invalidElements' => [
             HttpException::fromPayload(['detail' => $message = 'This is the message']),

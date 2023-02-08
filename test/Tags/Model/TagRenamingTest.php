@@ -20,7 +20,7 @@ class TagRenamingTest extends TestCase
         self::assertEquals($expectedPayload, $renaming->jsonSerialize());
     }
 
-    public function provideNames(): iterable
+    public static function provideNames(): iterable
     {
         yield ['', '', ['oldName' => '', 'newName' => '']];
         yield ['foo', 'bar', ['oldName' => 'foo', 'newName' => 'bar']];

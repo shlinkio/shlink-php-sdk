@@ -148,7 +148,7 @@ class ShortUrlsClientTest extends TestCase
         self::assertEquals(ShortUrl::fromArray($expected), $result);
     }
 
-    public function provideIdentifiers(): iterable
+    public static function provideIdentifiers(): iterable
     {
         yield 'no domain' => [ShortUrlIdentifier::fromShortCode('foo')];
         yield 'domain' => [ShortUrlIdentifier::fromShortCodeAndDomain('foo', 's.test')];
@@ -183,7 +183,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->getShortUrl(ShortUrlIdentifier::fromShortCode('foo'));
     }
 
-    public function provideGetExceptions(): iterable
+    public static function provideGetExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -210,7 +210,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->deleteShortUrl(ShortUrlIdentifier::fromShortCode('foo'));
     }
 
-    public function provideDeleteExceptions(): iterable
+    public static function provideDeleteExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -249,7 +249,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->createShortUrl(ShortUrlCreation::forLongUrl('https://foof.com'));
     }
 
-    public function provideCreateExceptions(): iterable
+    public static function provideCreateExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -292,7 +292,7 @@ class ShortUrlsClientTest extends TestCase
         $this->client->editShortUrl(ShortUrlIdentifier::fromShortCode('foo'), ShortUrlEdition::create());
     }
 
-    public function provideEditExceptions(): iterable
+    public static function provideEditExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];

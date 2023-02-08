@@ -76,7 +76,7 @@ class VisitsClientTest extends TestCase
         $this->assertPaginator($result, $amountOfPages);
     }
 
-    public function provideShortUrls(): iterable
+    public static function provideShortUrls(): iterable
     {
         yield [ShortUrlIdentifier::fromShortCode('foo')];
         yield [ShortUrlIdentifier::fromShortCodeAndDomain('bar', 's.test')];
@@ -95,7 +95,7 @@ class VisitsClientTest extends TestCase
         $this->visitsClient->listShortUrlVisits(ShortUrlIdentifier::fromShortCode('foo'));
     }
 
-    public function provideShortUrlExceptions(): iterable
+    public static function provideShortUrlExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -136,7 +136,7 @@ class VisitsClientTest extends TestCase
         $this->visitsClient->listTagVisits('foo');
     }
 
-    public function provideTagExceptions(): iterable
+    public static function provideTagExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -204,7 +204,7 @@ class VisitsClientTest extends TestCase
         $this->visitsClient->listDefaultDomainVisits();
     }
 
-    public function provideDomainExceptions(): iterable
+    public static function provideDomainExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];

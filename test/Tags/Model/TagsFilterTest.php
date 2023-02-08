@@ -21,7 +21,7 @@ class TagsFilterTest extends TestCase
         self::assertEquals($shouldPaginate, $tagsFilter->shouldPaginateRequest());
     }
 
-    public function provideOrderings(): iterable
+    public static function provideOrderings(): iterable
     {
         yield 'no order' => [fn () => TagsFilter::create(), true];
         yield 'tag ASC' => [fn () => TagsFilter::create()->orderingAscBy(TagsListOrderField::TAG), true];

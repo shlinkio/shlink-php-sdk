@@ -21,7 +21,7 @@ class DomainRedirectsConfigTest extends TestCase
         self::assertEquals($expectedPayload, $config->jsonSerialize());
     }
 
-    public function provideConfigs(): iterable
+    public static function provideConfigs(): iterable
     {
         yield [fn () => DomainRedirectsConfig::forDomain('foo.com'), ['domain' => 'foo.com']];
         yield [

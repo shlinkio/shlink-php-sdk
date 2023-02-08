@@ -28,7 +28,7 @@ class ShortUrlMetaTest extends TestCase
         self::assertEquals($expectedMaxVisits, $meta->maxVisits);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
         $formattedDate = $now->format(DateTimeInterface::ATOM); // @phpstan-ignore-line

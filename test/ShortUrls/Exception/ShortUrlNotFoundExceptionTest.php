@@ -28,7 +28,7 @@ class ShortUrlNotFoundExceptionTest extends TestCase
         self::assertEquals($expectedCode, $e->getCode());
     }
 
-    public function provideExceptions(): iterable
+    public static function provideExceptions(): iterable
     {
         yield [HttpException::fromPayload([]), ShortUrlIdentifier::fromShortCode(''), '', -1];
         yield [HttpException::fromPayload([

@@ -26,7 +26,7 @@ class TagWithStatsTest extends TestCase
         self::assertEquals($expectedVisitsCount, $stats->visitsCount);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         yield [[], '', 0, 0];
         yield [

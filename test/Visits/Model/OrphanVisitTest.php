@@ -38,7 +38,7 @@ class OrphanVisitTest extends TestCase
         self::assertEquals($expectedType, $visit->type());
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
         $formattedDate = $now->format(DateTimeInterface::ATOM); // @phpstan-ignore-line

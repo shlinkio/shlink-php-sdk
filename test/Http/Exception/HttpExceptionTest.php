@@ -71,7 +71,7 @@ class HttpExceptionTest extends TestCase
         self::assertEquals($expectedAdditional, $e->additional);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         yield 'no payload' => [[], '', '', '', -1, []];
         yield 'no additional props' => [

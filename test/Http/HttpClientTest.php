@@ -69,7 +69,7 @@ class HttpClientTest extends TestCase
         $this->httpClient->getFromShlink($path, $query);
     }
 
-    public function provideGetRequests(): iterable
+    public static function provideGetRequests(): iterable
     {
         yield 'no query' => ['/foo/bar', [], 'https://s.test/rest/v2/foo/bar'];
         yield 'array query' => ['/foo/bar', ['some' => 'thing'], 'https://s.test/rest/v2/foo/bar?some=thing'];
@@ -98,7 +98,7 @@ class HttpClientTest extends TestCase
         $this->httpClient->getFromShlink('');
     }
 
-    public function provideNonSuccessfulStatuses(): iterable
+    public static function provideNonSuccessfulStatuses(): iterable
     {
         yield 'status 400' => [400];
         yield 'status 401' => [401];
@@ -123,7 +123,7 @@ class HttpClientTest extends TestCase
         self::assertEquals($expectedResult, $result);
     }
 
-    public function provideSuccessfulStatuses(): iterable
+    public static function provideSuccessfulStatuses(): iterable
     {
         yield 'status 200' => [200, ['foo' => 'bar']];
         yield 'status 201' => [201, ['foo' => 'bar']];
@@ -154,7 +154,7 @@ class HttpClientTest extends TestCase
         $this->httpClient->callShlinkWithBody('/foo/bar', $method, $body);
     }
 
-    public function provideNonGetRequests(): iterable
+    public static function provideNonGetRequests(): iterable
     {
         yield 'empty body' => ['POST', [], '[]'];
         yield 'array body' => ['PATCH', ['some' => 'thing'], '{"some":"thing"}'];

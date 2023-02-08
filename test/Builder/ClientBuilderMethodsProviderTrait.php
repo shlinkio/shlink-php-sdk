@@ -9,7 +9,7 @@ use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilderInterface;
 
 trait ClientBuilderMethodsProviderTrait
 {
-    public function provideMethods(): iterable
+    public static function provideMethods(): iterable
     {
         $ref = new ReflectionClass(ShlinkClientBuilderInterface::class);
 

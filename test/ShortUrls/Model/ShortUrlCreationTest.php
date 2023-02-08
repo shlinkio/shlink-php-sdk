@@ -23,7 +23,7 @@ class ShortUrlCreationTest extends TestCase
         self::assertEquals($expectedPayload, $creation->jsonSerialize());
     }
 
-    public function provideConfigs(): iterable
+    public static function provideConfigs(): iterable
     {
         $date = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
 

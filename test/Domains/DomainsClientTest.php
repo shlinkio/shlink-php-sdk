@@ -129,7 +129,7 @@ class DomainsClientTest extends TestCase
         $this->domainsClient->configureDomainRedirects(DomainRedirectsConfig::forDomain('foo'));
     }
 
-    public function provideExceptions(): iterable
+    public static function provideExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];

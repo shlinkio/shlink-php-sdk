@@ -24,7 +24,7 @@ class ShortUrlsFilterTest extends TestCase
         self::assertEquals($expected, $filter->toArray());
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $date = new DateTimeImmutable();
 

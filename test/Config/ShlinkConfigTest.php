@@ -29,7 +29,7 @@ class ShlinkConfigTest extends TestCase
         self::assertEquals($expectedVersion, $config->version());
     }
 
-    public function provideMethods(): iterable
+    public static function provideMethods(): iterable
     {
         yield 'deprecated' => [ShlinkConfig::fromBaseUrlAndApiKey(...), ApiVersion::V2];
         yield 'v2' => [ShlinkConfig::fromV2BaseUrlAndApiKey(...), ApiVersion::V2];

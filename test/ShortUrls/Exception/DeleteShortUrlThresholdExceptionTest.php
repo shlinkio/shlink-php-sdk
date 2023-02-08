@@ -30,7 +30,7 @@ class DeleteShortUrlThresholdExceptionTest extends TestCase
         self::assertEquals($expectedCode, $e->getCode());
     }
 
-    public function provideExceptions(): iterable
+    public static function provideExceptions(): iterable
     {
         yield [HttpException::fromPayload([]), ShortUrlIdentifier::fromShortCode(''), 0, '', -1];
         yield [HttpException::fromPayload([

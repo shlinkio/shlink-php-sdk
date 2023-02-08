@@ -25,7 +25,7 @@ class ArrayShlinkConfigTest extends TestCase
         ArrayShlinkConfig::fromArray($rawConfig);
     }
 
-    public function provideInvalidData(): iterable
+    public static function provideInvalidData(): iterable
     {
         $standardMessage = 'Provided array is missing "baseUrl" and/or "apiKey" props, or their values are invalid. '
             . 'Make sure both are set with strings.';
@@ -59,7 +59,7 @@ class ArrayShlinkConfigTest extends TestCase
         self::assertEquals($expectedVersion, $config->version());
     }
 
-    public function provideVersions(): iterable
+    public static function provideVersions(): iterable
     {
         yield 'explicit version 3' => ['3', ApiVersion::V3];
         yield 'explicit version 2' => ['2', ApiVersion::V2];

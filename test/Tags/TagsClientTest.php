@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags;
 
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
@@ -22,8 +21,6 @@ use Throwable;
 
 class TagsClientTest extends TestCase
 {
-    use ArraySubsetAsserts;
-
     private TagsClient $tagsClient;
     private MockObject & HttpClientInterface $httpClient;
 
@@ -80,7 +77,11 @@ class TagsClientTest extends TestCase
         $test = $this;
         $this->assertListTags(
             ['/tags/stats', $this->callback(function (array $arg) use ($filter, $test) {
-                $test->assertArraySubset($filter->toArray(), $arg);
+                $filterArray = $filter->toArray();
+                foreach ($filterArray as $key => $expectedValue) {
+                    $test->assertEquals($expectedValue, $arg[$key]);
+                }
+
                 return true;
             })],
             [[], [], [], [], []],
@@ -132,7 +133,7 @@ class TagsClientTest extends TestCase
         $this->tagsClient->renameTag(TagRenaming::fromOldNameAndNewName('', ''));
     }
 
-    public function provideRenameExceptions(): iterable
+    public static function provideRenameExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
@@ -197,7 +198,7 @@ class TagsClientTest extends TestCase
         $this->tagsClient->deleteTags('foo');
     }
 
-    public function provideDeleteExceptions(): iterable
+    public static function provideDeleteExceptions(): iterable
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];

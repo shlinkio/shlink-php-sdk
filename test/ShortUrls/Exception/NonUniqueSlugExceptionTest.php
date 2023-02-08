@@ -29,7 +29,7 @@ class NonUniqueSlugExceptionTest extends TestCase
         self::assertEquals($expectedCode, $e->getCode());
     }
 
-    public function provideExceptions(): iterable
+    public static function provideExceptions(): iterable
     {
         yield [HttpException::fromPayload([]), '', null, '', -1];
         yield [HttpException::fromPayload([

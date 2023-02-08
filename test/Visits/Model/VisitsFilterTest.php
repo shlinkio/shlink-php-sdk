@@ -22,7 +22,7 @@ class VisitsFilterTest extends TestCase
         self::assertEquals($expected, $filter->toArray());
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         $now = new DateTimeImmutable();
 

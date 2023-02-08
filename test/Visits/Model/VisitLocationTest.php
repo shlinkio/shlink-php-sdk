@@ -34,7 +34,7 @@ class VisitLocationTest extends TestCase
         self::assertEquals($expectedTimezone, $visitLocation->timezone);
     }
 
-    public function providePayloads(): iterable
+    public static function providePayloads(): iterable
     {
         yield 'empty payload' => [[], '', '', '', '', 0.0, 0.0, ''];
         yield 'full payload' => [
