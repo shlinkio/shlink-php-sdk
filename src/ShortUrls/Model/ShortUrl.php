@@ -26,6 +26,7 @@ final class ShortUrl
         public readonly array $tags,
         public readonly ShortUrlMeta $meta,
         public readonly VisitsCount $visitsSummary,
+        public readonly DeviceLongUrls $deviceLongUrls,
     ) {
         $this->visitsCount = $visitsCount;
     }
@@ -48,6 +49,7 @@ final class ShortUrl
             tags: $payload['tags'] ?? [],
             meta: ShortUrlMeta::fromArray($payload['meta'] ?? []),
             visitsSummary: VisitsCount::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
+            deviceLongUrls: DeviceLongUrls::fromArray($payload['deviceLongUrls'] ?? []),
         );
     }
 }
