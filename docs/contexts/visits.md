@@ -18,8 +18,8 @@ use function count;
 
 $summary = $visitsClient->getVisitsSummary();
 
-echo 'Non-orphan visits: ' . $summary->visitsCount;
-echo 'Orphan visits: ' . $summary->orphanVisitsCount;
+echo 'Non-orphan visits: ' . $summary->nonOrphanVisits->total;
+echo 'Orphan visits: ' . $summary->orphanVisits->total;
 echo 'Total visits: ' . count($summary);
 ```
 

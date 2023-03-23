@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
-use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlVisitsSummary;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsCount;
 
 class ShortUrlTest extends TestCase
 {
@@ -29,7 +29,7 @@ class ShortUrlTest extends TestCase
         bool $expectedForwardQuery,
         array $expectedTags,
         ShortUrlMeta $expectedMeta,
-        ShortUrlVisitsSummary $expectedVisitsSummary,
+        VisitsCount $expectedVisitsSummary,
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 
@@ -65,7 +65,7 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
-            ShortUrlVisitsSummary::fromArrayWithFallback([], 0),
+            VisitsCount::fromArrayWithFallback([], 0),
         ];
         yield 'all values' => [
             [
@@ -99,7 +99,7 @@ class ShortUrlTest extends TestCase
             true,
             ['foo', 'bar'],
             ShortUrlMeta::fromArray($meta),
-            ShortUrlVisitsSummary::fromArrayWithFallback($visitsSummary, 5),
+            VisitsCount::fromArrayWithFallback($visitsSummary, 5),
         ];
         yield 'visits total fallback' => [
             ['dateCreated' => $formattedDate, 'visitsCount' => 35],
@@ -114,7 +114,7 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
-            ShortUrlVisitsSummary::fromArrayWithFallback([], 35),
+            VisitsCount::fromArrayWithFallback([], 35),
         ];
     }
 }
