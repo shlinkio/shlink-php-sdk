@@ -54,7 +54,7 @@ class VisitsClientTest extends TestCase
         $assert($this->visitsClient->getVisitsSummary());
     }
 
-    public function provideVisits(): iterable
+    public static function provideVisits(): iterable
     {
         yield 'legacy response' => [[
             'visitsCount' => 200,
