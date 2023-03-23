@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsCount;
 
 final class ShortUrl
 {
@@ -24,7 +25,7 @@ final class ShortUrl
         public readonly bool $forwardQuery,
         public readonly array $tags,
         public readonly ShortUrlMeta $meta,
-        public readonly ShortUrlVisitsSummary $visitsSummary,
+        public readonly VisitsCount $visitsSummary,
     ) {
         $this->visitsCount = $visitsCount;
     }
@@ -34,19 +35,19 @@ final class ShortUrl
         $visitsCount = $payload['visitsCount'] ?? 0;
 
         return new self(
-            $payload['shortCode'] ?? '',
-            $payload['shortUrl'] ?? '',
-            $payload['longUrl'] ?? '',
+            shortCode: $payload['shortCode'] ?? '',
+            shortUrl: $payload['shortUrl'] ?? '',
+            longUrl: $payload['longUrl'] ?? '',
             // @phpstan-ignore-next-line
-            DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['dateCreated']),
-            $visitsCount,
-            $payload['domain'] ?? null,
-            $payload['title'] ?? null,
-            $payload['crawlable'] ?? false,
-            $payload['forwardQuery'] ?? false,
-            $payload['tags'] ?? [],
-            ShortUrlMeta::fromArray($payload['meta'] ?? []),
-            ShortUrlVisitsSummary::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
+            dateCreated: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['dateCreated']),
+            visitsCount: $visitsCount,
+            domain: $payload['domain'] ?? null,
+            title: $payload['title'] ?? null,
+            crawlable: $payload['crawlable'] ?? false,
+            forwardQuery: $payload['forwardQuery'] ?? false,
+            tags: $payload['tags'] ?? [],
+            meta: ShortUrlMeta::fromArray($payload['meta'] ?? []),
+            visitsSummary: VisitsCount::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
         );
     }
 }

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
-final class ShortUrlVisitsSummary
+/**
+ * @deprecated Use VisitsCount instead
+ */
+class ShortUrlVisitsSummary
 {
     private function __construct(
         public readonly int $total,
@@ -13,9 +16,10 @@ final class ShortUrlVisitsSummary
     ) {
     }
 
-    public static function fromArrayWithFallback(array $payload, int $fallbackTotal): self
+    public static function fromArrayWithFallback(array $payload, int $fallbackTotal): static
     {
-        return new self(
+        // @phpstan-ignore-next-line
+        return new static(
             $payload['total'] ?? $fallbackTotal,
             $payload['nonBots'] ?? null,
             $payload['bots'] ?? null,
