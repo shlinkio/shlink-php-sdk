@@ -12,6 +12,22 @@ trait ShortUrlPayloadTrait
     {
     }
 
+    public function withDeviceLongUrl(Device $device, string $longUrl): self
+    {
+        $deviceLongUrls = $this->payload['deviceLongUrls'] ?? [];
+        $deviceLongUrls[$device->value] = $longUrl;
+
+        return $this->cloneWithProp('deviceLongUrls', $deviceLongUrls);
+    }
+
+    public function withoutDeviceLongUrl(Device $device): self
+    {
+        $deviceLongUrls = $this->payload['deviceLongUrls'] ?? [];
+        unset($deviceLongUrls[$device->value]);
+
+        return $this->cloneWithProp('deviceLongUrls', $deviceLongUrls);
+    }
+
     public function validSince(DateTimeInterface $validSince): self
     {
         return $this->cloneWithProp('validSince', $validSince->format(DateTimeInterface::ATOM));
