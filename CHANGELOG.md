@@ -4,10 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [1.2.0] - 2023-03-23
 ### Added
 * [#38](https://github.com/shlinkio/shlink-php-sdk/issues/38) Add support for bot and non-bot visits in summary.
 * [#39](https://github.com/shlinkio/shlink-php-sdk/issues/39) Add support for bot and non-bot visits in tags with stats.
+* [#37](https://github.com/shlinkio/shlink-php-sdk/issues/37) Add support for device-specific long URLs.
 
 ### Changed
 * Replace references to `doma.in` by `s.test`.
