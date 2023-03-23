@@ -6,6 +6,10 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use Countable;
 
+/**
+ * @todo This class should have a different name, so that VisitsCount could be called VisitsSummary.
+ *       Perhaps VisitsAmounts.
+ */
 final class VisitsSummary implements Countable
 {
     /** @deprecated Use $nonOrphanVisits->total instead */
