@@ -20,6 +20,14 @@ final class ShortUrlEdition implements JsonSerializable
         return $this->cloneWithProp('longUrl', $longUrl);
     }
 
+    public function removingDeviceLongUrl(Device $device): self
+    {
+        $deviceLongUrls = $this->payload['deviceLongUrls'] ?? [];
+        $deviceLongUrls[$device->value] = null;
+
+        return $this->cloneWithProp('deviceLongUrls', $deviceLongUrls);
+    }
+
     public function removingValidSince(): self
     {
         return $this->cloneWithProp('validSince', null);
