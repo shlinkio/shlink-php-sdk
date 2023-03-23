@@ -6,11 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* [#38](https://github.com/shlinkio/shlink-php-sdk/issues/38) Add support for bot and non-bot visits in summary.
 
 ### Changed
-* Replaced references to `doma.in` by `s.test`.
-* Updated to PHPUnit 10.
+* Replace references to `doma.in` by `s.test`.
+* Update to PHPUnit 10.
 
 ### Deprecated
 * *Nothing*
