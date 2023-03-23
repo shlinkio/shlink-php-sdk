@@ -9,6 +9,7 @@ use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\DeviceLongUrls;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsCount;
@@ -30,6 +31,7 @@ class ShortUrlTest extends TestCase
         array $expectedTags,
         ShortUrlMeta $expectedMeta,
         VisitsCount $expectedVisitsSummary,
+        DeviceLongUrls $expectedDeviceLongUrls,
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 
@@ -45,6 +47,7 @@ class ShortUrlTest extends TestCase
         self::assertEquals($expectedTags, $shortUrl->tags);
         self::assertEquals($expectedMeta, $shortUrl->meta);
         self::assertEquals($expectedVisitsSummary, $shortUrl->visitsSummary);
+        self::assertEquals($expectedDeviceLongUrls, $shortUrl->deviceLongUrls);
     }
 
     public static function providePayloads(): iterable
@@ -66,6 +69,7 @@ class ShortUrlTest extends TestCase
             [],
             ShortUrlMeta::fromArray([]),
             VisitsCount::fromArrayWithFallback([], 0),
+            DeviceLongUrls::fromArray([]),
         ];
         yield 'all values' => [
             [
@@ -100,6 +104,7 @@ class ShortUrlTest extends TestCase
             ['foo', 'bar'],
             ShortUrlMeta::fromArray($meta),
             VisitsCount::fromArrayWithFallback($visitsSummary, 5),
+            DeviceLongUrls::fromArray([]),
         ];
         yield 'visits total fallback' => [
             ['dateCreated' => $formattedDate, 'visitsCount' => 35],
@@ -115,6 +120,26 @@ class ShortUrlTest extends TestCase
             [],
             ShortUrlMeta::fromArray([]),
             VisitsCount::fromArrayWithFallback([], 35),
+            DeviceLongUrls::fromArray([]),
+        ];
+        yield 'device long URLs' => [
+            ['dateCreated' => $formattedDate, 'deviceLongUrls' => $rawDeviceLongUrls = [
+                'android' => 'foo',
+                'desktop' => 'bar',
+            ]],
+            '',
+            '',
+            '',
+            $now,
+            0,
+            null,
+            null,
+            false,
+            false,
+            [],
+            ShortUrlMeta::fromArray([]),
+            VisitsCount::fromArrayWithFallback([], 0),
+            DeviceLongUrls::fromArray($rawDeviceLongUrls),
         ];
     }
 }
