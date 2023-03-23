@@ -21,6 +21,8 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 use Throwable;
 
+use function array_map;
+
 class TagsClientTest extends TestCase
 {
     private TagsClient $tagsClient;
@@ -59,16 +61,7 @@ class TagsClientTest extends TestCase
         $this->assertListTags(
             ['/tags/stats', $this->isType('array')],
             [[], [], [], [], []],
-            function (): array {
-                $iterable = $this->tagsClient->listTagsWithStats();
-                $result = [];
-
-                foreach ($iterable as $value) {
-                    $result[] = [];
-                }
-
-                return $result;
-            },
+            fn (): array => array_map(fn () => [], [...$this->tagsClient->listTagsWithStats()]),
         );
     }
 
@@ -87,16 +80,7 @@ class TagsClientTest extends TestCase
                 return true;
             })],
             [[], [], [], [], []],
-            function () use ($filter): array {
-                $iterable = $this->tagsClient->listTagsWithStatsWithFilter($filter);
-                $result = [];
-
-                foreach ($iterable as $value) {
-                    $result[] = [];
-                }
-
-                return $result;
-            },
+            fn (): array => array_map(fn () => [], [...$this->tagsClient->listTagsWithStatsWithFilter($filter)]),
         );
     }
 
