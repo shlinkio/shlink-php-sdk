@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="./vendor/autoload.php"
     colors="true"
-    cacheDirectory=".phpunit.integration.cache"
+    cacheDirectory="build/.phpunit.integration.cache"
 >
     <testsuites>
         <testsuite name="SDK Integration tests">
