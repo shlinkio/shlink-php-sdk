@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+### Added
+* *Nothing*
+
+### Changed
+* Update to PHPUnit 10.1
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* *Nothing*
+
+### Fixed
+* *Nothing*
+
+
 ## [1.2.0] - 2023-03-23
 ### Added
 * [#38](https://github.com/shlinkio/shlink-php-sdk/issues/38) Add support for bot and non-bot visits in summary.
