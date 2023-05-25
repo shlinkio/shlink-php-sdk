@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* [#45](https://github.com/shlinkio/shlink-php-sdk/issues/45) Add support to delete orphan visits.
 
 ### Changed
 * [#46](https://github.com/shlinkio/shlink-php-sdk/issues/46) Run integration tests for Shlink 3.6.0.
