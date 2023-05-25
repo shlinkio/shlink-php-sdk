@@ -14,6 +14,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
@@ -193,5 +194,10 @@ class VisitsClient implements VisitsClientInterface
 
             return [$body['visits']['data'] ?? [], $body['visits']['pagination'] ?? []];
         };
+    }
+
+    public function deleteOrphanVisits(): VisitsDeletion
+    {
+        return VisitsDeletion::fromArray($this->httpClient->callShlinkWithBody('/visits/orphan', 'DELETE', []));
     }
 }

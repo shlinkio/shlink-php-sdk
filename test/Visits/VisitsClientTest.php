@@ -352,4 +352,19 @@ class VisitsClientTest extends TestCase
             ];
         };
     }
+
+    #[Test]
+    public function deleteOrphanVisitsPerformsExpectedCall(): void
+    {
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
+            '/visits/orphan',
+            'DELETE',
+            [],
+        )->willReturn(['deletedVisits' => 5562]);
+
+        $result = $this->visitsClient->deleteOrphanVisits();
+
+        self::assertEquals(5562, $result->deletedVisits);
+        self::assertCount(5562, $result);
+    }
 }

@@ -32,6 +32,7 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
@@ -291,5 +292,10 @@ class ShlinkClient implements
     public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listNonOrphanVisitsWithFilter($filter);
+    }
+
+    public function deleteOrphanVisits(): VisitsDeletion
+    {
+        return $this->visitsClient->deleteOrphanVisits();
     }
 }
