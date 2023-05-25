@@ -24,6 +24,7 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
@@ -316,5 +317,14 @@ class ShlinkClientTest extends TestCase
         );
 
         $this->shlinkClient->listNonOrphanVisitsWithFilter($filter);
+    }
+
+    #[Test]
+    public function deleteOrphanVisitsDelegatesCallToProperClient(): void
+    {
+        $this->visitsClient->expects($this->once())->method('deleteOrphanVisits')->willReturn(
+            VisitsDeletion::fromArray([]),
+        );
+        $this->shlinkClient->deleteOrphanVisits();
     }
 }
