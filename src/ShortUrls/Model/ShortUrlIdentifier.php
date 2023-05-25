@@ -24,4 +24,16 @@ final class ShortUrlIdentifier
     {
         return new self($shortUrl->shortCode, $shortUrl->domain);
     }
+
+    /**
+     * @return array{string, array}
+     */
+    public function toShortCodeAndQuery(array $baseQuery = []): array
+    {
+        if ($this->domain !== null) {
+            $baseQuery['domain'] = $this->domain;
+        }
+
+        return [$this->shortCode, $baseQuery];
+    }
 }

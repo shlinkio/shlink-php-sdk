@@ -298,4 +298,9 @@ class ShlinkClient implements
     {
         return $this->visitsClient->deleteOrphanVisits();
     }
+
+    public function deleteShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsDeletion
+    {
+        return $this->visitsClient->deleteShortUrlVisits($shortUrlIdentifier);
+    }
 }

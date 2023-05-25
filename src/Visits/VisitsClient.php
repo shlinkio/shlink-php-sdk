@@ -51,13 +51,7 @@ class VisitsClient implements VisitsClientInterface
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
     ): VisitsList {
-        $shortCode = $shortUrlIdentifier->shortCode;
-        $domain = $shortUrlIdentifier->domain;
-        $query = $filter->toArray();
-
-        if ($domain !== null) {
-            $query['domain'] = $domain;
-        }
+        [$shortCode, $query] = $shortUrlIdentifier->toShortCodeAndQuery($filter->toArray());
 
         try {
             return VisitsList::forTupleLoader(
@@ -199,5 +193,14 @@ class VisitsClient implements VisitsClientInterface
     public function deleteOrphanVisits(): VisitsDeletion
     {
         return VisitsDeletion::fromArray($this->httpClient->callShlinkWithBody('/visits/orphan', 'DELETE', []));
+    }
+
+    public function deleteShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsDeletion
+    {
+        [$shortCode, $query] = $shortUrlIdentifier->toShortCodeAndQuery();
+
+        return VisitsDeletion::fromArray(
+            $this->httpClient->callShlinkWithBody(sprintf('/short-urls/%s/visits', $shortCode), 'DELETE', $query),
+        );
     }
 }
