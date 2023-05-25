@@ -100,4 +100,6 @@ interface VisitsClientInterface
     public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList;
 
     public function deleteOrphanVisits(): VisitsDeletion;
+
+    public function deleteShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsDeletion;
 }

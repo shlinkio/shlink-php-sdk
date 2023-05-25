@@ -367,4 +367,20 @@ class VisitsClientTest extends TestCase
         self::assertEquals(5562, $result->deletedVisits);
         self::assertCount(5562, $result);
     }
+
+    #[Test, DataProvider('provideShortUrls')]
+    public function deleteShortUrlVisitsPerformsExpectedCall(ShortUrlIdentifier $identifier): void
+    {
+        [$shortCode, $query] = $identifier->toShortCodeAndQuery();
+        $this->httpClient->expects($this->once())->method('callShlinkWithBody')->with(
+            sprintf('/short-urls/%s/visits', $shortCode),
+            'DELETE',
+            $query,
+        )->willReturn(['deletedVisits' => 5562]);
+
+        $result = $this->visitsClient->deleteShortUrlVisits($identifier);
+
+        self::assertEquals(5562, $result->deletedVisits);
+        self::assertCount(5562, $result);
+    }
 }

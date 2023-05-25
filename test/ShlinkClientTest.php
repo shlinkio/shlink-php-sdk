@@ -327,4 +327,14 @@ class ShlinkClientTest extends TestCase
         );
         $this->shlinkClient->deleteOrphanVisits();
     }
+
+    #[Test]
+    public function deleteShortUrlVisitsDelegatesCallToProperClient(): void
+    {
+        $identifier = ShortUrlIdentifier::fromShortCode('foo');
+        $this->visitsClient->expects($this->once())->method('deleteShortUrlVisits')->with($identifier)->willReturn(
+            VisitsDeletion::fromArray([]),
+        );
+        $this->shlinkClient->deleteShortUrlVisits($identifier);
+    }
 }

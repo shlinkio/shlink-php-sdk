@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [1.3.0] - 2023-05-25
 ### Added
 * [#45](https://github.com/shlinkio/shlink-php-sdk/issues/45) Add support to delete orphan visits.
+* [#44](https://github.com/shlinkio/shlink-php-sdk/issues/44) Add support to delete short URL visits.
 
 ### Changed
 * [#46](https://github.com/shlinkio/shlink-php-sdk/issues/46) Run integration tests for Shlink 3.6.0.

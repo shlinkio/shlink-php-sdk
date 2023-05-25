@@ -138,9 +138,10 @@ class ShortUrlsClient implements ShortUrlsClientInterface
      */
     private function identifierToUrlAndQuery(ShortUrlIdentifier $identifier): array
     {
+        [$shortCode, $query] = $identifier->toShortCodeAndQuery();
         return [
-            sprintf('/short-urls/%s', $identifier->shortCode),
-            ['domain' => $identifier->domain],
+            sprintf('/short-urls/%s', $shortCode),
+            $query,
         ];
     }
 }

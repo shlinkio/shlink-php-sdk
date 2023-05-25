@@ -203,3 +203,31 @@ foreach ($filteredVisits as $visit) {
     echo $visit->date()->format(DateTimeInterface::ATOM);
 }
 ```
+
+### Delete orphan visits
+
+```php
+use function count;
+
+$result = $visitsClient->deleteOrphanVisits();
+
+echo $result->deletedVisits;
+echo count($result);
+```
+
+### Delete short URL visits
+
+```php
+use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
+use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+
+try {
+    $shortUrlId = ShortUrlIdentifier::fromShortCode('abc123');
+    $result = $visitsClient->deleteShortUrlVisits($shortUrlId);
+
+    echo $result->deletedVisits;
+    echo count($result);
+} catch (ShortUrlNotFoundException) {
+    echo 'Requested short URL could not be found'
+}
+```

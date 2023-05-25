@@ -103,7 +103,7 @@ class ShortUrlsClientTest extends TestCase
         $expected = ['dateCreated' => $this->now];
         $this->httpClient->expects($this->once())->method('getFromShlink')->with(
             sprintf('/short-urls/%s', $identifier->shortCode),
-            $this->callback(fn (array $query): bool => $query['domain'] === $identifier->domain),
+            $this->callback(fn (array $query): bool => ($query['domain'] ?? null) === $identifier->domain),
         )->willReturn($expected);
 
         $result = $this->client->getShortUrl($identifier);
@@ -118,7 +118,7 @@ class ShortUrlsClientTest extends TestCase
             sprintf('/short-urls/%s', $identifier->shortCode),
             'DELETE',
             [],
-            $this->callback(fn (array $query): bool => $query['domain'] === $identifier->domain),
+            $this->callback(fn (array $query): bool => ($query['domain'] ?? null) === $identifier->domain),
         );
 
         $this->client->deleteShortUrl($identifier);
@@ -133,7 +133,7 @@ class ShortUrlsClientTest extends TestCase
             sprintf('/short-urls/%s', $identifier->shortCode),
             'PATCH',
             $edit,
-            $this->callback(fn (array $query): bool => $query['domain'] === $identifier->domain),
+            $this->callback(fn (array $query): bool => ($query['domain'] ?? null) === $identifier->domain),
         )->willReturn($expected);
 
         $result = $this->client->editShortUrl($identifier, $edit);
