@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Changed
+* [#46](https://github.com/shlinkio/shlink-php-sdk/issues/46) Run integration tests for Shlink 3.6.0.
 * Update to PHPUnit 10.1
 
 ### Deprecated
