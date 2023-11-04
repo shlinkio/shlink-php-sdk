@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        php-version: ['8.2', '8.1']
+        php-version: ['8.2', '8.3']
         shlink-version: ['3.6', '3.5.4', '3.4.0', '3.3.2', '3.2.1', '3.1.2', '3.0.3']
         shlink-api-version: ['2', '3']
         exclude:
@@ -28,7 +28,7 @@ jobs:
             shlink-api-version: '3'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use PHP
         uses: shivammathur/setup-php@v2
         with:
