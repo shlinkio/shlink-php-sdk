@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+### Added
+* Add support for PHP 8.3
+
+### Changed
+* *Nothing*
+
+### Deprecated
+* Deprecated support for openswoole.
+
+### Removed
+* Drop support for PHP 8.1
+
+### Fixed
+* *Nothing*
+
+
 ## [1.3.0] - 2023-05-25
 ### Added
 * [#45](https://github.com/shlinkio/shlink-php-sdk/issues/45) Add support to delete orphan visits.
