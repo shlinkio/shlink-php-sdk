@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Deprecated
-* Deprecated support for openswoole.
+* *Nothing*
 
 ### Removed
 * Drop support for PHP 8.1

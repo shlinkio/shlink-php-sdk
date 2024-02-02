@@ -41,7 +41,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
 
         $isLastPage = $currentPage < 0 || $currentPage === $this->currentPagination['pagesCount'];
         if (! $isLastPage) {
-            $this->loadPage(($currentPage ?? -1) + 1);
+            $this->loadPage($currentPage + 1);
             yield from $this->getFullList();
         }
     }
