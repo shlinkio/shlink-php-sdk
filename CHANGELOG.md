@@ -4,15 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [1.4.0] - 2024-02-04
 ### Added
 * Add support for PHP 8.3
 
 ### Changed
-* *Nothing*
+* Add Shlink 3.7 to integration test matrix
+* Update dependencies
 
 ### Deprecated
-* Deprecated support for openswoole.
+* *Nothing*
 
 ### Removed
 * Drop support for PHP 8.1
