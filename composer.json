@@ -18,10 +18,9 @@
     "require-dev": {
         "devster/ubench": "^2.1",
         "guzzlehttp/guzzle": "^7.8",
-        "infection/infection": "^0.27.9",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-phpunit": "^1.3",
-        "phpunit/phpunit": "^10.5",
+        "phpunit/phpunit": "^11.0",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.3.0",
         "symfony/var-dumper": "^7.0"
@@ -41,31 +40,22 @@
         "ci": [
             "@cs",
             "@stan",
-            "@test:ci",
-            "@infect:ci"
+            "@test:ci"
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse src test test-integration --level=8",
         "test": "phpunit --order-by=random --testdox --colors=always",
-        "test:ci": "@test --coverage-clover=build/clover.xml --coverage-xml=build/coverage-xml --log-junit=build/junit.xml",
-        "test:pretty": "@test --coverage-html build/coverage-html",
+        "test:ci": "@test --coverage-clover=build/clover.xml",
+        "test:pretty": "@test --coverage-html=build/coverage-html",
         "test:integration": "test-integration/run-tests.sh",
-        "infect": "infection --threads=4 --min-msi=85 --log-verbosity=default --only-covered",
-        "infect:ci": "@infect --coverage=build --skip-initial-tests",
-        "infect:show": "@infect --show-mutations",
-        "infect:show:ci": "@infect --show-mutations --coverage=build",
-        "infect:test": [
-            "@test:ci",
-            "@infect:show:ci"
-        ],
         "docs:serve": [
             "Composer\\Config::disableProcessTimeout",
             "php -S 0.0.0.0:8888 -t docs"
         ]
     },
     "scripts-descriptions": {
-        "ci": "<fg=blue;options=bold>Alias for \"cs\", \"stan\", \"test:ci\" and \"infect:ci\"</>",
+        "ci": "<fg=blue;options=bold>Alias for \"cs\", \"stan\" and \"test:ci\"</>",
         "cs": "<fg=blue;options=bold>Checks coding styles</>",
         "cs:fix": "<fg=blue;options=bold>Fixes coding styles, when possible</>",
         "stan": "<fg=blue;options=bold>Inspects code with phpstan</>",
@@ -73,18 +63,12 @@
         "test:ci": "<fg=blue;options=bold>Runs unit tests generating coverage reports and logs</>",
         "test:pretty": "<fg=blue;options=bold>Runs unit tests generating coverage reports in html</>",
         "test:integration": "<fg=blue;options=bold>Runs integration tests with no coverage reports</>",
-        "infect": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing</>",
-        "infect:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs</>",
-        "infect:test": "<fg=blue;options=bold>Alias for \"test:ci\" and \"infect:show:ci\"</>",
-        "infect:show": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing and shows applied mutators</>",
-        "infect:show:ci": "<fg=blue;options=bold>Checks unit tests quality applying mutation testing with existing reports and logs and shows applied mutators</>",
         "docs:serve": "Allows you to access the documentation on http://localhost:8888"
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "infection/extension-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }
