@@ -9,7 +9,6 @@ CHANGELOG.md export-ignore
 docker-compose.override.yml.dist export-ignore
 docker-compose.yml export-ignore
 indocker export-ignore
-infection.json export-ignore
 phpcs.xml export-ignore
 phpunit.xml.dist export-ignore
 phpunit-integration.xml export-ignore
