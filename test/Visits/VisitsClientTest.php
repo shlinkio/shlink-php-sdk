@@ -19,8 +19,8 @@ use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsAmounts;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 use Throwable;
 
@@ -42,16 +42,16 @@ class VisitsClientTest extends TestCase
     }
 
     /**
-     * @param callable(VisitsAmounts): void $assert
+     * @param callable(VisitsOverview): void $assert
      */
     #[Test, DataProvider('provideVisits')]
-    public function getVisitsSummaryPerformsExpectedCall(array $visits, callable $assert): void
+    public function getVisitsOverviewPerformsExpectedCall(array $visits, callable $assert): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->with('/visits')->willReturn([
             'visits' => $visits,
         ]);
 
-        $assert($this->visitsClient->getVisitsSummary());
+        $assert($this->visitsClient->getVisitsOverview());
     }
 
     public static function provideVisits(): iterable
@@ -59,7 +59,7 @@ class VisitsClientTest extends TestCase
         yield 'legacy response' => [[
             'visitsCount' => 200,
             'orphanVisitsCount' => 38,
-        ], function (VisitsAmounts $result): void {
+        ], function (VisitsOverview $result): void {
             self::assertEquals(200, $result->visitsCount);
             self::assertEquals(38, $result->orphanVisitsCount);
             self::assertEquals(200, $result->nonOrphanVisits->total);
@@ -83,7 +83,7 @@ class VisitsClientTest extends TestCase
                 'nonBots' => 30,
                 'bots' => 8,
             ],
-        ], function (VisitsAmounts $result): void {
+        ], function (VisitsOverview $result): void {
             self::assertEquals(200, $result->visitsCount);
             self::assertEquals(38, $result->orphanVisitsCount);
             self::assertEquals(200, $result->nonOrphanVisits->total);
@@ -105,7 +105,7 @@ class VisitsClientTest extends TestCase
                 'nonBots' => 30,
                 'bots' => 8,
             ],
-        ], function (VisitsAmounts $result): void {
+        ], function (VisitsOverview $result): void {
             self::assertEquals(200, $result->visitsCount);
             self::assertEquals(38, $result->orphanVisitsCount);
             self::assertEquals(200, $result->nonOrphanVisits->total);

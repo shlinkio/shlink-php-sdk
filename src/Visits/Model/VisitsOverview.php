@@ -6,7 +6,7 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use Countable;
 
-final readonly class VisitsAmounts implements Countable
+final readonly class VisitsOverview implements Countable
 {
     /** @deprecated Use $nonOrphanVisits->total instead */
     public int $visitsCount;

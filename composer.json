@@ -41,7 +41,7 @@
         "ci": [
             "@cs",
             "@stan",
-            "@test:ci"
+            "@test:unit"
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",

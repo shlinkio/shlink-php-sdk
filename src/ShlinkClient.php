@@ -32,10 +32,10 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsAmounts;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
 readonly class ShlinkClient implements
@@ -175,9 +175,9 @@ readonly class ShlinkClient implements
         $this->tagsClient->deleteTags(...$tags);
     }
 
-    public function getVisitsSummary(): VisitsAmounts
+    public function getVisitsOverview(): VisitsOverview
     {
-        return $this->visitsClient->getVisitsSummary();
+        return $this->visitsClient->getVisitsOverview();
     }
 
     /**
