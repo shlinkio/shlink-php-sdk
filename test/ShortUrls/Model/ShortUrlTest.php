@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\DeviceLongUrls;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsCount;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 
 class ShortUrlTest extends TestCase
 {
@@ -30,8 +30,8 @@ class ShortUrlTest extends TestCase
         bool $expectedForwardQuery,
         array $expectedTags,
         ShortUrlMeta $expectedMeta,
-        VisitsCount $expectedVisitsSummary,
-        DeviceLongUrls $expectedDeviceLongUrls,
+        VisitsSummary $expectedVisitsSummary,
+        ?DeviceLongUrls $expectedDeviceLongUrls,
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 
@@ -68,8 +68,8 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
-            VisitsCount::fromArrayWithFallback([], 0),
-            DeviceLongUrls::fromArray([]),
+            VisitsSummary::fromArrayWithFallback([], 0),
+            null,
         ];
         yield 'all values' => [
             [
@@ -96,15 +96,15 @@ class ShortUrlTest extends TestCase
             'https://s.test/foo',
             'https://foo.com/bar',
             $now,
-            35,
+            3,
             'domain',
             'title',
             true,
             true,
             ['foo', 'bar'],
             ShortUrlMeta::fromArray($meta),
-            VisitsCount::fromArrayWithFallback($visitsSummary, 5),
-            DeviceLongUrls::fromArray([]),
+            VisitsSummary::fromArrayWithFallback($visitsSummary, 5),
+            null,
         ];
         yield 'visits total fallback' => [
             ['dateCreated' => $formattedDate, 'visitsCount' => 35],
@@ -119,8 +119,8 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
-            VisitsCount::fromArrayWithFallback([], 35),
-            DeviceLongUrls::fromArray([]),
+            VisitsSummary::fromArrayWithFallback([], 35),
+            null,
         ];
         yield 'device long URLs' => [
             ['dateCreated' => $formattedDate, 'deviceLongUrls' => $rawDeviceLongUrls = [
@@ -138,7 +138,7 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
-            VisitsCount::fromArrayWithFallback([], 0),
+            VisitsSummary::fromArrayWithFallback([], 0),
             DeviceLongUrls::fromArray($rawDeviceLongUrls),
         ];
     }

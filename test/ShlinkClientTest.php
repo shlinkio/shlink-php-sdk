@@ -24,10 +24,10 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsAmounts;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
 class ShlinkClientTest extends TestCase
@@ -188,7 +188,7 @@ class ShlinkClientTest extends TestCase
     public function getVisitsSummaryDelegatesCallToProperClient(): void
     {
         $this->visitsClient->expects($this->once())->method('getVisitsSummary')->willReturn(
-            VisitsSummary::fromArray([]),
+            VisitsAmounts::fromArray([]),
         );
         $this->shlinkClient->getVisitsSummary();
     }

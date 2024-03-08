@@ -125,7 +125,7 @@ class TagsClientTest extends TestCase
         ], function (TagsWithStatsList $list): void {
             /** @var TagWithStats $item */
             foreach ($list as $item) {
-                self::assertEquals(0, $item->visitsCount);
+                self::assertEquals(3, $item->visitsCount);
                 self::assertEquals(3, $item->visitsSummary->total);
                 self::assertEquals(2, $item->visitsSummary->nonBots);
                 self::assertEquals(1, $item->visitsSummary->bots);
@@ -190,35 +190,19 @@ class TagsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_ARGUMENT v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_ARGUMENT']),
-            InvalidDataException::class,
-        ];
-        yield 'INVALID_ARGUMENT v3 type' =>  [
+        yield 'INVALID_ARGUMENT' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_ARGUMENT->value]),
             InvalidDataException::class,
         ];
-        yield 'FORBIDDEN_OPERATION v2 type' =>  [
-            HttpException::fromPayload(['type' => 'FORBIDDEN_OPERATION']),
-            ForbiddenTagOperationException::class,
-        ];
-        yield 'FORBIDDEN_OPERATION v3 type' =>  [
+        yield 'FORBIDDEN_OPERATION' =>  [
             HttpException::fromPayload(['type' => ErrorType::FORBIDDEN_OPERATION->value]),
             ForbiddenTagOperationException::class,
         ];
-        yield 'TAG_NOT_FOUND v2 type' =>  [
-            HttpException::fromPayload(['type' => 'TAG_NOT_FOUND']),
-            TagNotFoundException::class,
-        ];
-        yield 'TAG_NOT_FOUND v3 type' =>  [
+        yield 'TAG_NOT_FOUND' =>  [
             HttpException::fromPayload(['type' => ErrorType::TAG_NOT_FOUND->value]),
             TagNotFoundException::class,
         ];
-        yield 'TAG_CONFLICT v2 type' =>  [
-            HttpException::fromPayload(['type' => 'TAG_CONFLICT']),
-            TagConflictException::class,
-        ];
-        yield 'TAG_CONFLICT v3 type' =>  [
+        yield 'TAG_CONFLICT' =>  [
             HttpException::fromPayload(['type' => ErrorType::TAG_CONFLICT->value]),
             TagConflictException::class,
         ];
@@ -254,11 +238,7 @@ class TagsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'FORBIDDEN_OPERATION v2 type' =>  [
-            HttpException::fromPayload(['type' => 'FORBIDDEN_OPERATION']),
-            ForbiddenTagOperationException::class,
-        ];
-        yield 'FORBIDDEN_OPERATION v3 type' =>  [
+        yield 'FORBIDDEN_OPERATION' =>  [
             HttpException::fromPayload(['type' => ErrorType::FORBIDDEN_OPERATION->value]),
             ForbiddenTagOperationException::class,
         ];

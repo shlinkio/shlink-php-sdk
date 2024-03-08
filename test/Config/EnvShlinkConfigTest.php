@@ -56,8 +56,8 @@ class EnvShlinkConfigTest extends TestCase
         yield 'invalid api version' => [$buildSetUpWithEnvVars([
             EnvShlinkConfig::BASE_URL_ENV_VAR => 'SOME_VALUE',
             EnvShlinkConfig::API_KEY_ENV_VAR => 'SOME_VALUE',
-            EnvShlinkConfig::VERSION_ENV_VAR => '1',
-        ]), 'Provided version "1" is invalid. Expected one of ["2", "3"]'];
+            EnvShlinkConfig::VERSION_ENV_VAR => '4',
+        ]), 'Provided version "4" is invalid. Expected one of ["3"]'];
     }
 
     #[Test]

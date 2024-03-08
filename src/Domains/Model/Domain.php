@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Domains\Model;
 
-final class Domain
+final readonly class Domain
 {
-    private function __construct(
-        public readonly string $domain,
-        public readonly bool $isDefault,
-        public readonly DomainRedirects $redirects,
-    ) {
+    private function __construct(public string $domain, public bool $isDefault, public DomainRedirects $redirects)
+    {
     }
 
     public static function fromArray(array $payload): self

@@ -6,7 +6,6 @@ use function array_map;
 
 enum ApiVersion: string
 {
-    case V2 = '2';
     case V3 = '3';
 
     /**

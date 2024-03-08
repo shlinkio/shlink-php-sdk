@@ -7,12 +7,12 @@ namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-final class ShortUrlMeta
+final readonly class ShortUrlMeta
 {
     private function __construct(
-        public readonly ?DateTimeInterface $validSince,
-        public readonly ?DateTimeInterface $validUntil,
-        public readonly ?int $maxVisits,
+        public ?DateTimeInterface $validSince,
+        public ?DateTimeInterface $validUntil,
+        public ?int $maxVisits,
     ) {
     }
 

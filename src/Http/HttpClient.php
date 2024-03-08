@@ -21,14 +21,14 @@ use function sprintf;
 
 use const JSON_THROW_ON_ERROR;
 
-class HttpClient implements HttpClientInterface
+readonly class HttpClient implements HttpClientInterface
 {
     public function __construct(
-        private readonly ClientInterface $client,
-        private readonly RequestFactoryInterface $requestFactory,
-        private readonly StreamFactoryInterface $streamFactory,
-        private readonly ShlinkConfigInterface $config,
-        private readonly ?HttpDebuggerInterface $debugger = null,
+        private ClientInterface $client,
+        private RequestFactoryInterface $requestFactory,
+        private StreamFactoryInterface $streamFactory,
+        private ShlinkConfigInterface $config,
+        private ?HttpDebuggerInterface $debugger = null,
     ) {
     }
 

@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ### Removed
 * Remove infection and mutation tests
+* [#54](https://github.com/shlinkio/shlink-php-sdk/issues/54) Drop support for Shlink older than 3.3.0.
 
 ### Fixed
 * *Nothing*

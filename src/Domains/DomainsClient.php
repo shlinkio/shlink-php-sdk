@@ -12,9 +12,9 @@ use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 
-class DomainsClient implements DomainsClientInterface
+readonly class DomainsClient implements DomainsClientInterface
 {
-    public function __construct(private readonly HttpClientInterface $httpClient)
+    public function __construct(private HttpClientInterface $httpClient)
     {
     }
 
@@ -41,7 +41,7 @@ class DomainsClient implements DomainsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_ARGUMENT->value => InvalidDataException::fromHttpException($e),
+                ErrorType::INVALID_ARGUMENT => InvalidDataException::fromHttpException($e),
                 default => $e,
             };
         }

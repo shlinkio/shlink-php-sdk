@@ -9,13 +9,13 @@ use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
 use function trim;
 
-final class ArrayShlinkConfig implements ShlinkConfigInterface
+final readonly class ArrayShlinkConfig implements ShlinkConfigInterface
 {
     public const BASE_URL_PROP = 'baseUrl';
     public const API_KEY_PROP = 'apiKey';
     public const VERSION_PROP = 'version';
 
-    private function __construct(private readonly ShlinkConfigInterface $wrapped)
+    private function __construct(private ShlinkConfigInterface $wrapped)
     {
     }
 

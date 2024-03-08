@@ -11,14 +11,14 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsAmounts;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 
 interface VisitsClientInterface
 {
-    public function getVisitsSummary(): VisitsSummary;
+    public function getVisitsSummary(): VisitsAmounts;
 
     /**
      * @return VisitsList|Visit[]

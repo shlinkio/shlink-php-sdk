@@ -6,9 +6,9 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use Countable;
 
-final class VisitsDeletion implements Countable
+final readonly class VisitsDeletion implements Countable
 {
-    private function __construct(public readonly int $deletedVisits)
+    private function __construct(public int $deletedVisits)
     {
     }
 

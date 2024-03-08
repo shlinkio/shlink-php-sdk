@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 
 use function json_encode;
@@ -20,7 +21,7 @@ class HttpExceptionTest extends TestCase
     #[Test, DataProvider('providePayloads')]
     public function exceptionIsCreatedAsExpectedFromPayload(
         array $payload,
-        string $expectedType,
+        ErrorType $expectedType,
         string $expectedTitle,
         string $expectedDetail,
         int $expectedStatus,
@@ -33,7 +34,7 @@ class HttpExceptionTest extends TestCase
     #[Test, DataProvider('providePayloads')]
     public function exceptionIsCreatedAsExpectedFromResponse(
         array $payload,
-        string $expectedType,
+        ErrorType $expectedType,
         string $expectedTitle,
         string $expectedDetail,
         int $expectedStatus,
@@ -47,7 +48,7 @@ class HttpExceptionTest extends TestCase
 
     private function runAssertions(
         HttpException $e,
-        string $expectedType,
+        ErrorType $expectedType,
         string $expectedTitle,
         string $expectedDetail,
         int $expectedStatus,
@@ -69,15 +70,15 @@ class HttpExceptionTest extends TestCase
 
     public static function providePayloads(): iterable
     {
-        yield 'no payload' => [[], '', '', '', -1, []];
+        yield 'no payload' => [[], ErrorType::UNKNOWN, '', '', -1, []];
         yield 'no additional props' => [
             [
-                'type' => 'foo',
+                'type' => ErrorType::INVALID_SHORTCODE->value,
                 'title' => 'bar',
                 'detail' => 'baz',
                 'status' => 500,
             ],
-            'foo',
+            ErrorType::INVALID_SHORTCODE,
             'bar',
             'baz',
             500,
@@ -90,7 +91,7 @@ class HttpExceptionTest extends TestCase
                 'bar' => 'baz',
                 'status' => 500,
             ],
-            '',
+            ErrorType::UNKNOWN,
             'bar',
             '',
             500,

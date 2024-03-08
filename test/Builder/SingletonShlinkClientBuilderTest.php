@@ -12,7 +12,11 @@ use Shlinkio\Shlink\SDK\Builder\ShlinkClientBuilderInterface;
 use Shlinkio\Shlink\SDK\Builder\SingletonShlinkClientBuilder;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
+use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\ShlinkClient;
+use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
+use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
 class SingletonShlinkClientBuilderTest extends TestCase
 {
@@ -32,7 +36,12 @@ class SingletonShlinkClientBuilderTest extends TestCase
     {
         $this->wrapped->expects($this->exactly(2))->method($method)->with(
             $this->isInstanceOf(ShlinkConfigInterface::class),
-        )->willReturn($this->createMock(ShlinkClient::class));
+        )->willReturn(new ShlinkClient(
+            $this->createMock(ShortUrlsClientInterface::class),
+            $this->createMock(VisitsClientInterface::class),
+            $this->createMock(TagsClientInterface::class),
+            $this->createMock(DomainsClientInterface::class),
+        ));
 
         $configOne = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');
         $instance1 = $this->builder->{$method}($configOne);

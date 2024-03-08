@@ -32,23 +32,23 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsAmounts;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
-class ShlinkClient implements
+readonly class ShlinkClient implements
     ShortUrlsClientInterface,
     VisitsClientInterface,
     TagsClientInterface,
     DomainsClientInterface
 {
     public function __construct(
-        private readonly ShortUrlsClientInterface $shortUrlsClient,
-        private readonly VisitsClientInterface $visitsClient,
-        private readonly TagsClientInterface $tagsClient,
-        private readonly DomainsClientInterface $domainsClient,
+        private ShortUrlsClientInterface $shortUrlsClient,
+        private VisitsClientInterface $visitsClient,
+        private TagsClientInterface $tagsClient,
+        private DomainsClientInterface $domainsClient,
     ) {
     }
 
@@ -175,7 +175,7 @@ class ShlinkClient implements
         $this->tagsClient->deleteTags(...$tags);
     }
 
-    public function getVisitsSummary(): VisitsSummary
+    public function getVisitsSummary(): VisitsAmounts
     {
         return $this->visitsClient->getVisitsSummary();
     }
