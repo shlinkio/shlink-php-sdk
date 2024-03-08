@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Visits\Model;
 
-final class VisitLocation
+final readonly class VisitLocation
 {
     private function __construct(
-        public readonly string $countryCode,
-        public readonly string $countryName,
-        public readonly string $regionName,
-        public readonly string $cityName,
-        public readonly float $latitude,
-        public readonly float $longitude,
-        public readonly string $timezone,
+        public string $countryCode,
+        public string $countryName,
+        public string $regionName,
+        public string $cityName,
+        public float $latitude,
+        public float $longitude,
+        public string $timezone,
     ) {
     }
 

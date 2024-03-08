@@ -179,11 +179,7 @@ class ShortUrlsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_SHORTCODE v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SHORTCODE']),
-            ShortUrlNotFoundException::class,
-        ];
-        yield 'INVALID_SHORTCODE v3 type' =>  [
+        yield 'INVALID_SHORTCODE' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
             ShortUrlNotFoundException::class,
         ];
@@ -205,23 +201,11 @@ class ShortUrlsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_SHORTCODE v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SHORTCODE']),
-            ShortUrlNotFoundException::class,
-        ];
-        yield 'INVALID_SHORTCODE v3 type' =>  [
+        yield 'INVALID_SHORTCODE' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
             ShortUrlNotFoundException::class,
         ];
-        yield 'INVALID_SHORTCODE_DELETION type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SHORTCODE_DELETION']),
-            DeleteShortUrlThresholdException::class,
-        ];
-        yield 'INVALID_SHORT_URL_DELETION v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SHORT_URL_DELETION']),
-            DeleteShortUrlThresholdException::class,
-        ];
-        yield 'INVALID_SHORT_URL_DELETION v3 type' =>  [
+        yield 'INVALID_SHORT_URL_DELETION' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_SHORT_URL_DELETION->value]),
             DeleteShortUrlThresholdException::class,
         ];
@@ -243,27 +227,15 @@ class ShortUrlsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_ARGUMENT v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_ARGUMENT']),
-            InvalidDataException::class,
-        ];
-        yield 'INVALID_ARGUMENT v3 type' =>  [
+        yield 'INVALID_ARGUMENT' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_ARGUMENT->value]),
             InvalidDataException::class,
         ];
-        yield 'INVALID_URL v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_URL']),
-            InvalidLongUrlException::class,
-        ];
-        yield 'INVALID_URL v3 type' =>  [
+        yield 'INVALID_URL' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_URL->value]),
             InvalidLongUrlException::class,
         ];
-        yield 'INVALID_SLUG v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SLUG']),
-            NonUniqueSlugException::class,
-        ];
-        yield 'INVALID_SLUG v3 type' =>  [
+        yield 'INVALID_SLUG' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_SLUG->value]),
             NonUniqueSlugException::class,
         ];
@@ -285,17 +257,9 @@ class ShortUrlsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_SHORTCODE v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SHORTCODE']),
-            ShortUrlNotFoundException::class,
-        ];
-        yield 'INVALID_SHORTCODE v3 type' =>  [
+        yield 'INVALID_SHORTCODE' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
             ShortUrlNotFoundException::class,
-        ];
-        yield 'INVALID_ARGUMENT type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_ARGUMENT']),
-            InvalidDataException::class,
         ];
     }
 }

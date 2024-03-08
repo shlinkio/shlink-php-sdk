@@ -16,4 +16,7 @@ enum ErrorType: string
     case MERCURE_NOT_CONFIGURED = 'https://shlink.io/api/error/mercure-not-configured';
     case INVALID_AUTHORIZATION = 'https://shlink.io/api/error/missing-authentication';
     case INVALID_API_KEY = 'https://shlink.io/api/error/invalid-api-key';
+
+    // Not really a Shlink API error. Used only as fallback value
+    case UNKNOWN = 'https://shlink.io/api/error/unknown';
 }

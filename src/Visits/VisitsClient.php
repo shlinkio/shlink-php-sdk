@@ -17,7 +17,7 @@ use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 
 use function sprintf;
 
@@ -27,9 +27,9 @@ class VisitsClient implements VisitsClientInterface
     {
     }
 
-    public function getVisitsSummary(): VisitsSummary
+    public function getVisitsOverview(): VisitsOverview
     {
-        return VisitsSummary::fromArray($this->httpClient->getFromShlink('/visits')['visits'] ?? []);
+        return VisitsOverview::fromArray($this->httpClient->getFromShlink('/visits')['visits'] ?? []);
     }
 
     /**
@@ -59,7 +59,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_SHORTCODE->value => ShortUrlNotFoundException::fromHttpException($e),
+                ErrorType::INVALID_SHORTCODE => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -88,7 +88,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::TAG_NOT_FOUND->value => TagNotFoundException::fromHttpException($e),
+                ErrorType::TAG_NOT_FOUND => TagNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -137,7 +137,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::DOMAIN_NOT_FOUND->value => DomainNotFoundException::fromHttpException($e),
+                ErrorType::DOMAIN_NOT_FOUND => DomainNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }

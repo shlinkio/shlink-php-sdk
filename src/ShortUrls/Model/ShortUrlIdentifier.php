@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
-final class ShortUrlIdentifier
+final readonly class ShortUrlIdentifier
 {
-    private function __construct(public readonly string $shortCode, public readonly ?string $domain)
+    private function __construct(public string $shortCode, public ?string $domain)
     {
     }
 

@@ -35,20 +35,20 @@ use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
-class ShlinkClient implements
+readonly class ShlinkClient implements
     ShortUrlsClientInterface,
     VisitsClientInterface,
     TagsClientInterface,
     DomainsClientInterface
 {
     public function __construct(
-        private readonly ShortUrlsClientInterface $shortUrlsClient,
-        private readonly VisitsClientInterface $visitsClient,
-        private readonly TagsClientInterface $tagsClient,
-        private readonly DomainsClientInterface $domainsClient,
+        private ShortUrlsClientInterface $shortUrlsClient,
+        private VisitsClientInterface $visitsClient,
+        private TagsClientInterface $tagsClient,
+        private DomainsClientInterface $domainsClient,
     ) {
     }
 
@@ -175,9 +175,9 @@ class ShlinkClient implements
         $this->tagsClient->deleteTags(...$tags);
     }
 
-    public function getVisitsSummary(): VisitsSummary
+    public function getVisitsOverview(): VisitsOverview
     {
-        return $this->visitsClient->getVisitsSummary();
+        return $this->visitsClient->getVisitsOverview();
     }
 
     /**

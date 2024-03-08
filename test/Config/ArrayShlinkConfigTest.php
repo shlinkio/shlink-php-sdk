@@ -35,31 +35,23 @@ class ArrayShlinkConfigTest extends TestCase
         yield 'invalid version' => [[
             ArrayShlinkConfig::BASE_URL_PROP => 'foo',
             ArrayShlinkConfig::API_KEY_PROP => 'bar',
-            ArrayShlinkConfig::VERSION_PROP => '4',
-        ], 'Provided version "4" is invalid. Expected one of ["2", "3"]'];
+            ArrayShlinkConfig::VERSION_PROP => '2',
+        ], 'Provided version "2" is invalid. Expected one of ["3"]'];
     }
 
-    #[Test, DataProvider('provideVersions')]
-    public function expectedParamsAreSet(?string $version, ApiVersion $expectedVersion): void
+    #[Test]
+    public function expectedParamsAreSet(): void
     {
         $rawConfig = [
             ArrayShlinkConfig::BASE_URL_PROP => 'foo',
             ArrayShlinkConfig::API_KEY_PROP => 'bar',
-            ArrayShlinkConfig::VERSION_PROP => $version,
+            ArrayShlinkConfig::VERSION_PROP => '3',
         ];
 
         $config = ArrayShlinkConfig::fromArray($rawConfig);
 
         self::assertEquals('foo', $config->baseUrl());
         self::assertEquals('bar', $config->apiKey());
-        self::assertEquals($expectedVersion, $config->version());
-    }
-
-    public static function provideVersions(): iterable
-    {
-        yield 'explicit version 3' => ['3', ApiVersion::V3];
-        yield 'explicit version 2' => ['2', ApiVersion::V2];
-        yield 'no version' => [null, ApiVersion::V2];
-        yield 'empty version' => ['', ApiVersion::V2];
+        self::assertEquals(ApiVersion::V3, $config->version());
     }
 }

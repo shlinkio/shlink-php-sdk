@@ -66,7 +66,7 @@ class ShortUrlsClient implements ShortUrlsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_SHORTCODE->value => ShortUrlNotFoundException::fromHttpException($e),
+                ErrorType::INVALID_SHORTCODE => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -85,9 +85,8 @@ class ShortUrlsClient implements ShortUrlsClientInterface
             $this->httpClient->callShlinkWithBody($url, 'DELETE', [], $query);
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_SHORTCODE->value => ShortUrlNotFoundException::fromHttpException($e),
-                'INVALID_SHORTCODE_DELETION' => DeleteShortUrlThresholdException::fromHttpException($e), // Deprecated
-                ErrorType::INVALID_SHORT_URL_DELETION->value => DeleteShortUrlThresholdException::fromHttpException($e),
+                ErrorType::INVALID_SHORTCODE => ShortUrlNotFoundException::fromHttpException($e),
+                ErrorType::INVALID_SHORT_URL_DELETION => DeleteShortUrlThresholdException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -105,9 +104,9 @@ class ShortUrlsClient implements ShortUrlsClientInterface
             return ShortUrl::fromArray($this->httpClient->callShlinkWithBody('/short-urls', 'POST', $creation));
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_ARGUMENT->value => InvalidDataException::fromHttpException($e),
-                ErrorType::INVALID_URL->value => InvalidLongUrlException::fromHttpException($e),
-                ErrorType::INVALID_SLUG->value => NonUniqueSlugException::fromHttpException($e),
+                ErrorType::INVALID_ARGUMENT => InvalidDataException::fromHttpException($e),
+                ErrorType::INVALID_URL => InvalidLongUrlException::fromHttpException($e),
+                ErrorType::INVALID_SLUG => NonUniqueSlugException::fromHttpException($e),
                 default => $e,
             };
         }
@@ -126,8 +125,8 @@ class ShortUrlsClient implements ShortUrlsClientInterface
             return ShortUrl::fromArray($this->httpClient->callShlinkWithBody($url, 'PATCH', $edition, $query));
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_SHORTCODE->value => ShortUrlNotFoundException::fromHttpException($e),
-                ErrorType::INVALID_ARGUMENT->value => InvalidDataException::fromHttpException($e),
+                ErrorType::INVALID_SHORTCODE => ShortUrlNotFoundException::fromHttpException($e),
+                ErrorType::INVALID_ARGUMENT => InvalidDataException::fromHttpException($e),
                 default => $e,
             };
         }

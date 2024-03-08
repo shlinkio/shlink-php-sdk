@@ -14,11 +14,11 @@ use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 
 interface VisitsClientInterface
 {
-    public function getVisitsSummary(): VisitsSummary;
+    public function getVisitsOverview(): VisitsOverview;
 
     /**
      * @return VisitsList|Visit[]

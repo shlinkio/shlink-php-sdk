@@ -10,13 +10,13 @@ use Shlinkio\Shlink\SDK\Http\ApiVersion;
 use function getenv;
 use function trim;
 
-final class EnvShlinkConfig implements ShlinkConfigInterface
+final readonly class EnvShlinkConfig implements ShlinkConfigInterface
 {
     public const BASE_URL_ENV_VAR = 'SHLINK_BASE_URL';
     public const API_KEY_ENV_VAR = 'SHLINK_API_KEY';
     public const VERSION_ENV_VAR = 'SHLINK_API_VERSION';
 
-    private function __construct(private readonly ShlinkConfigInterface $wrapped)
+    private function __construct(private ShlinkConfigInterface $wrapped)
     {
     }
 

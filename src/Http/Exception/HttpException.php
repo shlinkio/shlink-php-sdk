@@ -21,7 +21,7 @@ class HttpException extends RuntimeException implements ExceptionInterface
     private const STANDARD_PROBLEM_DETAILS_PROPS = ['type', 'title', 'detail', 'status'];
 
     private function __construct(
-        public readonly string $type, // TODO Make this ErrorType instead of string for v2.0.0
+        public readonly ErrorType $type,
         public readonly string $title,
         public readonly string $detail,
         public readonly int $status,
@@ -44,7 +44,7 @@ class HttpException extends RuntimeException implements ExceptionInterface
         );
 
         return new self(
-            type: self::normalizeType($payload['type'] ?? ''),
+            type: self::typeFromPayload($payload),
             title: $payload['title'] ?? '',
             detail: $payload['detail'] ?? '',
             status: $payload['status'] ?? -1,
@@ -52,25 +52,13 @@ class HttpException extends RuntimeException implements ExceptionInterface
         );
     }
 
-    /**
-     * For compatibility between API v2 and v3 error types
-     */
-    private static function normalizeType(string $type): string
+    private static function typeFromPayload(array $payload): ErrorType
     {
-        return match ($type) {
-            'INVALID_ARGUMENT' => ErrorType::INVALID_ARGUMENT->value,
-            'INVALID_SHORT_URL_DELETION' => ErrorType::INVALID_SHORT_URL_DELETION->value,
-            'DOMAIN_NOT_FOUND' => ErrorType::DOMAIN_NOT_FOUND->value,
-            'FORBIDDEN_OPERATION' => ErrorType::FORBIDDEN_OPERATION->value,
-            'INVALID_URL' => ErrorType::INVALID_URL->value,
-            'INVALID_SLUG' => ErrorType::INVALID_SLUG->value,
-            'INVALID_SHORTCODE' => ErrorType::INVALID_SHORTCODE->value,
-            'TAG_CONFLICT' => ErrorType::TAG_CONFLICT->value,
-            'TAG_NOT_FOUND' => ErrorType::TAG_NOT_FOUND->value,
-            'MERCURE_NOT_CONFIGURED' => ErrorType::MERCURE_NOT_CONFIGURED->value,
-            'INVALID_AUTHORIZATION' => ErrorType::INVALID_AUTHORIZATION->value,
-            'INVALID_API_KEY' => ErrorType::INVALID_API_KEY->value,
-            default => $type,
-        };
+        $type = $payload['type'] ?? null;
+        if ($type === null) {
+            return ErrorType::UNKNOWN;
+        }
+
+        return ErrorType::tryFrom($type) ?? ErrorType::UNKNOWN;
     }
 }

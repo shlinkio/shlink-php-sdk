@@ -20,6 +20,7 @@
         "guzzlehttp/guzzle": "^7.8",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-phpunit": "^1.3",
+        "phpunit/phpcov": "^10.0",
         "phpunit/phpunit": "^11.0",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.3.0",
@@ -40,15 +41,18 @@
         "ci": [
             "@cs",
             "@stan",
-            "@test:ci"
+            "@test:unit"
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse src test test-integration --level=8",
-        "test": "phpunit --order-by=random --testdox --colors=always",
-        "test:ci": "@test --coverage-clover=build/clover.xml",
-        "test:pretty": "@test --coverage-html=build/coverage-html",
+        "test:unit": "phpunit --order-by=random --testdox --colors=always",
+        "test:unit:ci": "@test:unit --coverage-php=build/coverage-unit.cov",
+        "test:unit:pretty": "@test:unit --coverage-html=build/coverage-unit-html",
         "test:integration": "test-integration/run-tests.sh",
+        "test:integration:ci": "composer test:integration -- --coverage-php=build/coverage-integration.cov",
+        "test:integration:pretty": "composer test:integration -- --coverage-html=build/coverage-integration-html",
+        "test:ci": "composer test:unit:ci && vendor/bin/phpcov merge build --clover build/clover.xml",
         "docs:serve": [
             "Composer\\Config::disableProcessTimeout",
             "php -S 0.0.0.0:8888 -t docs"
@@ -59,10 +63,12 @@
         "cs": "<fg=blue;options=bold>Checks coding styles</>",
         "cs:fix": "<fg=blue;options=bold>Fixes coding styles, when possible</>",
         "stan": "<fg=blue;options=bold>Inspects code with phpstan</>",
-        "test": "<fg=blue;options=bold>Runs unit tests with no coverage reports</>",
-        "test:ci": "<fg=blue;options=bold>Runs unit tests generating coverage reports and logs</>",
-        "test:pretty": "<fg=blue;options=bold>Runs unit tests generating coverage reports in html</>",
+        "test:unit": "<fg=blue;options=bold>Runs unit tests with no coverage reports</>",
+        "test:unit:ci": "<fg=blue;options=bold>Runs unit tests generating coverage reports in PHP</>",
+        "test:unit:pretty": "<fg=blue;options=bold>Runs unit tests generating coverage reports in html</>",
         "test:integration": "<fg=blue;options=bold>Runs integration tests with no coverage reports</>",
+        "test:integration:ci": "<fg=blue;options=bold>Runs integration tests generating coverage reports in PHP</>",
+        "test:integration:pretty": "<fg=blue;options=bold>Runs integration tests generating coverage reports in HTML</>",
         "docs:serve": "Allows you to access the documentation on http://localhost:8888"
     },
     "config": {

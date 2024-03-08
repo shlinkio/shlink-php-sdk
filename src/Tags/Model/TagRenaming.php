@@ -6,9 +6,9 @@ namespace Shlinkio\Shlink\SDK\Tags\Model;
 
 use JsonSerializable;
 
-final class TagRenaming implements JsonSerializable
+final readonly class TagRenaming implements JsonSerializable
 {
-    private function __construct(private readonly array $payload)
+    private function __construct(private array $payload)
     {
     }
 

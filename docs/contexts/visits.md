@@ -11,16 +11,16 @@ $visitsClient = new VisitsClient(new HttpClient(...));
 
 Once you have it, these are all the operations you can perform:
 
-### Visits summary
+### Visits overview
 
 ```php
 use function count;
 
-$summary = $visitsClient->getVisitsSummary();
+$overview = $visitsClient->getVisitsOverview();
 
-echo 'Non-orphan visits: ' . $summary->nonOrphanVisits->total;
-echo 'Orphan visits: ' . $summary->orphanVisits->total;
-echo 'Total visits: ' . count($summary);
+echo 'Non-orphan visits: ' . $overview->nonOrphanVisits->total;
+echo 'Orphan visits: ' . $overview->orphanVisits->total;
+echo 'Total visits: ' . count($overview);
 ```
 
 ### Visits by short URL

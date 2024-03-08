@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Domains\Model;
 
-final class DomainRedirects
+final readonly class DomainRedirects
 {
     private function __construct(
-        public readonly ?string $baseUrlRedirect,
-        public readonly ?string $regularNotFoundRedirect,
-        public readonly ?string $invalidShortUrlRedirect,
+        public ?string $baseUrlRedirect,
+        public ?string $regularNotFoundRedirect,
+        public ?string $invalidShortUrlRedirect,
     ) {
     }
 

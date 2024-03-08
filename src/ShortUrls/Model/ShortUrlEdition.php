@@ -20,6 +20,7 @@ final class ShortUrlEdition implements JsonSerializable
         return $this->cloneWithProp('longUrl', $longUrl);
     }
 
+    /** @deprecated Ignored when using Shlink 4.0.0 */
     public function removingDeviceLongUrl(Device $device): self
     {
         $deviceLongUrls = $this->payload['deviceLongUrls'] ?? [];

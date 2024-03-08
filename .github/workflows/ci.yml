@@ -7,25 +7,13 @@ on:
       - main
 
 jobs:
-  ci:
-    uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main
-    with:
-      mutation-tests: false
-
   integration-tests:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
         php-version: ['8.2', '8.3']
-        shlink-version: ['3.7', '3.6', '3.5.4', '3.4.0', '3.3.2', '3.2.1', '3.1.2', '3.0.3']
-        shlink-api-version: ['2', '3']
-        exclude:
-          - shlink-version: '3.0.3'
-            shlink-api-version: '3'
-          - shlink-version: '3.1.2'
-            shlink-api-version: '3'
-          - shlink-version: '3.2.1'
-            shlink-api-version: '3'
+        shlink-version: ['4.0', '3.7', '3.6', '3.5.4', '3.4.0', '3.3.2']
+        shlink-api-version: ['3']
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,4 +23,8 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: composer
       - run: composer install --no-interaction --prefer-dist
-      - run: composer test:integration -- ${{ matrix.shlink-version }} ${{ matrix.shlink-api-version }}
+      - run: SHLINK_VERSION=${{ matrix.shlink-version }} SHLINK_API_VERSION=${{ matrix.shlink-api-version }} composer test:integration:ci
+
+  ci:
+    needs: ['integration-tests'] # Wait for integration tests so that all coverage reports are generated
+    uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main

@@ -27,7 +27,7 @@ use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
 class ShlinkClientTest extends TestCase
@@ -185,12 +185,12 @@ class ShlinkClientTest extends TestCase
     }
 
     #[Test]
-    public function getVisitsSummaryDelegatesCallToProperClient(): void
+    public function getVisitsOverviewDelegatesCallToProperClient(): void
     {
-        $this->visitsClient->expects($this->once())->method('getVisitsSummary')->willReturn(
-            VisitsSummary::fromArray([]),
+        $this->visitsClient->expects($this->once())->method('getVisitsOverview')->willReturn(
+            VisitsOverview::fromArray([]),
         );
-        $this->shlinkClient->getVisitsSummary();
+        $this->shlinkClient->getVisitsOverview();
     }
 
     #[Test]

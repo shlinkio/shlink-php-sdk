@@ -6,21 +6,18 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use DateTimeInterface;
 
-final class OrphanVisit implements VisitInterface
+final readonly class OrphanVisit implements VisitInterface
 {
-    private function __construct(
-        private readonly Visit $visit,
-        private readonly string $visitedUrl,
-        private readonly OrphanVisitType $type,
-    ) {
+    private function __construct(private Visit $visit, private string $visitedUrl, private OrphanVisitType $type)
+    {
     }
 
     public static function fromArray(array $payload): self
     {
         return new self(
-            Visit::fromArray($payload),
-            $payload['visitedUrl'] ?? '',
-            OrphanVisitType::tryFrom($payload['type'] ?? '') ?? OrphanVisitType::REGULAR_NOT_FOUND,
+            visit: Visit::fromArray($payload),
+            visitedUrl: $payload['visitedUrl'] ?? '',
+            type: OrphanVisitType::tryFrom($payload['type'] ?? '') ?? OrphanVisitType::REGULAR_NOT_FOUND,
         );
     }
 

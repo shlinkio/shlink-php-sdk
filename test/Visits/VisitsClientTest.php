@@ -20,7 +20,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 use Throwable;
 
@@ -42,16 +42,16 @@ class VisitsClientTest extends TestCase
     }
 
     /**
-     * @param callable(VisitsSummary): void $assert
+     * @param callable(VisitsOverview): void $assert
      */
     #[Test, DataProvider('provideVisits')]
-    public function getVisitsSummaryPerformsExpectedCall(array $visits, callable $assert): void
+    public function getVisitsOverviewPerformsExpectedCall(array $visits, callable $assert): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->with('/visits')->willReturn([
             'visits' => $visits,
         ]);
 
-        $assert($this->visitsClient->getVisitsSummary());
+        $assert($this->visitsClient->getVisitsOverview());
     }
 
     public static function provideVisits(): iterable
@@ -59,7 +59,7 @@ class VisitsClientTest extends TestCase
         yield 'legacy response' => [[
             'visitsCount' => 200,
             'orphanVisitsCount' => 38,
-        ], function (VisitsSummary $result): void {
+        ], function (VisitsOverview $result): void {
             self::assertEquals(200, $result->visitsCount);
             self::assertEquals(38, $result->orphanVisitsCount);
             self::assertEquals(200, $result->nonOrphanVisits->total);
@@ -83,7 +83,7 @@ class VisitsClientTest extends TestCase
                 'nonBots' => 30,
                 'bots' => 8,
             ],
-        ], function (VisitsSummary $result): void {
+        ], function (VisitsOverview $result): void {
             self::assertEquals(200, $result->visitsCount);
             self::assertEquals(38, $result->orphanVisitsCount);
             self::assertEquals(200, $result->nonOrphanVisits->total);
@@ -105,9 +105,9 @@ class VisitsClientTest extends TestCase
                 'nonBots' => 30,
                 'bots' => 8,
             ],
-        ], function (VisitsSummary $result): void {
-            self::assertEquals(0, $result->visitsCount);
-            self::assertEquals(0, $result->orphanVisitsCount);
+        ], function (VisitsOverview $result): void {
+            self::assertEquals(200, $result->visitsCount);
+            self::assertEquals(38, $result->orphanVisitsCount);
             self::assertEquals(200, $result->nonOrphanVisits->total);
             self::assertEquals(150, $result->nonOrphanVisits->nonBots);
             self::assertEquals(50, $result->nonOrphanVisits->bots);
@@ -158,11 +158,7 @@ class VisitsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'INVALID_SHORTCODE v2 type' =>  [
-            HttpException::fromPayload(['type' => 'INVALID_SHORTCODE']),
-            ShortUrlNotFoundException::class,
-        ];
-        yield 'INVALID_SHORTCODE v3 type' =>  [
+        yield 'INVALID_SHORTCODE' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
             ShortUrlNotFoundException::class,
         ];
@@ -198,11 +194,7 @@ class VisitsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'TAG_NOT_FOUND v2 type' =>  [
-            HttpException::fromPayload(['type' => 'TAG_NOT_FOUND']),
-            TagNotFoundException::class,
-        ];
-        yield 'TAG_NOT_FOUND v3 type' =>  [
+        yield 'TAG_NOT_FOUND' =>  [
             HttpException::fromPayload(['type' => ErrorType::TAG_NOT_FOUND->value]),
             TagNotFoundException::class,
         ];
@@ -264,11 +256,7 @@ class VisitsClientTest extends TestCase
     {
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
-        yield 'DOMAIN_NOT_FOUND v2 type' =>  [
-            HttpException::fromPayload(['type' => 'DOMAIN_NOT_FOUND']),
-            DomainNotFoundException::class,
-        ];
-        yield 'DOMAIN_NOT_FOUND v3 type' =>  [
+        yield 'DOMAIN_NOT_FOUND' =>  [
             HttpException::fromPayload(['type' => ErrorType::DOMAIN_NOT_FOUND->value]),
             DomainNotFoundException::class,
         ];

@@ -7,25 +7,26 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 use DateTimeImmutable;
 use DateTimeInterface;
 
-final class Visit implements VisitInterface
+final readonly class Visit implements VisitInterface
 {
     private function __construct(
-        private readonly string $referer,
-        private readonly DateTimeInterface $date,
-        private readonly string $userAgent,
-        private readonly bool $potentialBot,
-        private readonly ?VisitLocation $location,
+        private string $referer,
+        private DateTimeInterface $date,
+        private string $userAgent,
+        private bool $potentialBot,
+        private ?VisitLocation $location,
     ) {
     }
 
     public static function fromArray(array $payload): self
     {
         return new self(
-            $payload['referer'] ?? '',
-            DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']), // @phpstan-ignore-line
-            $payload['userAgent'] ?? '',
-            $payload['potentialBot'] ?? false,
-            isset($payload['visitLocation']) ? VisitLocation::fromArray($payload['visitLocation']) : null,
+            referer: $payload['referer'] ?? '',
+            // @phpstan-ignore-next-line
+            date: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']),
+            userAgent: $payload['userAgent'] ?? '',
+            potentialBot: $payload['potentialBot'] ?? false,
+            location: isset($payload['visitLocation']) ? VisitLocation::fromArray($payload['visitLocation']) : null,
         );
     }
 

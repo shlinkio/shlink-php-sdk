@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Tags\Model;
 
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsCount;
+use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 
-final class TagWithStats
+final readonly class TagWithStats
 {
     /** @deprecated Use $visitsSummary->total instead */
-    public readonly int $visitsCount;
+    public int $visitsCount;
 
-    private function __construct(
-        public readonly string $tag,
-        public readonly int $shortUrlsCount,
-        public readonly VisitsCount $visitsSummary,
-        int $visitsCount,
-    ) {
-        $this->visitsCount = $visitsCount;
+    private function __construct(public string $tag, public int $shortUrlsCount, public VisitsSummary $visitsSummary)
+    {
+        $this->visitsCount = $visitsSummary->total;
     }
 
     public static function fromArray(array $payload): self
@@ -27,8 +23,7 @@ final class TagWithStats
         return new self(
             tag: $payload['tag'] ?? '',
             shortUrlsCount: $payload['shortUrlsCount'] ?? 0,
-            visitsSummary: VisitsCount::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
-            visitsCount: $visitsCount,
+            visitsSummary: VisitsSummary::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
         );
     }
 }

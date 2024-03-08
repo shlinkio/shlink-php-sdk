@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Config;
 
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig;
@@ -17,24 +16,14 @@ use function sprintf;
 
 class ShlinkConfigTest extends TestCase
 {
-    /**
-     * @param callable(string, string): ShlinkConfig $createConfig
-     */
-    #[Test, DataProvider('provideMethods')]
-    public function configIsInitializedForV2(callable $createConfig, ApiVersion $expectedVersion): void
+    #[Test]
+    public function configIsInitializedForV2(): void
     {
-        $config = $createConfig('baseUrl', 'apiKey');
+        $config = ShlinkConfig::fromBaseUrlAndApiKey('baseUrl', 'apiKey');
 
         self::assertEquals('baseUrl', $config->baseUrl());
         self::assertEquals('apiKey', $config->apiKey());
-        self::assertEquals($expectedVersion, $config->version());
-    }
-
-    public static function provideMethods(): iterable
-    {
-        yield 'deprecated' => [ShlinkConfig::fromBaseUrlAndApiKey(...), ApiVersion::V2];
-        yield 'v2' => [ShlinkConfig::fromV2BaseUrlAndApiKey(...), ApiVersion::V2];
-        yield 'v3' => [ShlinkConfig::fromV3BaseUrlAndApiKey(...), ApiVersion::V3];
+        self::assertEquals(ApiVersion::V3, $config->version());
     }
 
     #[Test]

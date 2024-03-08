@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
-final class DeviceLongUrls
+/**
+ * @deprecated This is no longer used in Shlink 4.0.0
+ */
+final readonly class DeviceLongUrls
 {
     public function __construct(
-        public readonly ?string $android,
-        public readonly ?string $ios,
-        public readonly ?string $desktop,
+        public ?string $android,
+        public ?string $ios,
+        public ?string $desktop,
     ) {
     }
 
