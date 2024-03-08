@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 * *Nothing*
 
 ### Changed
-* *Nothing*
+* [#25](https://github.com/shlinkio/shlink-php-sdk/issues/25) Add code coverage collection to integration tests.
 
 ### Deprecated
 * *Nothing*
