@@ -180,7 +180,7 @@ class ShortUrlsClientTest extends TestCase
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
         yield 'INVALID_SHORTCODE' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
+            HttpException::fromPayload(['type' => ErrorType::SHORT_URL_NOT_FOUND->value]),
             ShortUrlNotFoundException::class,
         ];
     }
@@ -202,7 +202,7 @@ class ShortUrlsClientTest extends TestCase
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
         yield 'INVALID_SHORTCODE' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
+            HttpException::fromPayload(['type' => ErrorType::SHORT_URL_NOT_FOUND->value]),
             ShortUrlNotFoundException::class,
         ];
         yield 'INVALID_SHORT_URL_DELETION' =>  [
@@ -228,7 +228,7 @@ class ShortUrlsClientTest extends TestCase
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
         yield 'INVALID_ARGUMENT' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_ARGUMENT->value]),
+            HttpException::fromPayload(['type' => ErrorType::INVALID_DATA->value]),
             InvalidDataException::class,
         ];
         yield 'INVALID_URL' =>  [
@@ -236,7 +236,7 @@ class ShortUrlsClientTest extends TestCase
             InvalidLongUrlException::class,
         ];
         yield 'INVALID_SLUG' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_SLUG->value]),
+            HttpException::fromPayload(['type' => ErrorType::NON_UNIQUE_SLUG->value]),
             NonUniqueSlugException::class,
         ];
     }
@@ -258,7 +258,7 @@ class ShortUrlsClientTest extends TestCase
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
         yield 'INVALID_SHORTCODE' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
+            HttpException::fromPayload(['type' => ErrorType::SHORT_URL_NOT_FOUND->value]),
             ShortUrlNotFoundException::class,
         ];
     }

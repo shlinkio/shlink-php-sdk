@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
+use Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRulesList;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShlinkClient;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
@@ -37,6 +39,7 @@ class ShlinkClientTest extends TestCase
     private MockObject & VisitsClientInterface $visitsClient;
     private MockObject & TagsClientInterface $tagsClient;
     private MockObject & DomainsClientInterface $domainsClient;
+    private MockObject & RedirectRulesClientInterface $redirectRulesClient;
 
     public function setUp(): void
     {
@@ -44,12 +47,14 @@ class ShlinkClientTest extends TestCase
         $this->visitsClient = $this->createMock(VisitsClientInterface::class);
         $this->tagsClient = $this->createMock(TagsClientInterface::class);
         $this->domainsClient = $this->createMock(DomainsClientInterface::class);
+        $this->redirectRulesClient = $this->createMock(RedirectRulesClientInterface::class);
 
         $this->shlinkClient = new ShlinkClient(
             $this->shortUrlsClient,
             $this->visitsClient,
             $this->tagsClient,
             $this->domainsClient,
+            $this->redirectRulesClient,
         );
     }
 
@@ -336,5 +341,15 @@ class ShlinkClientTest extends TestCase
             VisitsDeletion::fromArray([]),
         );
         $this->shlinkClient->deleteShortUrlVisits($identifier);
+    }
+
+    #[Test]
+    public function getShortUrlRedirectRulesDelegatesCallToProperClient(): void
+    {
+        $identifier = ShortUrlIdentifier::fromShortCode('foo');
+        $this->redirectRulesClient->expects($this->once())->method('getShortUrlRedirectRules')->with(
+            $identifier,
+        )->willReturn(RedirectRulesList::fromArray([]));
+        $this->shlinkClient->getShortUrlRedirectRules($identifier);
     }
 }

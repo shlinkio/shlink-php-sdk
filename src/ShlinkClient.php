@@ -11,6 +11,8 @@ use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
+use Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRulesList;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
@@ -42,13 +44,15 @@ readonly class ShlinkClient implements
     ShortUrlsClientInterface,
     VisitsClientInterface,
     TagsClientInterface,
-    DomainsClientInterface
+    DomainsClientInterface,
+    RedirectRulesClientInterface
 {
     public function __construct(
         private ShortUrlsClientInterface $shortUrlsClient,
         private VisitsClientInterface $visitsClient,
         private TagsClientInterface $tagsClient,
         private DomainsClientInterface $domainsClient,
+        private RedirectRulesClientInterface $redirectRulesClient,
     ) {
     }
 
@@ -302,5 +306,10 @@ readonly class ShlinkClient implements
     public function deleteShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsDeletion
     {
         return $this->visitsClient->deleteShortUrlVisits($shortUrlIdentifier);
+    }
+
+    public function getShortUrlRedirectRules(ShortUrlIdentifier $identifier): RedirectRulesList
+    {
+        return $this->redirectRulesClient->getShortUrlRedirectRules($identifier);
     }
 }

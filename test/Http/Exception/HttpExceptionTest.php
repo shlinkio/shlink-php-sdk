@@ -73,12 +73,12 @@ class HttpExceptionTest extends TestCase
         yield 'no payload' => [[], ErrorType::UNKNOWN, '', '', -1, []];
         yield 'no additional props' => [
             [
-                'type' => ErrorType::INVALID_SHORTCODE->value,
+                'type' => ErrorType::SHORT_URL_NOT_FOUND->value,
                 'title' => 'bar',
                 'detail' => 'baz',
                 'status' => 500,
             ],
-            ErrorType::INVALID_SHORTCODE,
+            ErrorType::SHORT_URL_NOT_FOUND,
             'bar',
             'baz',
             500,

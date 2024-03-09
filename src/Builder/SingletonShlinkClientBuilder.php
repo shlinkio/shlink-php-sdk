@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\Builder;
 
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
@@ -49,6 +50,16 @@ class SingletonShlinkClientBuilder implements ShlinkClientBuilderInterface
         $key = $this->configToKey($config);
         return $this->instances[DomainsClientInterface::class][$key] ?? (
             $this->instances[DomainsClientInterface::class][$key] = $this->wrapped->buildDomainsClient($config)
+        );
+    }
+
+    public function buildRedirectRulesClient(ShlinkConfigInterface $config): RedirectRulesClientInterface
+    {
+        $key = $this->configToKey($config);
+        return $this->instances[RedirectRulesClientInterface::class][$key] ?? (
+            $this->instances[RedirectRulesClientInterface::class][$key] = $this->wrapped->buildRedirectRulesClient(
+                $config,
+            )
         );
     }
 
