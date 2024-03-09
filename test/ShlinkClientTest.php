@@ -13,6 +13,7 @@ use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
 use Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRulesList;
+use Shlinkio\Shlink\SDK\RedirectRules\Model\SetRedirectRules;
 use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShlinkClient;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
@@ -351,5 +352,17 @@ class ShlinkClientTest extends TestCase
             $identifier,
         )->willReturn(RedirectRulesList::fromArray([]));
         $this->shlinkClient->getShortUrlRedirectRules($identifier);
+    }
+
+    #[Test]
+    public function setShortUrlRedirectRulesDelegatesCallToProperClient(): void
+    {
+        $identifier = ShortUrlIdentifier::fromShortCode('foo');
+        $rules = SetRedirectRules::fromScratch();
+        $this->redirectRulesClient->expects($this->once())->method('setShortUrlRedirectRules')->with(
+            $identifier,
+            $rules,
+        )->willReturn(RedirectRulesList::fromArray([]));
+        $this->shlinkClient->setShortUrlRedirectRules($identifier, $rules);
     }
 }
