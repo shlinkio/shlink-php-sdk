@@ -8,6 +8,7 @@
   - [Visits](/contexts/visits)
   - [Tags](/contexts/tags)
   - [Domains](/contexts/domains)
+  - [Redirect rules](/contexts/redirect-rules)
 - **Extra**
   - [Error handling](/extra/error-handling)
   - [Debugging](/extra/debugging)
