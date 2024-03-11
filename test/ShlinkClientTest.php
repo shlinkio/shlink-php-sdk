@@ -7,6 +7,7 @@ namespace ShlinkioTest\Shlink\SDK;
 use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
@@ -27,6 +28,7 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
@@ -295,14 +297,19 @@ class ShlinkClientTest extends TestCase
     }
 
     #[Test]
-    public function listOrphanVisitsWithFilterDelegatesCallToProperClient(): void
+    #[TestWith([null])]
+    #[TestWith([OrphanVisitType::BASE_URL])]
+    #[TestWith([OrphanVisitType::REGULAR_NOT_FOUND])]
+    #[TestWith([OrphanVisitType::INVALID_SHORT_URL])]
+    public function listOrphanVisitsWithFilterDelegatesCallToProperClient(?OrphanVisitType $type): void
     {
         $filter = VisitsFilter::create();
-        $this->visitsClient->expects($this->once())->method('listOrphanVisitsWithFilter')->with($filter)->willReturn(
-            VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]),
-        );
+        $this->visitsClient->expects($this->once())->method('listOrphanVisitsWithFilter')->with(
+            $filter,
+            $type,
+        )->willReturn(VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]));
 
-        $this->shlinkClient->listOrphanVisitsWithFilter($filter);
+        $this->shlinkClient->listOrphanVisitsWithFilter($filter, $type);
     }
 
     #[Test]
