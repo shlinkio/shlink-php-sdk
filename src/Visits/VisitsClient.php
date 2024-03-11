@@ -21,9 +21,9 @@ use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 
 use function sprintf;
 
-class VisitsClient implements VisitsClientInterface
+readonly class VisitsClient implements VisitsClientInterface
 {
-    public function __construct(private readonly HttpClientInterface $httpClient)
+    public function __construct(private HttpClientInterface $httpClient)
     {
     }
 
@@ -59,7 +59,7 @@ class VisitsClient implements VisitsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_SHORTCODE => ShortUrlNotFoundException::fromHttpException($e),
+                ErrorType::SHORT_URL_NOT_FOUND => ShortUrlNotFoundException::fromHttpException($e),
                 default => $e,
             };
         }

@@ -16,9 +16,9 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
-class TagsClient implements TagsClientInterface
+readonly class TagsClient implements TagsClientInterface
 {
-    public function __construct(private readonly HttpClientInterface $httpClient)
+    public function __construct(private HttpClientInterface $httpClient)
     {
     }
 
@@ -78,8 +78,8 @@ class TagsClient implements TagsClientInterface
             $this->httpClient->callShlinkWithBody('/tags', 'PUT', $tagRenaming);
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_ARGUMENT => InvalidDataException::fromHttpException($e),
-                ErrorType::FORBIDDEN_OPERATION => ForbiddenTagOperationException::fromHttpException($e),
+                ErrorType::INVALID_DATA => InvalidDataException::fromHttpException($e),
+                ErrorType::FORBIDDEN_TAG_OPERATION => ForbiddenTagOperationException::fromHttpException($e),
                 ErrorType::TAG_NOT_FOUND => TagNotFoundException::fromHttpException($e),
                 ErrorType::TAG_CONFLICT => TagConflictException::fromHttpException($e),
                 default => $e,
@@ -97,7 +97,7 @@ class TagsClient implements TagsClientInterface
             $this->httpClient->callShlinkWithBody('/tags', 'DELETE', [], ['tags' => $tags]);
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::FORBIDDEN_OPERATION => ForbiddenTagOperationException::fromHttpException($e),
+                ErrorType::FORBIDDEN_TAG_OPERATION => ForbiddenTagOperationException::fromHttpException($e),
                 default => $e,
             };
         }

@@ -6,6 +6,7 @@ In order to make sure you always have access just to the minimum amount of resou
 * `VisitsClient`
 * `TagsClient`
 * `DomainsClient`
+* `RedirectRulesClient`
 
 They all expect an `HttpClient` to be injected, and implement their corresponding interfaces.
 
@@ -17,6 +18,7 @@ use GuzzleHttp\Psr7\HttpFactory;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 use Shlinkio\Shlink\SDK\Domains\DomainsClient;
 use Shlinkio\Shlink\SDK\Http\HttpClient;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClient;
 use Shlinkio\Shlink\SDK\ShlinkClient;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
@@ -29,8 +31,9 @@ $shortUrlsClient = new ShortUrlsClient($httpClient);
 $visitsClient = new VisitsClient($httpClient);
 $tagsClient = new TagsClient($httpClient);
 $domainsClient = new DomainsClient($httpClient);
+$redirectRulesClient = new RedirectRulesClient($httpClient);
 
-$client = new ShlinkClient($shortUrlsClient, $visitsClient, $tagsClient, $domainsClient);
+$client = new ShlinkClient($shortUrlsClient, $visitsClient, $tagsClient, $domainsClient, $redirectRulesClient);
 ```
 
 ### Client Builder

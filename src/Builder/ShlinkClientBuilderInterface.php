@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\Builder;
 
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
@@ -19,4 +20,6 @@ interface ShlinkClientBuilderInterface
     public function buildTagsClient(ShlinkConfigInterface $config): TagsClientInterface;
 
     public function buildDomainsClient(ShlinkConfigInterface $config): DomainsClientInterface;
+
+    public function buildRedirectRulesClient(ShlinkConfigInterface $config): RedirectRulesClientInterface;
 }

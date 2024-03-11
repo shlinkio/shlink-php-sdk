@@ -13,6 +13,7 @@ use Shlinkio\Shlink\SDK\Builder\SingletonShlinkClientBuilder;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfig;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShlinkClient;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
@@ -41,6 +42,7 @@ class SingletonShlinkClientBuilderTest extends TestCase
             $this->createMock(VisitsClientInterface::class),
             $this->createMock(TagsClientInterface::class),
             $this->createMock(DomainsClientInterface::class),
+            $this->createMock(RedirectRulesClientInterface::class),
         ));
 
         $configOne = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');

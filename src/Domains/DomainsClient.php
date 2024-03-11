@@ -41,7 +41,7 @@ readonly class DomainsClient implements DomainsClientInterface
             );
         } catch (HttpException $e) {
             throw match ($e->type) {
-                ErrorType::INVALID_ARGUMENT => InvalidDataException::fromHttpException($e),
+                ErrorType::INVALID_DATA => InvalidDataException::fromHttpException($e),
                 default => $e,
             };
         }

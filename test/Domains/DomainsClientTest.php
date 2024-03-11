@@ -135,7 +135,7 @@ class DomainsClientTest extends TestCase
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
         yield 'INVALID_ARGUMENT' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_ARGUMENT->value]),
+            HttpException::fromPayload(['type' => ErrorType::INVALID_DATA->value]),
             InvalidDataException::class,
         ];
     }

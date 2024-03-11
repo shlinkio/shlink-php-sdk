@@ -159,7 +159,7 @@ class VisitsClientTest extends TestCase
         yield 'no type' => [HttpException::fromPayload([]), HttpException::class];
         yield 'not expected type' =>  [HttpException::fromPayload(['type' => 'something else']), HttpException::class];
         yield 'INVALID_SHORTCODE' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_SHORTCODE->value]),
+            HttpException::fromPayload(['type' => ErrorType::SHORT_URL_NOT_FOUND->value]),
             ShortUrlNotFoundException::class,
         ];
     }

@@ -13,6 +13,8 @@ use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Http\Debug\HttpDebuggerInterface;
 use Shlinkio\Shlink\SDK\Http\HttpClient;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClient;
+use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
@@ -48,6 +50,11 @@ readonly class ShlinkClientBuilder implements ShlinkClientBuilderInterface
     public function buildDomainsClient(ShlinkConfigInterface $config): DomainsClientInterface
     {
         return new DomainsClient($this->createHttpClient($config));
+    }
+
+    public function buildRedirectRulesClient(ShlinkConfigInterface $config): RedirectRulesClientInterface
+    {
+        return new RedirectRulesClient($this->createHttpClient($config));
     }
 
     private function createHttpClient(ShlinkConfigInterface $config): HttpClientInterface
