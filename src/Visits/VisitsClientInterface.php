@@ -10,6 +10,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
@@ -87,7 +88,7 @@ interface VisitsClientInterface
     /**
      * @return VisitsList|OrphanVisit[]
      */
-    public function listOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList;
+    public function listOrphanVisitsWithFilter(VisitsFilter $filter, ?OrphanVisitType $type = null): VisitsList;
 
     /**
      * @return VisitsList|Visit[]

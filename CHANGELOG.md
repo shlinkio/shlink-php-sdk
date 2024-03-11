@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 
 ## [Unreleased]
 ### Added
-* *Nothing*
+* [#53](https://github.com/shlinkio/shlink-php-sdk/issues/53) Add support for Shlink 4.0.0.
+
+    * Short URL redirect rules.
+    * Filter orphan visits by type.
+    * Deprecate anything related with device long URLs.
 
 ### Changed
 * [#25](https://github.com/shlinkio/shlink-php-sdk/issues/25) Add code coverage collection to integration tests.
