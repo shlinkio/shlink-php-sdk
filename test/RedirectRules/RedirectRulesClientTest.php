@@ -18,6 +18,7 @@ use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClient;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\Device;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
+use Throwable;
 
 use function sprintf;
 
@@ -96,6 +97,9 @@ class RedirectRulesClientTest extends TestCase
         self::assertEquals('foo', $result->redirectRules[1]->conditions[1]->matchKey);
     }
 
+    /**
+     * @param class-string<Throwable> $expectedException
+     */
     #[Test, DataProvider('provideGetException')]
     public function getShortUrlRedirectRulesThrowsExpectedException(
         HttpException $httpException,
@@ -144,6 +148,9 @@ class RedirectRulesClientTest extends TestCase
         yield 'short code and domain' => [ShortUrlIdentifier::fromShortCodeAndDomain('bar', 's.test')];
     }
 
+    /**
+     * @param class-string<Throwable> $expectedException
+     */
     #[Test, DataProvider('provideSetException')]
     public function setShortUrlRedirectRulesThrowsExpectedException(
         HttpException $httpException,

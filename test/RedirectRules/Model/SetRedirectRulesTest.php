@@ -83,7 +83,7 @@ class SetRedirectRulesTest extends TestCase
                     ],
                 ],
             ],
-        ], json_decode(json_encode($setRules->jsonSerialize()), associative: true));
+        ], json_decode((string) json_encode($setRules->jsonSerialize()), associative: true));
     }
 
     #[Test]
