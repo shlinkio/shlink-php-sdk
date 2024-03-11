@@ -36,9 +36,13 @@ class ShortUrlsFilterTest extends TestCase
         ];
         yield [
             fn () => ShortUrlsFilter::create()
-                ->containingTags('foo', 'bar')
+                ->containingSomeTags('foo', 'bar')
                 ->searchingBy('searching'),
-            ['tags' => ['foo', 'bar'], 'searchTerm' => 'searching'],
+            ['tags' => ['foo', 'bar'], 'tagsMode' => 'any', 'searchTerm' => 'searching'],
+        ];
+        yield [
+            fn () => ShortUrlsFilter::create()->containingAllTags('foo', 'bar'),
+            ['tags' => ['foo', 'bar'], 'tagsMode' => 'all'],
         ];
         yield [
             fn () => ShortUrlsFilter::create()->orderingAscBy(ShortUrlListOrderField::VISITS),

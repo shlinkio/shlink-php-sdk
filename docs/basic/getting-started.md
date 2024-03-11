@@ -25,7 +25,7 @@ $httpClient = new HttpClient(
 $client = new ShortUrlsClient($httpClient)
 
 $filter = ShortUrlsFilter::create()
-    ->containingTags('foo', 'bar')
+    ->containingSomeTags('foo', 'bar')
     ->since(Chronos::now()->subDays(10)) // Any object implementing DateTimeInterface
     ->orderingAscBy(ShortUrlListOrderField::VISITS)
 $shortUrls = $client->listShortUrlsWithFilter($filter)
