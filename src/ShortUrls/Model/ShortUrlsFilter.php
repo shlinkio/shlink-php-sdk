@@ -35,9 +35,14 @@ final class ShortUrlsFilter implements ArraySerializable
         return $this->cloneWithProp('searchTerm', $searchTerm);
     }
 
-    public function containingTags(string ...$tags): self
+    public function containingSomeTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags);
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', 'any');
+    }
+
+    public function containingAllTags(string ...$tags): self
+    {
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', 'all');
     }
 
     public function excludingMaxVisitsReached(): self

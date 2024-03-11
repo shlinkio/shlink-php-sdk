@@ -29,7 +29,7 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlListOrderField;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 
 $filter = ShortUrlsFilter::create()->searchingBy('foobar')
-                                   ->containingTags('videogames', 'development')
+                                   ->containingSomeTags('videogames', 'development')
                                    ->orderingDescBy(ShortUrlListOrderField::TITLE);
 $filteredShortUrls = $shortUrlsClient->listShortUrlsWithFilter($filter);
 

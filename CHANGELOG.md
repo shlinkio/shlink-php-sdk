@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [2.0.0] - 2024-03-11
 ### Added
 * [#53](https://github.com/shlinkio/shlink-php-sdk/issues/53) Add support for Shlink 4.0.0.
 
@@ -12,8 +12,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
     * Filter orphan visits by type.
     * Deprecate anything related with device long URLs.
 
+* [#57](https://github.com/shlinkio/shlink-php-sdk/issues/57) Add support for `tagsMode` when listing short URLs.
+
 ### Changed
 * [#25](https://github.com/shlinkio/shlink-php-sdk/issues/25) Add code coverage collection to integration tests.
+* `ShortUrlsFilter::containingTags` renamed to `ShortUrlsFilter::containingSomeTags`.
 
 ### Deprecated
 * *Nothing*
