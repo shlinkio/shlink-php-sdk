@@ -8,6 +8,7 @@ use JsonSerializable;
 
 use function array_values;
 use function count;
+use function ksort;
 
 final readonly class SetRedirectRules implements JsonSerializable
 {
@@ -65,6 +66,9 @@ final readonly class SetRedirectRules implements JsonSerializable
             }
         }
         $newRules[$priority] = $newRule;
+
+        // Sort rules by their key, which is the priority
+        ksort($newRules);
 
         return new self($newRules);
     }
