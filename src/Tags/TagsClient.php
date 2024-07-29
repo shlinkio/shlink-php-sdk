@@ -14,7 +14,6 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
-use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 readonly class TagsClient implements TagsClientInterface
 {
@@ -23,29 +22,26 @@ readonly class TagsClient implements TagsClientInterface
     }
 
     /**
-     * @return string[]
+     * @inheritDoc
      */
     public function listTags(): array
     {
         return $this->listTagsWithFilter(TagsFilter::create());
     }
 
+    /**
+     * @inheritDoc
+     */
     public function listTagsWithFilter(TagsFilter $filter): array
     {
         return $this->httpClient->getFromShlink('/tags', $filter)['tags']['data'] ?? [];
     }
 
-    /**
-     * @return TagsWithStatsList|TagWithStats[]
-     */
     public function listTagsWithStats(): TagsWithStatsList
     {
         return $this->listTagsWithStatsWithFilter(TagsFilter::create());
     }
 
-    /**
-     * @return TagsWithStatsList|TagWithStats[]
-     */
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
     {
         $query = $filter->toArray();
@@ -66,11 +62,7 @@ readonly class TagsClient implements TagsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws InvalidDataException
-     * @throws ForbiddenTagOperationException
-     * @throws TagNotFoundException
-     * @throws TagConflictException
+     * @inheritDoc
      */
     public function renameTag(TagRenaming $tagRenaming): void
     {
@@ -88,8 +80,7 @@ readonly class TagsClient implements TagsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws ForbiddenTagOperationException
+     * @inheritDoc
      */
     public function deleteTags(string ...$tags): void
     {

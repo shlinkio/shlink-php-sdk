@@ -7,6 +7,9 @@ namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 use Closure;
 use Shlinkio\Shlink\SDK\Model\ListEndpointIterator;
 
+/**
+ * @extends ListEndpointIterator<ShortUrl>
+ */
 final class ShortUrlsList extends ListEndpointIterator
 {
     private const ITEMS_PER_PAGE = 20;

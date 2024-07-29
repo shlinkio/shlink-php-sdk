@@ -19,14 +19,8 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 
 interface ShortUrlsClientInterface
 {
-    /**
-     * @return ShortUrlsList|ShortUrl[]
-     */
     public function listShortUrls(): ShortUrlsList;
 
-    /**
-     * @return ShortUrlsList|ShortUrl[]
-     */
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList;
 
     /**

@@ -22,14 +22,14 @@ interface VisitsClientInterface
     public function getVisitsOverview(): VisitsOverview;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws ShortUrlNotFoundException
      */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws ShortUrlNotFoundException
      */
@@ -39,64 +39,64 @@ interface VisitsClientInterface
     ): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws TagNotFoundException
      */
     public function listTagVisits(string $tag): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws TagNotFoundException
      */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws DomainNotFoundException
      */
     public function listDefaultDomainVisits(): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws DomainNotFoundException
      */
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws DomainNotFoundException
      */
     public function listDomainVisits(string $domain): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      * @throws HttpException
      * @throws DomainNotFoundException
      */
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList;
 
     /**
-     * @return VisitsList|OrphanVisit[]
+     * @return VisitsList<OrphanVisit>
      */
     public function listOrphanVisits(): VisitsList;
 
     /**
-     * @return VisitsList|OrphanVisit[]
+     * @return VisitsList<OrphanVisit>
      */
     public function listOrphanVisitsWithFilter(VisitsFilter $filter, ?OrphanVisitType $type = null): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      */
     public function listNonOrphanVisits(): VisitsList;
 
     /**
-     * @return VisitsList|Visit[]
+     * @return VisitsList<Visit>
      */
     public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList;
 

@@ -315,7 +315,8 @@ class VisitsClientTest extends TestCase
     }
 
     /**
-     * @param VisitsList|VisitInterface[] $result
+     * @template VisitType of VisitInterface
+     * @param VisitsList<VisitType> $result
      */
     private function assertPaginator(VisitsList $result, int $amountOfPages): void
     {
