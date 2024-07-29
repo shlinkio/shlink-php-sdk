@@ -7,6 +7,9 @@ namespace Shlinkio\Shlink\SDK\Tags\Model;
 use Closure;
 use Shlinkio\Shlink\SDK\Model\ListEndpointIterator;
 
+/**
+ * @extends ListEndpointIterator<TagWithStats>
+ */
 final class TagsWithStatsList extends ListEndpointIterator
 {
     private const PAGINATED_ITEMS_PER_PAGE = 30;

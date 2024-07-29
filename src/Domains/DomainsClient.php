@@ -19,7 +19,7 @@ readonly class DomainsClient implements DomainsClientInterface
     }
 
     /**
-     * @return iterable<Domain>
+     * @inheritDoc
      */
     public function listDomains(): iterable
     {
@@ -30,8 +30,7 @@ readonly class DomainsClient implements DomainsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects
     {

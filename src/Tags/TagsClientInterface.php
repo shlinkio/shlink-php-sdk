@@ -12,7 +12,6 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
-use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 
 interface TagsClientInterface
 {
@@ -26,14 +25,8 @@ interface TagsClientInterface
      */
     public function listTagsWithFilter(TagsFilter $filter): array;
 
-    /**
-     * @return TagsWithStatsList|TagWithStats[]
-     */
     public function listTagsWithStats(): TagsWithStatsList;
 
-    /**
-     * @return TagsWithStatsList|TagWithStats[]
-     */
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList;
 
     /**

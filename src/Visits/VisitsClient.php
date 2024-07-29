@@ -12,9 +12,7 @@ use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
-use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
-use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
@@ -34,9 +32,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
@@ -44,9 +40,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
@@ -67,9 +61,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws TagNotFoundException
+     * @inheritDoc
      */
     public function listTagVisits(string $tag): VisitsList
     {
@@ -77,9 +69,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws TagNotFoundException
+     * @inheritDoc
      */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
@@ -96,9 +86,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDefaultDomainVisits(): VisitsList
     {
@@ -106,9 +94,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
@@ -116,9 +102,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDomainVisits(string $domain): VisitsList
     {
@@ -126,9 +110,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
     {
@@ -145,7 +127,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|OrphanVisit[]
+     * @inheritDoc
      */
     public function listOrphanVisits(): VisitsList
     {
@@ -153,7 +135,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|OrphanVisit[]
+     * @inheritDoc
      */
     public function listOrphanVisitsWithFilter(VisitsFilter $filter, ?OrphanVisitType $type = null): VisitsList
     {
@@ -166,7 +148,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
+     * @inheritDoc
      */
     public function listNonOrphanVisits(): VisitsList
     {
@@ -174,7 +156,7 @@ readonly class VisitsClient implements VisitsClientInterface
     }
 
     /**
-     * @return VisitsList|Visit[]
+     * @inheritDoc
      */
     public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
     {

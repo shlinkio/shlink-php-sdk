@@ -9,6 +9,10 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @template T
+ * @implements IteratorAggregate<T>
+ */
 abstract class ListEndpointIterator implements IteratorAggregate, Countable
 {
     private array $currentData = [];

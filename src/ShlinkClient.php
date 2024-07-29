@@ -5,19 +5,11 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK;
 
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
-use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
-use Shlinkio\Shlink\SDK\Domains\Model\Domain;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
-use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
-use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRulesList;
 use Shlinkio\Shlink\SDK\RedirectRules\Model\SetRedirectRules;
 use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
-use Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException;
-use Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException;
-use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
-use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlEdition;
@@ -25,17 +17,11 @@ use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsFilter;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList;
 use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClientInterface;
-use Shlinkio\Shlink\SDK\Tags\Exception\ForbiddenTagOperationException;
-use Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException;
-use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
-use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
-use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
-use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
@@ -59,7 +45,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return iterable<Domain>
+     * @inheritDoc
      */
     public function listDomains(): iterable
     {
@@ -67,8 +53,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects
     {
@@ -76,7 +61,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return ShortUrlsList|ShortUrl[]
+     * @inheritDoc
      */
     public function listShortUrls(): ShortUrlsList
     {
@@ -84,7 +69,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return ShortUrlsList|ShortUrl[]
+     * @inheritDoc
      */
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
@@ -92,8 +77,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
@@ -101,9 +85,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
-     * @throws DeleteShortUrlThresholdException
+     * @inheritDoc
      */
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
@@ -111,10 +93,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws NonUniqueSlugException
-     * @throws InvalidLongUrlException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function createShortUrl(ShortUrlCreation $creation): ShortUrl
     {
@@ -122,9 +101,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
     {
@@ -132,7 +109,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return string[]
+     * @inheritDoc
      */
     public function listTags(): array
     {
@@ -145,7 +122,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return TagsWithStatsList|TagWithStats[]
+     * @inheritDoc
      */
     public function listTagsWithStats(): TagsWithStatsList
     {
@@ -153,7 +130,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return TagsWithStatsList|TagWithStats[]
+     * @inheritDoc
      */
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
     {
@@ -161,11 +138,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws InvalidDataException
-     * @throws ForbiddenTagOperationException
-     * @throws TagNotFoundException
-     * @throws TagConflictException
+     * @inheritDoc
      */
     public function renameTag(TagRenaming $tagRenaming): void
     {
@@ -173,8 +146,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws HttpException
-     * @throws ForbiddenTagOperationException
+     * @inheritDoc
      */
     public function deleteTags(string ...$tags): void
     {
@@ -187,9 +159,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
@@ -197,9 +167,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
@@ -209,9 +177,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws TagNotFoundException
+     * @inheritDoc
      */
     public function listTagVisits(string $tag): VisitsList
     {
@@ -219,9 +185,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws TagNotFoundException
+     * @inheritDoc
      */
     public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
     {
@@ -229,9 +193,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDefaultDomainVisits(): VisitsList
     {
@@ -239,9 +201,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
@@ -249,9 +209,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDomainVisits(string $domain): VisitsList
     {
@@ -259,9 +217,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
-     * @throws HttpException
-     * @throws DomainNotFoundException
+     * @inheritDoc
      */
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
     {
@@ -269,7 +225,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|OrphanVisit[]
+     * @inheritDoc
      */
     public function listOrphanVisits(): VisitsList
     {
@@ -277,7 +233,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|OrphanVisit[]
+     * @inheritDoc
      */
     public function listOrphanVisitsWithFilter(VisitsFilter $filter, ?OrphanVisitType $type = null): VisitsList
     {
@@ -285,7 +241,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
+     * @inheritDoc
      */
     public function listNonOrphanVisits(): VisitsList
     {
@@ -293,7 +249,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @return VisitsList|Visit[]
+     * @inheritDoc
      */
     public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
@@ -311,7 +267,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function getShortUrlRedirectRules(ShortUrlIdentifier $identifier): RedirectRulesList
     {
@@ -319,8 +275,7 @@ readonly class ShlinkClient implements
     }
 
     /**
-     * @throws ShortUrlNotFoundException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function setShortUrlRedirectRules(
         ShortUrlIdentifier $identifier,

@@ -27,17 +27,11 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     {
     }
 
-    /**
-     * @return ShortUrlsList|ShortUrl[]
-     */
     public function listShortUrls(): ShortUrlsList
     {
         return $this->listShortUrlsWithFilter(ShortUrlsFilter::create());
     }
 
-    /**
-     * @return ShortUrlsList|ShortUrl[]
-     */
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
         $query = $filter->toArray();
@@ -55,8 +49,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
+     * @inheritDoc
      */
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
@@ -73,9 +66,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
-     * @throws DeleteShortUrlThresholdException
+     * @inheritDoc
      */
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
@@ -93,10 +84,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws NonUniqueSlugException
-     * @throws InvalidLongUrlException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function createShortUrl(ShortUrlCreation $creation): ShortUrl
     {
@@ -113,9 +101,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     }
 
     /**
-     * @throws HttpException
-     * @throws ShortUrlNotFoundException
-     * @throws InvalidDataException
+     * @inheritDoc
      */
     public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
     {
