@@ -45,7 +45,7 @@
         ],
         "cs": "phpcs",
         "cs:fix": "phpcbf",
-        "stan": "phpstan analyse src test test-integration --level=8",
+        "stan": "phpstan analyse",
         "test:unit": "phpunit --order-by=random --testdox --colors=always",
         "test:unit:ci": "@test:unit --coverage-php=build/coverage-unit.cov",
         "test:unit:pretty": "@test:unit --coverage-html=build/coverage-unit-html",
