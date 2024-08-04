@@ -13,7 +13,7 @@ CONTAINER=$(docker run --rm -d -p ${PORT}:8080 -e DEFAULT_DOMAIN=localhost:${POR
 sleep 2 # Let's give the server a couple of seconds to start
 export SHLINK_API_KEY=$(docker exec ${CONTAINER} shlink api-key:generate | grep "Generated API key" | sed 's/.*Generated\ API\ key\:\ \"\(.*\)\".*/\1/')
 
-vendor/bin/phpunit --order-by=random -c phpunit-integration.xml --testdox --colors=always $*
+vendor/bin/phpunit --order-by=random -c phpunit-integration.xml --testdox --testdox-summary $*
 TESTS_EXIT_CODE=$?
 
 docker stop ${CONTAINER}

@@ -21,7 +21,7 @@
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpunit/phpcov": "^10.0",
-        "phpunit/phpunit": "^11.0",
+        "phpunit/phpunit": "^11.3",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.3.0",
         "symfony/var-dumper": "^7.0"
@@ -46,7 +46,7 @@
         "cs": "phpcs",
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse",
-        "test:unit": "phpunit --order-by=random --testdox --colors=always",
+        "test:unit": "phpunit --order-by=random --testdox --testdox-summary",
         "test:unit:ci": "@test:unit --coverage-php=build/coverage-unit.cov",
         "test:unit:pretty": "@test:unit --coverage-html=build/coverage-unit-html",
         "test:integration": "test-integration/run-tests.sh",
