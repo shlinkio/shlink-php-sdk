@@ -32,6 +32,15 @@ final readonly class RedirectCondition implements JsonSerializable
         return new self(RedirectConditionType::DEVICE, $device->value);
     }
 
+    /**
+     * @param string $ipAddressPattern - A static IP address (100.200.80.40), CIDR block (192.168.10.0/24) or wildcard
+     *                                   pattern (11.22.*.*)
+     */
+    public static function forIpAddress(string $ipAddressPattern): self
+    {
+        return new self(RedirectConditionType::IP_ADDRESS, $ipAddressPattern);
+    }
+
     public static function fromArray(array $payload): self
     {
         $originalType = $payload['type'] ?? '';
