@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [2.2.0] - 2024-08-15
+### Added
+* Add support for IP-address redirect conditions from Shlink 4.2.
+
+### Changed
+* *Nothing*
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* *Nothing*
+
+### Fixed
+* *Nothing*
+
+
 ## [2.1.0] - 2024-07-30
 ### Added
 * Improve type definitions for iterables. Static analysis tools and IDEs should now be smarter and be able to properly infer item types.

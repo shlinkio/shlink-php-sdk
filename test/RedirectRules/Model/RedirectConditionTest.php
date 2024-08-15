@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace RedirectRules\Model;
+namespace ShlinkioTest\Shlink\SDK\RedirectRules\Model;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
@@ -28,6 +28,11 @@ class RedirectConditionTest extends TestCase
         RedirectConditionType::QUERY_PARAM->value,
         RedirectConditionType::QUERY_PARAM,
         RedirectConditionType::QUERY_PARAM->value,
+    ])]
+    #[TestWith([
+        RedirectConditionType::IP_ADDRESS->value,
+        RedirectConditionType::IP_ADDRESS,
+        RedirectConditionType::IP_ADDRESS->value,
     ])]
     #[TestWith(['something-else', RedirectConditionType::UNKNOWN, 'something-else'])]
     public function expectedTypeAndOriginalTypeAreSet(
@@ -68,6 +73,16 @@ class RedirectConditionTest extends TestCase
 
         self::assertEquals(RedirectConditionType::DEVICE, $condition->type);
         self::assertEquals(Device::IOS->value, $condition->matchValue);
+        self::assertNull($condition->matchKey);
+    }
+
+    #[Test]
+    public function forIpAddressCreatesExpectedCondition(): void
+    {
+        $condition = RedirectCondition::forIpAddress('192.168.1.100');
+
+        self::assertEquals(RedirectConditionType::IP_ADDRESS, $condition->type);
+        self::assertEquals('192.168.1.100', $condition->matchValue);
         self::assertNull($condition->matchKey);
     }
 }
