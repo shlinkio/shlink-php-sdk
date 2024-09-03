@@ -24,6 +24,11 @@ final class ShortUrlCreation implements JsonSerializable
         return $this->cloneWithProp('customSlug', $slug)->cloneWithoutProp('shortCodeLength');
     }
 
+    public function withPathPrefix(string $pathPrefix): self
+    {
+        return $this->cloneWithProp('pathPrefix', $pathPrefix);
+    }
+
     public function withShortCodeLength(int $length): self
     {
         return $this->cloneWithProp('shortCodeLength', $length)->cloneWithoutProp('customSlug');

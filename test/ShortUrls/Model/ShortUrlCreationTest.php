@@ -35,25 +35,29 @@ class ShortUrlCreationTest extends TestCase
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')
                 ->withTags('foo', 'bar')
                 ->validSince($date) // @phpstan-ignore-line
-                ->withCustomSlug('some-slug'),
+                ->withCustomSlug('some-slug')
+                ->withPathPrefix('my-prefix-'),
             [
                 'longUrl' => 'https://foo.com',
                 'tags' => ['foo', 'bar'],
                 'customSlug' => 'some-slug',
+                'pathPrefix' => 'my-prefix-',
                 'validSince' => $date->format(DateTimeInterface::ATOM), // @phpstan-ignore-line
             ],
         ];
         yield [
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')
                 ->withCustomSlug('some-slug')
+                ->withPathPrefix('my-prefix-')
                 ->withShortCodeLength(50),
-            ['longUrl' => 'https://foo.com', 'shortCodeLength' => 50],
+            ['longUrl' => 'https://foo.com', 'pathPrefix' => 'my-prefix-', 'shortCodeLength' => 50],
         ];
         yield [
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')
                 ->withShortCodeLength(50)
-                ->withCustomSlug('some-slug'),
-            ['longUrl' => 'https://foo.com', 'customSlug' => 'some-slug'],
+                ->withCustomSlug('some-slug')
+                ->withPathPrefix('my-prefix-'),
+            ['longUrl' => 'https://foo.com', 'customSlug' => 'some-slug', 'pathPrefix' => 'my-prefix-'],
         ];
         yield [
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')
