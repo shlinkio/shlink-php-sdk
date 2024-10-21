@@ -22,9 +22,12 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           tools: composer
+          coverage: xdebug
       - run: composer install --no-interaction --prefer-dist
       - run: SHLINK_VERSION=${{ matrix.shlink-version }} SHLINK_API_VERSION=${{ matrix.shlink-api-version }} composer test:integration:ci
 
   ci:
     needs: ['integration-tests'] # Wait for integration tests so that all coverage reports are generated
     uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main
+    with:
+      coverage-driver: 'xdebug'
