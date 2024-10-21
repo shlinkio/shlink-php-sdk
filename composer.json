@@ -47,11 +47,23 @@
         "cs:fix": "phpcbf",
         "stan": "phpstan analyse",
         "test:unit": "phpunit --order-by=random --testdox --testdox-summary",
-        "test:unit:ci": "@test:unit --coverage-php=build/coverage-unit.cov",
-        "test:unit:pretty": "@test:unit --coverage-html=build/coverage-unit-html",
+        "test:unit:ci": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test:unit --coverage-php=build/coverage-unit.cov"
+        ],
+        "test:unit:pretty": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test:unit --coverage-html=build/coverage-unit-html"
+        ],
         "test:integration": "test-integration/run-tests.sh",
-        "test:integration:ci": "composer test:integration -- --coverage-php=build/coverage-integration.cov",
-        "test:integration:pretty": "composer test:integration -- --coverage-html=build/coverage-integration-html",
+        "test:integration:ci": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test:integration --coverage-php=build/coverage-integration.cov"
+        ],
+        "test:integration:pretty": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@test:integration --coverage-html=build/coverage-integration-html"
+        ],
         "test:ci": "composer test:unit:ci && vendor/bin/phpcov merge build --clover build/clover.xml",
         "docs:serve": [
             "Composer\\Config::disableProcessTimeout",
