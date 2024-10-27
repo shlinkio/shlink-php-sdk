@@ -1,6 +1,7 @@
 services:
   shlink_php_sdk:
     container_name: shlink_php_sdk
+    user: 1000:1000
     build:
       context: .
     ports:
