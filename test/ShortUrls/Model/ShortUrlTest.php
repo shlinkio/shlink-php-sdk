@@ -24,14 +24,14 @@ class ShortUrlTest extends TestCase
         string $expectedLongUrl,
         DateTimeInterface $expectedDateCreated,
         int $expectedVisitsCount,
-        ?string $expectedDomain,
-        ?string $expectedTitle,
+        string|null $expectedDomain,
+        string|null $expectedTitle,
         bool $expectedCrawlable,
         bool $expectedForwardQuery,
         array $expectedTags,
         ShortUrlMeta $expectedMeta,
         VisitsSummary $expectedVisitsSummary,
-        ?DeviceLongUrls $expectedDeviceLongUrls,
+        DeviceLongUrls|null $expectedDeviceLongUrls,
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 

@@ -10,9 +10,9 @@ namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 final readonly class DeviceLongUrls
 {
     public function __construct(
-        public ?string $android,
-        public ?string $ios,
-        public ?string $desktop,
+        public string|null $android,
+        public string|null $ios,
+        public string|null $desktop,
     ) {
     }
 

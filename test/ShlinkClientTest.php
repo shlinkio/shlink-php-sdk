@@ -301,7 +301,7 @@ class ShlinkClientTest extends TestCase
     #[TestWith([OrphanVisitType::BASE_URL])]
     #[TestWith([OrphanVisitType::REGULAR_NOT_FOUND])]
     #[TestWith([OrphanVisitType::INVALID_SHORT_URL])]
-    public function listOrphanVisitsWithFilterDelegatesCallToProperClient(?OrphanVisitType $type): void
+    public function listOrphanVisitsWithFilterDelegatesCallToProperClient(OrphanVisitType|null $type): void
     {
         $filter = VisitsFilter::create();
         $this->visitsClient->expects($this->once())->method('listOrphanVisitsWithFilter')->with(

@@ -137,7 +137,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
-    public function listOrphanVisitsWithFilter(VisitsFilter $filter, ?OrphanVisitType $type = null): VisitsList
+    public function listOrphanVisitsWithFilter(VisitsFilter $filter, OrphanVisitType|null $type = null): VisitsList
     {
         $query = $filter->toArray();
         if ($type !== null) {

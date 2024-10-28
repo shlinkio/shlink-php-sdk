@@ -16,7 +16,7 @@ class NonUniqueSlugExceptionTest extends TestCase
     public function exceptionIsProperlyCreated(
         HttpException $prev,
         string $expectedCustomSlug,
-        ?string $expectedDomain,
+        string|null $expectedDomain,
         string $expectedMessage,
         int $expectedCode,
     ): void {

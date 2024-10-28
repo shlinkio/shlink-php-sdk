@@ -88,7 +88,7 @@ interface VisitsClientInterface
     /**
      * @return VisitsList<OrphanVisit>
      */
-    public function listOrphanVisitsWithFilter(VisitsFilter $filter, ?OrphanVisitType $type = null): VisitsList;
+    public function listOrphanVisitsWithFilter(VisitsFilter $filter, OrphanVisitType|null $type = null): VisitsList;
 
     /**
      * @return VisitsList<Visit>

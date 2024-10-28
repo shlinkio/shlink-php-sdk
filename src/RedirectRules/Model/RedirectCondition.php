@@ -12,8 +12,8 @@ final readonly class RedirectCondition implements JsonSerializable
     private function __construct(
         public RedirectConditionType $type,
         public string $matchValue,
-        public ?string $matchKey = null,
-        private ?string $originalType = null,
+        public string|null $matchKey = null,
+        private string|null $originalType = null,
     ) {
     }
 

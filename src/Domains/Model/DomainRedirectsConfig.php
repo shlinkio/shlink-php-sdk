@@ -47,7 +47,7 @@ final class DomainRedirectsConfig implements JsonSerializable
         return $this->getCloneWithProp(DomainRedirectProps::INVALID_SHORT_URL->value, null);
     }
 
-    private function getCloneWithProp(string $prop, ?string $value): self
+    private function getCloneWithProp(string $prop, string|null $value): self
     {
         $clone = new self($this->payload);
         $clone->payload[$prop] = $value;

@@ -21,7 +21,7 @@ class VisitTest extends TestCase
         DateTimeInterface $expectedDate,
         string $expectedUserAgent,
         bool $expectedPotentialBot,
-        ?VisitLocation $expectedLocation,
+        VisitLocation|null $expectedLocation,
     ): void {
         $visit = Visit::fromArray($payload);
 

@@ -13,21 +13,21 @@ final readonly class ShortUrl
     /** @deprecated Use $visitsSummary->total instead */
     public int $visitsCount;
     /** @deprecated Not returned by Shlink 4.0.0 */
-    public ?DeviceLongUrls $deviceLongUrls;
+    public DeviceLongUrls|null $deviceLongUrls;
 
     private function __construct(
         public string $shortCode,
         public string $shortUrl,
         public string $longUrl,
         public DateTimeInterface $dateCreated,
-        public ?string $domain,
-        public ?string $title,
+        public string|null $domain,
+        public string|null $title,
         public bool $crawlable,
         public bool $forwardQuery,
         public array $tags,
         public ShortUrlMeta $meta,
         public VisitsSummary $visitsSummary,
-        ?DeviceLongUrls $deviceLongUrls,
+        DeviceLongUrls|null $deviceLongUrls,
     ) {
         // Not using constructor property promotion here so that we can mark these props as deprecated
         $this->visitsCount = $visitsSummary->total;

@@ -284,7 +284,7 @@ class VisitsClientTest extends TestCase
     #[TestWith([OrphanVisitType::INVALID_SHORT_URL])]
     #[TestWith([OrphanVisitType::BASE_URL])]
     #[TestWith([OrphanVisitType::REGULAR_NOT_FOUND])]
-    public function listOrphanVisitsWithFilterPerformsExpectedCall(?OrphanVisitType $type): void
+    public function listOrphanVisitsWithFilterPerformsExpectedCall(OrphanVisitType|null $type): void
     {
         $amountOfPages = 1;
         $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
