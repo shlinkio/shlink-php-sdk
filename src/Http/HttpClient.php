@@ -28,7 +28,7 @@ readonly class HttpClient implements HttpClientInterface
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
         private ShlinkConfigInterface $config,
-        private ?HttpDebuggerInterface $debugger = null,
+        private HttpDebuggerInterface|null $debugger = null,
     ) {
     }
 

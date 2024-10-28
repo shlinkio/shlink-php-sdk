@@ -16,9 +16,9 @@ class ShortUrlMetaTest extends TestCase
     #[Test, DataProvider('providePayloads')]
     public function properObjectIsCreatedFromArray(
         array $payload,
-        ?DateTimeInterface $expectedValidSince,
-        ?DateTimeInterface $expectedValidUntil,
-        ?int $expectedMaxVisits,
+        DateTimeInterface|null $expectedValidSince,
+        DateTimeInterface|null $expectedValidUntil,
+        int|null $expectedMaxVisits,
     ): void {
         $meta = ShortUrlMeta::fromArray($payload);
 

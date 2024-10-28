@@ -8,8 +8,8 @@ final readonly class VisitsSummary
 {
     private function __construct(
         public int $total,
-        public ?int $nonBots,// These are optional for Shlink <3.4.0
-        public ?int $bots,// These are optional for Shlink <3.4.0
+        public int|null $nonBots,// These are optional for Shlink <3.4.0
+        public int|null $bots,// These are optional for Shlink <3.4.0
     ) {
     }
 

@@ -28,7 +28,7 @@ readonly class ShlinkClientBuilder implements ShlinkClientBuilderInterface
         private ClientInterface $client,
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
-        private ?HttpDebuggerInterface $debugger = null,
+        private HttpDebuggerInterface|null $debugger = null,
     ) {
     }
 

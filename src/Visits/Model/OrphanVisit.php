@@ -41,7 +41,7 @@ final readonly class OrphanVisit implements VisitInterface
         return $this->visit->potentialBot();
     }
 
-    public function location(): ?VisitLocation
+    public function location(): VisitLocation|null
     {
         return $this->visit->location();
     }

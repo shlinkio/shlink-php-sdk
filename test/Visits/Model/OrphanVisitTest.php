@@ -22,7 +22,7 @@ class OrphanVisitTest extends TestCase
         DateTimeInterface $expectedDate,
         string $expectedUserAgent,
         bool $expectedPotentialBot,
-        ?VisitLocation $expectedLocation,
+        VisitLocation|null $expectedLocation,
         string $expectedVisitedUrl,
         OrphanVisitType $expectedType,
     ): void {

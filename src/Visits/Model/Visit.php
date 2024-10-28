@@ -14,7 +14,7 @@ final readonly class Visit implements VisitInterface
         private DateTimeInterface $date,
         private string $userAgent,
         private bool $potentialBot,
-        private ?VisitLocation $location,
+        private VisitLocation|null $location,
     ) {
     }
 
@@ -50,7 +50,7 @@ final readonly class Visit implements VisitInterface
         return $this->potentialBot;
     }
 
-    public function location(): ?VisitLocation
+    public function location(): VisitLocation|null
     {
         return $this->location;
     }

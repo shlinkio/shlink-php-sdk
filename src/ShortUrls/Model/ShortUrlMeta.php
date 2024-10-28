@@ -10,9 +10,9 @@ use DateTimeInterface;
 final readonly class ShortUrlMeta
 {
     private function __construct(
-        public ?DateTimeInterface $validSince,
-        public ?DateTimeInterface $validUntil,
-        public ?int $maxVisits,
+        public DateTimeInterface|null $validSince,
+        public DateTimeInterface|null $validUntil,
+        public int|null $maxVisits,
     ) {
     }
 
@@ -25,7 +25,7 @@ final readonly class ShortUrlMeta
         );
     }
 
-    private static function toNullableDate(?string $value): ?DateTimeInterface
+    private static function toNullableDate(string|null $value): DateTimeInterface|null
     {
         if ($value === null) {
             return null;

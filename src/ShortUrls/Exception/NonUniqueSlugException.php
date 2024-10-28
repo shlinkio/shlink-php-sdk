@@ -13,7 +13,7 @@ class NonUniqueSlugException extends RuntimeException implements ExceptionInterf
     private function __construct(
         HttpException $previous,
         public readonly string $customSlug,
-        public readonly ?string $domain,
+        public readonly string|null $domain,
     ) {
         parent::__construct($previous->detail, $previous->status, $previous);
     }
