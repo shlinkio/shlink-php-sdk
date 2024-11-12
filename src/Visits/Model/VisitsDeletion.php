@@ -8,6 +8,9 @@ use Countable;
 
 final readonly class VisitsDeletion implements Countable
 {
+    /**
+     * @param int<0, max> $deletedVisits
+     */
     private function __construct(public int $deletedVisits)
     {
     }
