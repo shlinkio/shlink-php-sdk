@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [2.4.0] - 2024-11-25
 ### Added
-* *Nothing*
+* Add support for PHP 8.4
+* Add support for Shlink 4.3
 
 ### Changed
 * Switch to xdebug for code coverage reports, as pcov is not marking functions as covered

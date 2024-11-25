@@ -65,6 +65,11 @@ final class ShortUrlsFilter implements ArraySerializable
         return $this->cloneWithProp('orderBy', sprintf('%s-DESC', $field->value));
     }
 
+    public function forDomain(string $domain): self
+    {
+        return $this->cloneWithProp('domain', $domain);
+    }
+
     private function cloneWithProp(string $prop, mixed $value): self
     {
         $clone = new self($this->query);

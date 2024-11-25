@@ -41,6 +41,16 @@ final readonly class RedirectCondition implements JsonSerializable
         return new self(RedirectConditionType::IP_ADDRESS, $ipAddressPattern);
     }
 
+    public static function forGeolocationCountryCode(string $countryCode): self
+    {
+        return new self(RedirectConditionType::GEOLOCATION_COUNTRY_CODE, $countryCode);
+    }
+
+    public static function forGeolocationCityName(string $cityName): self
+    {
+        return new self(RedirectConditionType::GEOLOCATION_CITY_NAME, $cityName);
+    }
+
     public static function fromArray(array $payload): self
     {
         $originalType = $payload['type'] ?? '';

@@ -8,7 +8,7 @@ use DateTimeInterface;
 
 final readonly class OrphanVisit implements VisitInterface
 {
-    private function __construct(private Visit $visit, private string $visitedUrl, private OrphanVisitType $type)
+    private function __construct(private Visit $visit, private OrphanVisitType $type)
     {
     }
 
@@ -16,7 +16,6 @@ final readonly class OrphanVisit implements VisitInterface
     {
         return new self(
             visit: Visit::fromArray($payload),
-            visitedUrl: $payload['visitedUrl'] ?? '',
             type: OrphanVisitType::tryFrom($payload['type'] ?? '') ?? OrphanVisitType::REGULAR_NOT_FOUND,
         );
     }
@@ -48,7 +47,12 @@ final readonly class OrphanVisit implements VisitInterface
 
     public function visitedUrl(): string
     {
-        return $this->visitedUrl;
+        return $this->visit->visitedUrl();
+    }
+
+    public function redirectUrl(): string|null
+    {
+        return $this->visit->redirectUrl();
     }
 
     public function type(): OrphanVisitType
