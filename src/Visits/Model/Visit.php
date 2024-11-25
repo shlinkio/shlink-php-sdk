@@ -14,6 +14,8 @@ final readonly class Visit implements VisitInterface
         private DateTimeInterface $date,
         private string $userAgent,
         private bool $potentialBot,
+        private string $visitedUrl,
+        private string|null $redirectUrl,
         private VisitLocation|null $location,
     ) {
     }
@@ -26,6 +28,8 @@ final readonly class Visit implements VisitInterface
             date: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']),
             userAgent: $payload['userAgent'] ?? '',
             potentialBot: $payload['potentialBot'] ?? false,
+            visitedUrl: $payload['visitedUrl'] ?? '',
+            redirectUrl: $payload['redirectUrl'] ?? null,
             location: isset($payload['visitLocation']) ? VisitLocation::fromArray($payload['visitLocation']) : null,
         );
     }
@@ -53,5 +57,15 @@ final readonly class Visit implements VisitInterface
     public function location(): VisitLocation|null
     {
         return $this->location;
+    }
+
+    public function visitedUrl(): string
+    {
+        return $this->visitedUrl;
+    }
+
+    public function redirectUrl(): string|null
+    {
+        return $this->redirectUrl;
     }
 }

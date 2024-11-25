@@ -15,6 +15,9 @@ final readonly class ShortUrl
     /** @deprecated Not returned by Shlink 4.0.0 */
     public DeviceLongUrls|null $deviceLongUrls;
 
+    /**
+     * @param $hasRedirectRules - It's `null` for Shlink older than 4.3
+     */
     private function __construct(
         public string $shortCode,
         public string $shortUrl,
@@ -24,6 +27,7 @@ final readonly class ShortUrl
         public string|null $title,
         public bool $crawlable,
         public bool $forwardQuery,
+        public bool|null $hasRedirectRules,
         public array $tags,
         public ShortUrlMeta $meta,
         public VisitsSummary $visitsSummary,
@@ -48,6 +52,7 @@ final readonly class ShortUrl
             title: $payload['title'] ?? null,
             crawlable: $payload['crawlable'] ?? false,
             forwardQuery: $payload['forwardQuery'] ?? false,
+            hasRedirectRules: $payload['hasRedirectRules'] ?? null,
             tags: $payload['tags'] ?? [],
             meta: ShortUrlMeta::fromArray($payload['meta'] ?? []),
             visitsSummary: VisitsSummary::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
