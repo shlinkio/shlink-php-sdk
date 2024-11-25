@@ -85,4 +85,24 @@ class RedirectConditionTest extends TestCase
         self::assertEquals('192.168.1.100', $condition->matchValue);
         self::assertNull($condition->matchKey);
     }
+
+    #[Test]
+    public function forGeolocationCountryCodeCreatesExpectedCondition(): void
+    {
+        $condition = RedirectCondition::forGeolocationCountryCode('US');
+
+        self::assertEquals(RedirectConditionType::GEOLOCATION_COUNTRY_CODE, $condition->type);
+        self::assertEquals('US', $condition->matchValue);
+        self::assertNull($condition->matchKey);
+    }
+
+    #[Test]
+    public function forGeolocationCityNameCreatesExpectedCondition(): void
+    {
+        $condition = RedirectCondition::forGeolocationCityName('Los Angeles');
+
+        self::assertEquals(RedirectConditionType::GEOLOCATION_CITY_NAME, $condition->type);
+        self::assertEquals('Los Angeles', $condition->matchValue);
+        self::assertNull($condition->matchKey);
+    }
 }

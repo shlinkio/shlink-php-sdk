@@ -56,5 +56,6 @@ class ShortUrlsFilterTest extends TestCase
             fn () => ShortUrlsFilter::create()->excludingMaxVisitsReached()->excludingPastValidUntil(),
             ['excludeMaxVisitsReached' => 'true', 'excludePastValidUntil' => 'true'],
         ];
+        yield [fn () => ShortUrlsFilter::create()->forDomain('s.test'), ['domain' => 's.test']];
     }
 }
