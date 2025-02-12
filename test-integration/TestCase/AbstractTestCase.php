@@ -18,6 +18,12 @@ use Shlinkio\Shlink\SDK\ShortUrls\ShortUrlsClient;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 
+use function array_pad;
+use function explode;
+use function getenv;
+use function implode;
+use function version_compare;
+
 class AbstractTestCase extends TestCase
 {
     protected static function httpClient(): HttpClientInterface
@@ -68,6 +74,11 @@ class AbstractTestCase extends TestCase
             $shlinkClient->deleteShortUrl($shortUrl->identifier());
         }
 
-        $shlinkClient->deleteOrphanVisits();
+        // Do not try to delete orphan visits for versions older than 3.6.0, as it's not supported there
+        $version = getenv('SHLINK_VERSION') ?: '';
+        $normalizedVersion = implode('.', array_pad(explode('.', $version), length: 3, value: '0'));
+        if (version_compare($normalizedVersion, '3.6.0') >= 0) {
+            $shlinkClient->deleteOrphanVisits();
+        }
     }
 }
