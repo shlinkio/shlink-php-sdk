@@ -37,7 +37,7 @@ class ShortUrlsClientTest extends AbstractTestCase
     }
 
     #[Test, DataProvider('provideIdentifiableMethods')]
-    public function throwsExceptionWhenTryingToActOnNotFoundSHortUrl(string $method, mixed ...$extraArgs): void
+    public function throwsExceptionWhenTryingToActOnNotFoundShortUrl(string $method, mixed ...$extraArgs): void
     {
         $identifier = ShortUrlIdentifier::fromShortCode('invalid');
 
