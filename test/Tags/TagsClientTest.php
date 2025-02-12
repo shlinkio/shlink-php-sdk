@@ -62,7 +62,7 @@ class TagsClientTest extends TestCase
     public function listTagsWithStatsReturnsExpectedResponse(): void
     {
         $this->assertListTags(
-            ['/tags/stats', $this->isType('array')],
+            ['/tags/stats', $this->isArray()],
             [[], [], [], [], []],
             fn (): array => array_map(fn () => [], [...$this->tagsClient->listTagsWithStats()]),
         );
