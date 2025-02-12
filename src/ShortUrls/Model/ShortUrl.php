@@ -61,4 +61,9 @@ final readonly class ShortUrl
                 : null,
         );
     }
+
+    public function identifier(): ShortUrlIdentifier
+    {
+        return ShortUrlIdentifier::fromShortUrl($this);
+    }
 }

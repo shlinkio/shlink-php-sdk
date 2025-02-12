@@ -12,4 +12,5 @@
     <!-- Paths to check -->
     <file>src</file>
     <file>test</file>
+    <file>test-integration</file>
 </ruleset>
