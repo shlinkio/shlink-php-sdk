@@ -36,8 +36,7 @@ class AbstractTestCase extends TestCase
         return $client;
     }
 
-    #[After]
-    public function cleanupTestArtifacts(): void
+    protected static function shlinkClient(): ShlinkClient
     {
         static $shlinkClient;
         if ($shlinkClient === null) {
@@ -50,6 +49,14 @@ class AbstractTestCase extends TestCase
                 new RedirectRulesClient($httpClient),
             );
         }
+
+        return $shlinkClient;
+    }
+
+    #[After]
+    public function cleanupTestArtifacts(): void
+    {
+        $shlinkClient = self::shlinkClient();
 
         // Delete all short URLs (and their visits), all tags and all orphan visits after every test
         // This ensures side effects in one test do not affect subsequent ones
