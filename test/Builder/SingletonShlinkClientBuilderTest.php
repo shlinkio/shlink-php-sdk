@@ -32,6 +32,9 @@ class SingletonShlinkClientBuilderTest extends TestCase
         $this->builder = new SingletonShlinkClientBuilder($this->wrapped);
     }
 
+    /**
+     * @param non-empty-string $method
+     */
     #[Test, DataProvider('provideMethods')]
     public function buildClientReturnsAlwaysNewInstances(string $method): void
     {

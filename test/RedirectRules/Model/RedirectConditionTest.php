@@ -57,6 +57,26 @@ class RedirectConditionTest extends TestCase
     }
 
     #[Test]
+    public function forAnyValueQueryParamCreatesExpectedCondition(): void
+    {
+        $condition = RedirectCondition::forAnyValueQueryParam('foo');
+
+        self::assertEquals(RedirectConditionType::ANY_VALUE_QUERY_PARAM, $condition->type);
+        self::assertEquals('foo', $condition->matchKey);
+        self::assertNull($condition->matchValue);
+    }
+
+    #[Test]
+    public function forValuelessQueryParamCreatesExpectedCondition(): void
+    {
+        $condition = RedirectCondition::forValuelessQueryParam('bar');
+
+        self::assertEquals(RedirectConditionType::VALUELESS_QUERY_PARAM, $condition->type);
+        self::assertEquals('bar', $condition->matchKey);
+        self::assertNull($condition->matchValue);
+    }
+
+    #[Test]
     public function forLanguageCreatesExpectedCondition(): void
     {
         $condition = RedirectCondition::forLanguage('es-ES');
