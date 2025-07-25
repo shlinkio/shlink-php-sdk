@@ -11,7 +11,7 @@ final readonly class RedirectCondition implements JsonSerializable
 {
     private function __construct(
         public RedirectConditionType $type,
-        public string $matchValue,
+        public string|null $matchValue = null,
         public string|null $matchKey = null,
         private string|null $originalType = null,
     ) {
@@ -20,6 +20,16 @@ final readonly class RedirectCondition implements JsonSerializable
     public static function forQueryParam(string $param, string $value): self
     {
         return new self(RedirectConditionType::QUERY_PARAM, $value, $param);
+    }
+
+    public static function forAnyValueQueryParam(string $param): self
+    {
+        return new self(RedirectConditionType::ANY_VALUE_QUERY_PARAM, matchKey: $param);
+    }
+
+    public static function forValuelessQueryParam(string $param): self
+    {
+        return new self(RedirectConditionType::VALUELESS_QUERY_PARAM, matchKey: $param);
     }
 
     public static function forLanguage(string $language): self
@@ -56,7 +66,7 @@ final readonly class RedirectCondition implements JsonSerializable
         $originalType = $payload['type'] ?? '';
         return new self(
             type: RedirectConditionType::tryFrom($originalType) ?? RedirectConditionType::UNKNOWN,
-            matchValue:  $payload['matchValue'] ?? '',
+            matchValue:  $payload['matchValue'] ?? null,
             matchKey: $payload['matchKey'] ?? null,
             originalType: $originalType,
         );
