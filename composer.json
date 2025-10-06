@@ -23,7 +23,7 @@
         "phpunit/phpcov": "^11.0",
         "phpunit/phpunit": "^12.2",
         "roave/security-advisories": "dev-master",
-        "shlinkio/php-coding-standard": "~2.4.0",
+        "shlinkio/php-coding-standard": "~2.5.0",
         "symfony/var-dumper": "^7.3"
     },
     "autoload": {
