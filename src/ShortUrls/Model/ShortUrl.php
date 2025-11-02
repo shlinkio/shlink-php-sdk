@@ -10,11 +10,6 @@ use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
 
 final readonly class ShortUrl
 {
-    /** @deprecated Use $visitsSummary->total instead */
-    public int $visitsCount;
-    /** @deprecated Not returned by Shlink 4.0.0 */
-    public DeviceLongUrls|null $deviceLongUrls;
-
     /**
      * @param $hasRedirectRules - It's `null` for Shlink older than 4.3
      */
@@ -31,11 +26,7 @@ final readonly class ShortUrl
         public array $tags,
         public ShortUrlMeta $meta,
         public VisitsSummary $visitsSummary,
-        DeviceLongUrls|null $deviceLongUrls,
     ) {
-        // Not using constructor property promotion here so that we can mark these props as deprecated
-        $this->visitsCount = $visitsSummary->total;
-        $this->deviceLongUrls = $deviceLongUrls;
     }
 
     public static function fromArray(array $payload): self
@@ -56,9 +47,6 @@ final readonly class ShortUrl
             tags: $payload['tags'] ?? [],
             meta: ShortUrlMeta::fromArray($payload['meta'] ?? []),
             visitsSummary: VisitsSummary::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
-            deviceLongUrls: isset($payload['deviceLongUrls'])
-                ? DeviceLongUrls::fromArray($payload['deviceLongUrls'])
-                : null,
         );
     }
 

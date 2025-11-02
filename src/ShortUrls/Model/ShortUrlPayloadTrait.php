@@ -12,24 +12,6 @@ trait ShortUrlPayloadTrait
     {
     }
 
-    /** @deprecated Ignored when using Shlink 4.0.0 */
-    public function withDeviceLongUrl(Device $device, string $longUrl): self
-    {
-        $deviceLongUrls = $this->payload['deviceLongUrls'] ?? [];
-        $deviceLongUrls[$device->value] = $longUrl;
-
-        return $this->cloneWithProp('deviceLongUrls', $deviceLongUrls);
-    }
-
-    /** @deprecated Ignored when using Shlink 4.0.0 */
-    public function withoutDeviceLongUrl(Device $device): self
-    {
-        $deviceLongUrls = $this->payload['deviceLongUrls'] ?? [];
-        unset($deviceLongUrls[$device->value]);
-
-        return $this->cloneWithProp('deviceLongUrls', $deviceLongUrls);
-    }
-
     public function validSince(DateTimeInterface $validSince): self
     {
         return $this->cloneWithProp('validSince', $validSince->format(DateTimeInterface::ATOM));
@@ -63,18 +45,6 @@ trait ShortUrlPayloadTrait
     public function withoutQueryForwardingOnRedirect(): self
     {
         return $this->cloneWithProp('forwardQuery', false);
-    }
-
-    /** @deprecated Ignored when using Shlink 4.0.0 */
-    public function validatingTheLongUrl(): self
-    {
-        return $this->cloneWithProp('validateUrl', true);
-    }
-
-    /** @deprecated Ignored when using Shlink 4.0.0 */
-    public function notValidatingTheLongUrl(): self
-    {
-        return $this->cloneWithProp('validateUrl', false);
     }
 
     private function cloneWithProp(string $prop, mixed $value): self

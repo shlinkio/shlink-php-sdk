@@ -60,14 +60,8 @@ class ShortUrlCreationTest extends TestCase
             ['longUrl' => 'https://foo.com', 'customSlug' => 'some-slug', 'pathPrefix' => 'my-prefix-'],
         ];
         yield [
-            fn () => ShortUrlCreation::forLongUrl('https://foo.com')
-                ->notValidatingTheLongUrl()
-                ->crawlable(),
-            ['longUrl' => 'https://foo.com', 'validateUrl' => false, 'crawlable' => true],
-        ];
-        yield [
-            fn () => ShortUrlCreation::forLongUrl('https://foo.com')->validatingTheLongUrl(),
-            ['longUrl' => 'https://foo.com', 'validateUrl' => true],
+            fn () => ShortUrlCreation::forLongUrl('https://foo.com')->crawlable(),
+            ['longUrl' => 'https://foo.com', 'crawlable' => true],
         ];
         yield [
             fn () => ShortUrlCreation::forLongUrl('https://foo.com')

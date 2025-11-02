@@ -9,7 +9,6 @@ use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException;
-use Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
@@ -93,7 +92,6 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
         } catch (HttpException $e) {
             throw match ($e->type) {
                 ErrorType::INVALID_DATA => InvalidDataException::fromHttpException($e),
-                ErrorType::INVALID_URL => InvalidLongUrlException::fromHttpException($e),
                 ErrorType::NON_UNIQUE_SLUG => NonUniqueSlugException::fromHttpException($e),
                 default => $e,
             };

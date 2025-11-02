@@ -23,7 +23,6 @@ use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 use Throwable;
 
@@ -44,81 +43,33 @@ class VisitsClientTest extends TestCase
         $this->now = (new DateTimeImmutable())->format(DateTimeInterface::ATOM);
     }
 
-    /**
-     * @param callable(VisitsOverview): void $assert
-     */
-    #[Test, DataProvider('provideVisits')]
-    public function getVisitsOverviewPerformsExpectedCall(array $visits, callable $assert): void
+    #[Test]
+    public function getVisitsOverviewPerformsExpectedCall(): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->with('/visits')->willReturn([
-            'visits' => $visits,
+            'visits' => [
+                'nonOrphanVisits' => [
+                    'total' => 200,
+                    'nonBots' => 150,
+                    'bots' => 50,
+                ],
+                'orphanVisits' => [
+                    'total' => 38,
+                    'nonBots' => 30,
+                    'bots' => 8,
+                ],
+            ],
         ]);
 
-        $assert($this->visitsClient->getVisitsOverview());
-    }
+        $result = $this->visitsClient->getVisitsOverview();
 
-    public static function provideVisits(): iterable
-    {
-        yield 'legacy response' => [[
-            'visitsCount' => 200,
-            'orphanVisitsCount' => 38,
-        ], function (VisitsOverview $result): void {
-            self::assertEquals(200, $result->visitsCount);
-            self::assertEquals(38, $result->orphanVisitsCount);
-            self::assertEquals(200, $result->nonOrphanVisits->total);
-            self::assertEquals(38, $result->orphanVisits->total);
-            self::assertNull($result->nonOrphanVisits->bots);
-            self::assertNull($result->nonOrphanVisits->nonBots);
-            self::assertNull($result->orphanVisits->bots);
-            self::assertNull($result->orphanVisits->nonBots);
-            self::assertCount(238, $result);
-        }];
-        yield 'current response' => [[
-            'visitsCount' => 200,
-            'orphanVisitsCount' => 38,
-            'nonOrphanVisits' => [
-                'total' => 200,
-                'nonBots' => 150,
-                'bots' => 50,
-            ],
-            'orphanVisits' => [
-                'total' => 38,
-                'nonBots' => 30,
-                'bots' => 8,
-            ],
-        ], function (VisitsOverview $result): void {
-            self::assertEquals(200, $result->visitsCount);
-            self::assertEquals(38, $result->orphanVisitsCount);
-            self::assertEquals(200, $result->nonOrphanVisits->total);
-            self::assertEquals(150, $result->nonOrphanVisits->nonBots);
-            self::assertEquals(50, $result->nonOrphanVisits->bots);
-            self::assertEquals(38, $result->orphanVisits->total);
-            self::assertEquals(30, $result->orphanVisits->nonBots);
-            self::assertEquals(8, $result->orphanVisits->bots);
-            self::assertCount(238, $result);
-        }];
-        yield 'future response' => [[
-            'nonOrphanVisits' => [
-                'total' => 200,
-                'nonBots' => 150,
-                'bots' => 50,
-            ],
-            'orphanVisits' => [
-                'total' => 38,
-                'nonBots' => 30,
-                'bots' => 8,
-            ],
-        ], function (VisitsOverview $result): void {
-            self::assertEquals(200, $result->visitsCount);
-            self::assertEquals(38, $result->orphanVisitsCount);
-            self::assertEquals(200, $result->nonOrphanVisits->total);
-            self::assertEquals(150, $result->nonOrphanVisits->nonBots);
-            self::assertEquals(50, $result->nonOrphanVisits->bots);
-            self::assertEquals(38, $result->orphanVisits->total);
-            self::assertEquals(30, $result->orphanVisits->nonBots);
-            self::assertEquals(8, $result->orphanVisits->bots);
-            self::assertCount(238, $result);
-        }];
+        self::assertEquals(200, $result->nonOrphanVisits->total);
+        self::assertEquals(150, $result->nonOrphanVisits->nonBots);
+        self::assertEquals(50, $result->nonOrphanVisits->bots);
+        self::assertEquals(38, $result->orphanVisits->total);
+        self::assertEquals(30, $result->orphanVisits->nonBots);
+        self::assertEquals(8, $result->orphanVisits->bots);
+        self::assertCount(238, $result);
     }
 
     #[Test, DataProvider('provideShortUrls')]

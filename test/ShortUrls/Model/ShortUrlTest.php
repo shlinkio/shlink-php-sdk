@@ -9,7 +9,6 @@ use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Shlinkio\Shlink\SDK\ShortUrls\Model\DeviceLongUrls;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary;
@@ -23,7 +22,6 @@ class ShortUrlTest extends TestCase
         string $expectedShortUrl,
         string $expectedLongUrl,
         DateTimeInterface $expectedDateCreated,
-        int $expectedVisitsCount,
         string|null $expectedDomain,
         string|null $expectedTitle,
         bool $expectedCrawlable,
@@ -31,7 +29,6 @@ class ShortUrlTest extends TestCase
         array $expectedTags,
         ShortUrlMeta $expectedMeta,
         VisitsSummary $expectedVisitsSummary,
-        DeviceLongUrls|null $expectedDeviceLongUrls,
     ): void {
         $shortUrl = ShortUrl::fromArray($payload);
 
@@ -39,7 +36,6 @@ class ShortUrlTest extends TestCase
         self::assertEquals($expectedShortUrl, $shortUrl->shortUrl);
         self::assertEquals($expectedLongUrl, $shortUrl->longUrl);
         self::assertEquals($expectedDateCreated, $shortUrl->dateCreated);
-        self::assertEquals($expectedVisitsCount, $shortUrl->visitsCount);
         self::assertEquals($expectedDomain, $shortUrl->domain);
         self::assertEquals($expectedTitle, $shortUrl->title);
         self::assertEquals($expectedCrawlable, $shortUrl->crawlable);
@@ -47,7 +43,6 @@ class ShortUrlTest extends TestCase
         self::assertEquals($expectedTags, $shortUrl->tags);
         self::assertEquals($expectedMeta, $shortUrl->meta);
         self::assertEquals($expectedVisitsSummary, $shortUrl->visitsSummary);
-        self::assertEquals($expectedDeviceLongUrls, $shortUrl->deviceLongUrls);
     }
 
     public static function providePayloads(): iterable
@@ -61,7 +56,6 @@ class ShortUrlTest extends TestCase
             '',
             '',
             $now,
-            0,
             null,
             null,
             false,
@@ -69,7 +63,6 @@ class ShortUrlTest extends TestCase
             [],
             ShortUrlMeta::fromArray([]),
             VisitsSummary::fromArrayWithFallback([], 0),
-            null,
         ];
         yield 'all values' => [
             [
@@ -96,7 +89,6 @@ class ShortUrlTest extends TestCase
             'https://s.test/foo',
             'https://foo.com/bar',
             $now,
-            3,
             'domain',
             'title',
             true,
@@ -104,7 +96,6 @@ class ShortUrlTest extends TestCase
             ['foo', 'bar'],
             ShortUrlMeta::fromArray($meta),
             VisitsSummary::fromArrayWithFallback($visitsSummary, 5),
-            null,
         ];
         yield 'visits total fallback' => [
             ['dateCreated' => $formattedDate, 'visitsCount' => 35],
@@ -112,7 +103,6 @@ class ShortUrlTest extends TestCase
             '',
             '',
             $now,
-            35,
             null,
             null,
             false,
@@ -120,26 +110,6 @@ class ShortUrlTest extends TestCase
             [],
             ShortUrlMeta::fromArray([]),
             VisitsSummary::fromArrayWithFallback([], 35),
-            null,
-        ];
-        yield 'device long URLs' => [
-            ['dateCreated' => $formattedDate, 'deviceLongUrls' => $rawDeviceLongUrls = [
-                'android' => 'foo',
-                'desktop' => 'bar',
-            ]],
-            '',
-            '',
-            '',
-            $now,
-            0,
-            null,
-            null,
-            false,
-            false,
-            [],
-            ShortUrlMeta::fromArray([]),
-            VisitsSummary::fromArrayWithFallback([], 0),
-            DeviceLongUrls::fromArray($rawDeviceLongUrls),
         ];
     }
 }
