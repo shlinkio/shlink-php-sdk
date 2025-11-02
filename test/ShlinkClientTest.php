@@ -28,6 +28,7 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
@@ -303,13 +304,18 @@ class ShlinkClientTest extends TestCase
     #[TestWith([OrphanVisitType::INVALID_SHORT_URL])]
     public function listOrphanVisitsWithFilterDelegatesCallToProperClient(OrphanVisitType|null $type): void
     {
-        $filter = VisitsFilter::create();
+        $filter = match ($type) {
+            null => OrphanVisitsFilter::create(),
+            OrphanVisitType::INVALID_SHORT_URL => OrphanVisitsFilter::create()->onlyIncludingInvalidShortUrl(),
+            OrphanVisitType::BASE_URL => OrphanVisitsFilter::create()->onlyIncludingBaseUrl(),
+            OrphanVisitType::REGULAR_NOT_FOUND => OrphanVisitsFilter::create()->onlyIncludingRegularNotFound(),
+        };
+
         $this->visitsClient->expects($this->once())->method('listOrphanVisitsWithFilter')->with(
             $filter,
-            $type,
         )->willReturn(VisitsList::forOrphanVisitsTupleLoader(static fn () => [[], []]));
 
-        $this->shlinkClient->listOrphanVisitsWithFilter($filter, $type);
+        $this->shlinkClient->listOrphanVisitsWithFilter($filter);
     }
 
     #[Test]

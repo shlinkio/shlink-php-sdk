@@ -19,9 +19,9 @@ use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitInterface;
-use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\VisitsClient;
 use Throwable;
@@ -237,16 +237,24 @@ class VisitsClientTest extends TestCase
     #[TestWith([OrphanVisitType::REGULAR_NOT_FOUND])]
     public function listOrphanVisitsWithFilterPerformsExpectedCall(OrphanVisitType|null $type): void
     {
+        $visitsFilter = match ($type) {
+            null => OrphanVisitsFilter::create(),
+            OrphanVisitType::INVALID_SHORT_URL => OrphanVisitsFilter::create()->onlyIncludingInvalidShortUrl(),
+            OrphanVisitType::BASE_URL => OrphanVisitsFilter::create()->onlyIncludingBaseUrl(),
+            OrphanVisitType::REGULAR_NOT_FOUND => OrphanVisitsFilter::create()->onlyIncludingRegularNotFound(),
+        };
+
         $amountOfPages = 1;
+        $rawType = $visitsFilter->toArray()['type'] ?? null;
         $this->httpClient->expects($this->exactly($amountOfPages))->method('getFromShlink')->with(
             '/visits/orphan',
             $this->callback(
                 fn (array $query)
-                    => $type === null ? ! array_key_exists('type', $query) : $query['type'] === $type->value,
+                    => $rawType === null ? ! array_key_exists('type', $query) : $query['type'] === $rawType,
             ),
         )->willReturnCallback($this->buildPaginationImplementation($amountOfPages));
 
-        $result = $this->visitsClient->listOrphanVisitsWithFilter(VisitsFilter::create(), $type);
+        $result = $this->visitsClient->listOrphanVisitsWithFilter($visitsFilter);
 
         $this->assertPaginator($result, $amountOfPages);
     }

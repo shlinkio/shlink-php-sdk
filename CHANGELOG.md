@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com), and this 
 ## [3.0.0] - 2025-11-02
 ### Added
 * Add support for PHP 8.5
+* Add support for Shlink 4.6.0
 
 ### Changed
 * *Nothing*

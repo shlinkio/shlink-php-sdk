@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeInterface;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsMode;
 use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
 use function sprintf;
 
 final class ShortUrlsFilter implements ArraySerializable
 {
-    private const string TAGS_MODE_ANY = 'any';
-    private const string TAGS_MODE_ALL = 'all';
-
     private function __construct(private array $query = [])
     {
     }
@@ -40,22 +38,26 @@ final class ShortUrlsFilter implements ArraySerializable
 
     public function containingSomeTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', self::TAGS_MODE_ANY);
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', TagsMode::ANY->value);
     }
 
     public function containingAllTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', self::TAGS_MODE_ALL);
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', TagsMode::ALL->value);
     }
 
     public function notContainingSomeTags(string ...$excludeTags): self
     {
-        return $this->cloneWithProp('excludeTags', $excludeTags)->cloneWithProp('excludeTagsMode', self::TAGS_MODE_ANY);
+        return $this
+            ->cloneWithProp('excludeTags', $excludeTags)
+            ->cloneWithProp('excludeTagsMode', TagsMode::ANY->value);
     }
 
     public function notContainingAnyTags(string ...$excludeTags): self
     {
-        return $this->cloneWithProp('excludeTags', $excludeTags)->cloneWithProp('excludeTagsMode', self::TAGS_MODE_ALL);
+        return $this
+            ->cloneWithProp('excludeTags', $excludeTags)
+            ->cloneWithProp('excludeTagsMode', TagsMode::ALL->value);
     }
 
     public function excludingMaxVisitsReached(): self
