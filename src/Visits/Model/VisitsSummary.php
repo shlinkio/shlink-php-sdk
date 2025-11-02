@@ -17,16 +17,10 @@ final readonly class VisitsSummary
 
     public static function fromArray(array $payload): self
     {
-        return self::fromArrayWithFallback($payload);
-    }
-
-    /** @deprecated Use self::fromArray instead */
-    public static function fromArrayWithFallback(array $payload, int $fallbackTotal = 0): self
-    {
         return new self(
-            $payload['total'] ?? $fallbackTotal,
-            $payload['nonBots'] ?? $fallbackTotal,
-            $payload['bots'] ?? $fallbackTotal,
+            total: $payload['total'] ?? 0,
+            nonBots: $payload['nonBots'] ?? 0,
+            bots: $payload['bots'] ?? 0,
         );
     }
 }

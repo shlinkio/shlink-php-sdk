@@ -62,7 +62,7 @@ class ShortUrlTest extends TestCase
             false,
             [],
             ShortUrlMeta::fromArray([]),
-            VisitsSummary::fromArrayWithFallback([], 0),
+            VisitsSummary::fromArray([]),
         ];
         yield 'all values' => [
             [
@@ -70,7 +70,6 @@ class ShortUrlTest extends TestCase
                 'shortUrl' => 'https://s.test/foo',
                 'longUrl' => 'https://foo.com/bar',
                 'dateCreated' => $formattedDate,
-                'visitsCount' => 35,
                 'domain' => 'domain',
                 'title' => 'title',
                 'crawlable' => true,
@@ -95,21 +94,7 @@ class ShortUrlTest extends TestCase
             true,
             ['foo', 'bar'],
             ShortUrlMeta::fromArray($meta),
-            VisitsSummary::fromArrayWithFallback($visitsSummary, 5),
-        ];
-        yield 'visits total fallback' => [
-            ['dateCreated' => $formattedDate, 'visitsCount' => 35],
-            '',
-            '',
-            '',
-            $now,
-            null,
-            null,
-            false,
-            false,
-            [],
-            ShortUrlMeta::fromArray([]),
-            VisitsSummary::fromArrayWithFallback([], 35),
+            VisitsSummary::fromArray($visitsSummary),
         ];
     }
 }

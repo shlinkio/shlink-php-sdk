@@ -31,8 +31,6 @@ final readonly class ShortUrl
 
     public static function fromArray(array $payload): self
     {
-        $visitsCount = $payload['visitsCount'] ?? 0;
-
         return new self(
             shortCode: $payload['shortCode'] ?? '',
             shortUrl: $payload['shortUrl'] ?? '',
@@ -46,7 +44,7 @@ final readonly class ShortUrl
             hasRedirectRules: $payload['hasRedirectRules'] ?? null,
             tags: $payload['tags'] ?? [],
             meta: ShortUrlMeta::fromArray($payload['meta'] ?? []),
-            visitsSummary: VisitsSummary::fromArrayWithFallback($payload['visitsSummary'] ?? [], $visitsCount),
+            visitsSummary: VisitsSummary::fromArray($payload['visitsSummary'] ?? []),
         );
     }
 
