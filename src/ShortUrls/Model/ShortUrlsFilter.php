@@ -11,6 +11,9 @@ use function sprintf;
 
 final class ShortUrlsFilter implements ArraySerializable
 {
+    private const string TAGS_MODE_ANY = 'any';
+    private const string TAGS_MODE_ALL = 'all';
+
     private function __construct(private array $query = [])
     {
     }
@@ -37,12 +40,22 @@ final class ShortUrlsFilter implements ArraySerializable
 
     public function containingSomeTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', 'any');
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', self::TAGS_MODE_ANY);
     }
 
     public function containingAllTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', 'all');
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', self::TAGS_MODE_ALL);
+    }
+
+    public function notContainingSomeTags(string ...$excludeTags): self
+    {
+        return $this->cloneWithProp('excludeTags', $excludeTags)->cloneWithProp('excludeTagsMode', self::TAGS_MODE_ANY);
+    }
+
+    public function notContainingAnyTags(string ...$excludeTags): self
+    {
+        return $this->cloneWithProp('excludeTags', $excludeTags)->cloneWithProp('excludeTagsMode', self::TAGS_MODE_ALL);
     }
 
     public function excludingMaxVisitsReached(): self
@@ -68,6 +81,11 @@ final class ShortUrlsFilter implements ArraySerializable
     public function forDomain(string $domain): self
     {
         return $this->cloneWithProp('domain', $domain);
+    }
+
+    public function createdWithApiKey(string $apiKeyName): self
+    {
+        return $this->cloneWithProp('apiKeyName', $apiKeyName);
     }
 
     private function cloneWithProp(string $prop, mixed $value): self
