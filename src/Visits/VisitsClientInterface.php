@@ -10,12 +10,13 @@ use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier;
 use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit;
-use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\Visit;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
+use Shlinkio\Shlink\SDK\Visits\Model\WithDomainVisitsFilter;
 
 interface VisitsClientInterface
 {
@@ -50,7 +51,7 @@ interface VisitsClientInterface
      * @throws HttpException
      * @throws TagNotFoundException
      */
-    public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList;
+    public function listTagVisitsWithFilter(string $tag, WithDomainVisitsFilter|VisitsFilter $filter): VisitsList;
 
     /**
      * @return VisitsList<Visit>
@@ -88,7 +89,9 @@ interface VisitsClientInterface
     /**
      * @return VisitsList<OrphanVisit>
      */
-    public function listOrphanVisitsWithFilter(VisitsFilter $filter, OrphanVisitType|null $type = null): VisitsList;
+    public function listOrphanVisitsWithFilter(
+        OrphanVisitsFilter|WithDomainVisitsFilter|VisitsFilter $filter,
+    ): VisitsList;
 
     /**
      * @return VisitsList<Visit>
@@ -98,7 +101,7 @@ interface VisitsClientInterface
     /**
      * @return VisitsList<Visit>
      */
-    public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList;
+    public function listNonOrphanVisitsWithFilter(WithDomainVisitsFilter|VisitsFilter $filter): VisitsList;
 
     public function deleteOrphanVisits(): VisitsDeletion;
 

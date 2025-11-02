@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        php-version: ['8.3', '8.4']
-        shlink-version: ['4.5', '4.4', '4.3', '4.2', '4.1', '4.0', '3.7', '3.6']
+        php-version: ['8.3', '8.4', '8.5']
+        shlink-version: ['4.6', '4.5', '4.4', '4.3', '4.2', '4.1', '4.0']
         shlink-api-version: ['3']
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Use PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -29,5 +29,3 @@ jobs:
   ci:
     needs: ['integration-tests'] # Wait for integration tests so that all coverage reports are generated
     uses: shlinkio/github-actions/.github/workflows/php-lib-ci.yml@main
-    with:
-      coverage-driver: 'xdebug'

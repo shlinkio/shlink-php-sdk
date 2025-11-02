@@ -8,22 +8,19 @@ final readonly class VisitsSummary
 {
     /**
      * @param int<0, max> $total
-     * @param int<0, max>|null $nonBots
-     * @param int<0, max>|null $bots
+     * @param int<0, max> $nonBots
+     * @param int<0, max> $bots
      */
-    private function __construct(
-        public int $total,
-        public int|null $nonBots,// These are optional for Shlink <3.4.0
-        public int|null $bots,// These are optional for Shlink <3.4.0
-    ) {
+    private function __construct(public int $total, public int $nonBots, public int $bots)
+    {
     }
 
-    public static function fromArrayWithFallback(array $payload, int $fallbackTotal): self
+    public static function fromArray(array $payload): self
     {
         return new self(
-            $payload['total'] ?? $fallbackTotal,
-            $payload['nonBots'] ?? null,
-            $payload['bots'] ?? null,
+            total: $payload['total'] ?? 0,
+            nonBots: $payload['nonBots'] ?? 0,
+            bots: $payload['bots'] ?? 0,
         );
     }
 }

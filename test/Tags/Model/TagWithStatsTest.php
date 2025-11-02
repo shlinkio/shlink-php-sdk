@@ -22,7 +22,7 @@ class TagWithStatsTest extends TestCase
 
         self::assertEquals($expectedTag, $stats->tag);
         self::assertEquals($expectedShortUrlsCount, $stats->shortUrlsCount);
-        self::assertEquals($expectedVisitsCount, $stats->visitsCount);
+        self::assertEquals($expectedVisitsCount, $stats->visitsSummary->total);
     }
 
     public static function providePayloads(): iterable
@@ -32,7 +32,7 @@ class TagWithStatsTest extends TestCase
             [
                 'tag' => 'some-tag',
                 'shortUrlsCount' => 23,
-                'visitsCount' => 5471,
+                'visitsSummary' => ['total' => 5471],
             ],
             'some-tag',
             23,

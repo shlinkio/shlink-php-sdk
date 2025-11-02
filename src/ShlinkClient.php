@@ -21,11 +21,12 @@ use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\TagsClientInterface;
-use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType;
+use Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
+use Shlinkio\Shlink\SDK\Visits\Model\WithDomainVisitsFilter;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
 readonly class ShlinkClient implements
@@ -187,7 +188,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
-    public function listTagVisitsWithFilter(string $tag, VisitsFilter $filter): VisitsList
+    public function listTagVisitsWithFilter(string $tag, WithDomainVisitsFilter|VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listTagVisitsWithFilter($tag, $filter);
     }
@@ -235,9 +236,10 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
-    public function listOrphanVisitsWithFilter(VisitsFilter $filter, OrphanVisitType|null $type = null): VisitsList
-    {
-        return $this->visitsClient->listOrphanVisitsWithFilter($filter, $type);
+    public function listOrphanVisitsWithFilter(
+        OrphanVisitsFilter|WithDomainVisitsFilter|VisitsFilter $filter,
+    ): VisitsList {
+        return $this->visitsClient->listOrphanVisitsWithFilter($filter);
     }
 
     /**
@@ -251,7 +253,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
-    public function listNonOrphanVisitsWithFilter(VisitsFilter $filter): VisitsList
+    public function listNonOrphanVisitsWithFilter(WithDomainVisitsFilter|VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listNonOrphanVisitsWithFilter($filter);
     }

@@ -17,11 +17,11 @@
     },
     "require-dev": {
         "devster/ubench": "^2.1",
-        "guzzlehttp/guzzle": "^7.9",
+        "guzzlehttp/guzzle": "^7.10",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpcov": "^11.0",
-        "phpunit/phpunit": "^12.2",
+        "phpunit/phpunit": "^12.4",
         "roave/security-advisories": "dev-master",
         "shlinkio/php-coding-standard": "~2.5.0",
         "symfony/var-dumper": "^7.3"

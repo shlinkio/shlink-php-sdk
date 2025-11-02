@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeInterface;
+use Shlinkio\Shlink\SDK\Tags\Model\TagsMode;
 use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
 use function sprintf;
@@ -37,12 +38,26 @@ final class ShortUrlsFilter implements ArraySerializable
 
     public function containingSomeTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', 'any');
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', TagsMode::ANY->value);
     }
 
     public function containingAllTags(string ...$tags): self
     {
-        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', 'all');
+        return $this->cloneWithProp('tags', $tags)->cloneWithProp('tagsMode', TagsMode::ALL->value);
+    }
+
+    public function notContainingSomeTags(string ...$excludeTags): self
+    {
+        return $this
+            ->cloneWithProp('excludeTags', $excludeTags)
+            ->cloneWithProp('excludeTagsMode', TagsMode::ANY->value);
+    }
+
+    public function notContainingAnyTags(string ...$excludeTags): self
+    {
+        return $this
+            ->cloneWithProp('excludeTags', $excludeTags)
+            ->cloneWithProp('excludeTagsMode', TagsMode::ALL->value);
     }
 
     public function excludingMaxVisitsReached(): self
@@ -68,6 +83,11 @@ final class ShortUrlsFilter implements ArraySerializable
     public function forDomain(string $domain): self
     {
         return $this->cloneWithProp('domain', $domain);
+    }
+
+    public function createdWithApiKey(string $apiKeyName): self
+    {
+        return $this->cloneWithProp('apiKeyName', $apiKeyName);
     }
 
     private function cloneWithProp(string $prop, mixed $value): self

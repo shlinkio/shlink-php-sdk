@@ -57,5 +57,14 @@ class ShortUrlsFilterTest extends TestCase
             ['excludeMaxVisitsReached' => 'true', 'excludePastValidUntil' => 'true'],
         ];
         yield [fn () => ShortUrlsFilter::create()->forDomain('s.test'), ['domain' => 's.test']];
+        yield [
+            fn () => ShortUrlsFilter::create()->notContainingSomeTags('foo', 'bar', 'baz'),
+            ['excludeTags' => ['foo', 'bar', 'baz'], 'excludeTagsMode' => 'any'],
+        ];
+        yield [
+            fn () => ShortUrlsFilter::create()->notContainingAnyTags('foo', 'bar', 'baz'),
+            ['excludeTags' => ['foo', 'bar', 'baz'], 'excludeTagsMode' => 'all'],
+        ];
+        yield [fn () => ShortUrlsFilter::create()->createdWithApiKey('foo'), ['apiKeyName' => 'foo']];
     }
 }

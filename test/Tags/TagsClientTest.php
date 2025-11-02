@@ -19,7 +19,6 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
-use Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList;
 use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 use Throwable;
@@ -68,70 +67,32 @@ class TagsClientTest extends TestCase
         );
     }
 
-    #[Test, DataProvider('provideTagsWithStats')]
-    public function listTagsWithStatsReturnsExpectedVisitsCount(array $resp, callable $assert): void
+    #[Test]
+    public function listTagsWithStatsReturnsExpectedVisitsCount(): void
     {
         $this->httpClient->expects($this->once())->method('getFromShlink')->willReturn([
             'tags' => [
-                'data' => [$resp],
+                'data' => [[
+                    'tag' => 'foo',
+                    'shortUrlsCount' => 1,
+                    'visitsSummary' => [
+                        'total' => 3,
+                        'nonBots' => 2,
+                        'bots' => 1,
+                    ],
+                ]],
             ],
         ]);
-        $assert($this->tagsClient->listTagsWithStats());
-    }
 
-    public static function provideTagsWithStats(): iterable
-    {
-        yield 'legacy response' => [[
-            'tag' => 'foo',
-            'shortUrlsCount' => 1,
-            'visitsCount' => 3,
-        ], function (TagsWithStatsList $list): void {
-            /** @var TagWithStats $item */
-            foreach ($list as $item) {
-                self::assertEquals(3, $item->visitsCount);
-                self::assertEquals(3, $item->visitsSummary->total);
-                self::assertNull($item->visitsSummary->nonBots);
-                self::assertNull($item->visitsSummary->bots);
-                break;
-            }
-        }];
-        yield 'current response' => [[
-            'tag' => 'foo',
-            'shortUrlsCount' => 1,
-            'visitsCount' => 3,
-            'visitsSummary' => [
-                'total' => 3,
-                'nonBots' => 2,
-                'bots' => 1,
-            ],
-        ], function (TagsWithStatsList $list): void {
-            /** @var TagWithStats $item */
-            foreach ($list as $item) {
-                self::assertEquals(3, $item->visitsCount);
-                self::assertEquals(3, $item->visitsSummary->total);
-                self::assertEquals(2, $item->visitsSummary->nonBots);
-                self::assertEquals(1, $item->visitsSummary->bots);
-                break;
-            }
-        }];
-        yield 'future response' => [[
-            'tag' => 'foo',
-            'shortUrlsCount' => 1,
-            'visitsSummary' => [
-                'total' => 3,
-                'nonBots' => 2,
-                'bots' => 1,
-            ],
-        ], function (TagsWithStatsList $list): void {
-            /** @var TagWithStats $item */
-            foreach ($list as $item) {
-                self::assertEquals(3, $item->visitsCount);
-                self::assertEquals(3, $item->visitsSummary->total);
-                self::assertEquals(2, $item->visitsSummary->nonBots);
-                self::assertEquals(1, $item->visitsSummary->bots);
-                break;
-            }
-        }];
+        $list = $this->tagsClient->listTagsWithStats();
+
+        /** @var TagWithStats $item */
+        foreach ($list as $item) {
+            self::assertEquals(3, $item->visitsSummary->total);
+            self::assertEquals(2, $item->visitsSummary->nonBots);
+            self::assertEquals(1, $item->visitsSummary->bots);
+            break;
+        }
     }
 
     #[Test]

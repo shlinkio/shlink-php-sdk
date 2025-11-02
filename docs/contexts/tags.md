@@ -45,8 +45,8 @@ $allTagsWithSTats = $tagsClient->listTagsWithStats();
 
 foreach ($allTagsWithSTats as $tag) {
     echo 'Tag: ' . $tag->tag;
-    echo 'Short URLs could: ' . $tag->shortUrlsCount;
-    echo 'Visits could: ' . $tag->visitsCount;
+    echo 'Short URLs count: ' . $tag->shortUrlsCount;
+    echo 'Visits count: ' . $tag->visitsSummary->total;
 }
 ```
 
@@ -62,8 +62,8 @@ $filteredTagsWithSTats = $tagsClient->listTagsWithStatsWithFilter($filter);
 
 foreach ($filteredTagsWithSTats as $tag) {
     echo 'Tag: ' . $tag->tag;
-    echo 'Short URLs could: ' . $tag->shortUrlsCount;
-    echo 'Visits could: ' . $tag->visitsCount;
+    echo 'Short URLs count: ' . $tag->shortUrlsCount;
+    echo 'Visits count: ' . $tag->visitsSummary->total;
 }
 ```
 

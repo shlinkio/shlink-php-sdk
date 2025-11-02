@@ -43,9 +43,8 @@ class ShortUrlEditionTest extends TestCase
         yield [
             fn () => ShortUrlEdition::create()
                 ->withLongUrl('https://edited.com/foo/bar')
-                ->notValidatingTheLongUrl()
                 ->withoutTags(),
-            ['longUrl' => 'https://edited.com/foo/bar', 'validateUrl' => false, 'tags' => []],
+            ['longUrl' => 'https://edited.com/foo/bar', 'tags' => []],
         ];
         yield [
             fn () => ShortUrlEdition::create()

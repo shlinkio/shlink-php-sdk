@@ -15,7 +15,6 @@ use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
 use Shlinkio\Shlink\SDK\Http\HttpClientInterface;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException;
-use Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl;
@@ -230,10 +229,6 @@ class ShortUrlsClientTest extends TestCase
         yield 'INVALID_ARGUMENT' =>  [
             HttpException::fromPayload(['type' => ErrorType::INVALID_DATA->value]),
             InvalidDataException::class,
-        ];
-        yield 'INVALID_URL' =>  [
-            HttpException::fromPayload(['type' => ErrorType::INVALID_URL->value]),
-            InvalidLongUrlException::class,
         ];
         yield 'INVALID_SLUG' =>  [
             HttpException::fromPayload(['type' => ErrorType::NON_UNIQUE_SLUG->value]),

@@ -18,7 +18,4 @@ enum ErrorType: string
 
     // Not really a Shlink API error. Used only as fallback value
     case UNKNOWN = 'https://shlink.io/api/error/unknown';
-
-    /** @deprecated No longer returned by Shlink 4.0.0 */
-    case INVALID_URL = 'https://shlink.io/api/error/invalid-url';
 }

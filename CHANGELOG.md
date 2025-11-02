@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [3.0.0] - 2025-11-02
+### Added
+* Add support for PHP 8.5
+* Add support for Shlink 4.6.0
+
+### Changed
+* *Nothing*
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* Drop support for Shlink older than 4.0.0
+
+### Fixed
+* *Nothing*
+
+
 ## [2.5.0] - 2025-07-25
 ### Added
 *  Add support for features introduced in Shlink 4.5.0, like more device types, and `any-value-query-param` and `valueless-query-param` redirect conditions.
