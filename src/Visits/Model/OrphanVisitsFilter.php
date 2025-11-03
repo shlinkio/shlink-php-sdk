@@ -8,7 +8,7 @@ use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
 class OrphanVisitsFilter implements ArraySerializable
 {
-    use VisitsFilterPayloadTrait;
+    use WithDomainVisitsFilterPayloadTrait;
 
     public function onlyIncludingBaseUrl(): self
     {
