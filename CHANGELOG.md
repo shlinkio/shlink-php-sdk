@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [3.0.1] - 2025-11-03
+### Added
+* *Nothing*
+
+### Changed
+* *Nothing*
+
+### Deprecated
+* *Nothing*
+
+### Removed
+* *Nothing*
+
+### Fixed
+* Allow `OrphanVisitsFilter` to filter by domain.
+
+
 ## [3.0.0] - 2025-11-02
 ### Added
 * Add support for PHP 8.5
