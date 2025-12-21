@@ -32,12 +32,12 @@ class HttpClientTest extends TestCase
     {
         $this->client = $this->createMock(ClientInterface::class);
 
-        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory = $this->createStub(RequestFactoryInterface::class);
         $requestFactory->method('createRequest')->willReturnCallback(
             fn (string $method, string|UriInterface $uri) => new Request($method, $uri),
         );
 
-        $streamFactory = $this->createMock(StreamFactoryInterface::class);
+        $streamFactory = $this->createStub(StreamFactoryInterface::class);
         $streamFactory->method('createStream')->willReturnCallback(fn (string $content) => Utils::streamFor($content));
 
         $this->httpClient = new HttpClient(

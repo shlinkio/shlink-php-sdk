@@ -6,6 +6,7 @@ namespace ShlinkioTest\Shlink\SDK;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -36,6 +37,7 @@ use Shlinkio\Shlink\SDK\Visits\Model\VisitsList;
 use Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview;
 use Shlinkio\Shlink\SDK\Visits\VisitsClientInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 class ShlinkClientTest extends TestCase
 {
     private ShlinkClient $shlinkClient;

@@ -41,11 +41,11 @@ class SingletonShlinkClientBuilderTest extends TestCase
         $this->wrapped->expects($this->exactly(2))->method($method)->with(
             $this->isInstanceOf(ShlinkConfigInterface::class),
         )->willReturn(new ShlinkClient(
-            $this->createMock(ShortUrlsClientInterface::class),
-            $this->createMock(VisitsClientInterface::class),
-            $this->createMock(TagsClientInterface::class),
-            $this->createMock(DomainsClientInterface::class),
-            $this->createMock(RedirectRulesClientInterface::class),
+            $this->createStub(ShortUrlsClientInterface::class),
+            $this->createStub(VisitsClientInterface::class),
+            $this->createStub(TagsClientInterface::class),
+            $this->createStub(DomainsClientInterface::class),
+            $this->createStub(RedirectRulesClientInterface::class),
         ));
 
         $configOne = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');

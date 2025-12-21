@@ -24,9 +24,9 @@ class ShlinkClientBuilderTest extends TestCase
     public function setUp(): void
     {
         $this->builder = new ShlinkClientBuilder(
-            $this->createMock(ClientInterface::class),
-            $this->createMock(RequestFactoryInterface::class),
-            $this->createMock(StreamFactoryInterface::class),
+            $this->createStub(ClientInterface::class),
+            $this->createStub(RequestFactoryInterface::class),
+            $this->createStub(StreamFactoryInterface::class),
         );
         $this->config = ShlinkConfig::fromBaseUrlAndApiKey('foo', 'bar');
     }
