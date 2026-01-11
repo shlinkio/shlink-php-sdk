@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\RedirectRules\Model;
 
+use DateTimeInterface;
 use JsonSerializable;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\Device;
 
@@ -59,6 +60,16 @@ final readonly class RedirectCondition implements JsonSerializable
     public static function forGeolocationCityName(string $cityName): self
     {
         return new self(RedirectConditionType::GEOLOCATION_CITY_NAME, $cityName);
+    }
+
+    public static function forBeforeDate(DateTimeInterface $date): self
+    {
+        return new self(RedirectConditionType::BEFORE_DATE, $date->format(DateTimeInterface::ATOM));
+    }
+
+    public static function forAfterDate(DateTimeInterface $date): self
+    {
+        return new self(RedirectConditionType::AFTER_DATE, $date->format(DateTimeInterface::ATOM));
     }
 
     public static function fromArray(array $payload): self

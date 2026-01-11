@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\RedirectRules\Model;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
@@ -123,6 +124,28 @@ class RedirectConditionTest extends TestCase
 
         self::assertEquals(RedirectConditionType::GEOLOCATION_CITY_NAME, $condition->type);
         self::assertEquals('Los Angeles', $condition->matchValue);
+        self::assertNull($condition->matchKey);
+    }
+
+    #[Test]
+    public function forBeforeDateCreatesExpectedCondition(): void
+    {
+        $date = new DateTimeImmutable('2026-01-01');
+        $condition = RedirectCondition::forBeforeDate($date);
+
+        self::assertEquals(RedirectConditionType::BEFORE_DATE, $condition->type);
+        self::assertEquals($date->format(DateTimeImmutable::ATOM), $condition->matchValue);
+        self::assertNull($condition->matchKey);
+    }
+
+    #[Test]
+    public function forAfterDateCreatesExpectedCondition(): void
+    {
+        $date = new DateTimeImmutable('2026-01-01');
+        $condition = RedirectCondition::forAfterDate($date);
+
+        self::assertEquals(RedirectConditionType::AFTER_DATE, $condition->type);
+        self::assertEquals($date->format(DateTimeImmutable::ATOM), $condition->matchValue);
         self::assertNull($condition->matchKey);
     }
 }
