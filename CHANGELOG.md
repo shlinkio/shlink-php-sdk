@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com), and this project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [3.1.0] - 2026-01-11
 ### Added
-* *Nothing*
+* Add support for `before-date` and `after-date` redirect conditions, introduced in Shlink 5.0.0
 
 ### Changed
 * *Nothing*
