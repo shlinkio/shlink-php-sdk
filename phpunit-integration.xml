@@ -5,6 +5,10 @@
     bootstrap="./vendor/autoload.php"
     colors="true"
     cacheDirectory="build/.phpunit.integration.cache"
+    displayDetailsOnPhpunitNotices="true"
+    displayDetailsOnTestsThatTriggerWarnings="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
 >
     <testsuites>
         <testsuite name="SDK Integration tests">
