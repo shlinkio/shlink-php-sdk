@@ -20,8 +20,8 @@
         "guzzlehttp/guzzle": "^7.10",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/phpcov": "^11.0",
-        "phpunit/phpunit": "^12.5",
+        "phpunit/phpcov": "^12.0",
+        "phpunit/phpunit": "^13.0",
         "shlinkio/php-coding-standard": "~2.5.0",
         "symfony/var-dumper": "^8.0"
     },
