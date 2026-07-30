@@ -21,3 +21,12 @@ loop-does-not-iterate = { exclude = ["test"] }
 
 [analyzer]
 baseline = "mago-analyze-baseline.toml"
+ignore = [
+    { code = "mixed-assignment", in = ["test/", "test-integration/"] },
+    { code = "mixed-argument", in = ["test/", "test-integration/"] },
+    { code = "mixed-operand", in = ["test/", "test-integration/"] },
+    { code = "invalid-method-access", in = ["test/", "test-integration/"] },
+    { code = "string-member-selector", in = ["test/", "test-integration/"] },
+    { code = "invalid-array-element-key", in = ["test/", "test-integration/"] },
+    { code = "possibly-false-argument", in = ["test/", "test-integration/"] },
+]

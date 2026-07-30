@@ -37,16 +37,16 @@ message = 'Could not infer a precise return type for function `Shlinkio\Shlink\S
 count = 1
 
 [[issues]]
-file = "src/Config/ArrayShlinkConfig.php"
+file = "src/Config/EnvShlinkConfig.php"
 code = "mixed-argument"
 message = "Invalid argument type for argument #1 of `trim`: expected `string`, but found `nonnull`."
 count = 3
 
 [[issues]]
-file = "src/Config/EnvShlinkConfig.php"
-code = "mixed-argument"
-message = "Invalid argument type for argument #1 of `trim`: expected `string`, but found `nonnull`."
-count = 3
+file = "src/Config/ShlinkConfig.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig::fromArray`: expected `array{'apiKey'?: string, 'baseUrl'?: string, 'version'?: string}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
 
 [[issues]]
 file = "src/Domains/DomainsClient.php"
@@ -57,7 +57,7 @@ count = 1
 [[issues]]
 file = "src/Domains/DomainsClient.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Domains\Model\Domain::fromArray`: expected `array<array-key, mixed>`, but found `mixed`.'
+message = '''Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Domains\Model\Domain::fromArray`: expected `array{'domain'?: string, 'isDefault'?: bool, 'redirects'?: array{'baseUrlRedirect'?: string, 'invalidShortUrlRedirect'?: string, 'regular404Redirect'?: string}}`, but found `mixed`.'''
 count = 1
 
 [[issues]]
@@ -73,6 +73,12 @@ message = "Assigning `nonnull` type to a variable may lead to unexpected behavio
 count = 1
 
 [[issues]]
+file = "src/Domains/DomainsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects::fromArray`: expected `array{'baseUrlRedirect'?: string, 'invalidShortUrlRedirect'?: string, 'regular404Redirect'?: string}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
 file = "src/Domains/Exception/DomainNotFoundException.php"
 code = "mixed-argument"
 message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException::__construct`: expected `string`, but found `nonnull`.'
@@ -82,42 +88,6 @@ count = 1
 file = "src/Domains/Exception/DomainNotFoundException.php"
 code = "mixed-assignment"
 message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/Domains/Model/Domain.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Domains\Model\Domain::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Domains/Model/Domain.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Domains/Model/Domain.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Domains\Model\Domain::__construct`: expected `bool`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Domains/Model/DomainRedirects.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/Domains/Model/DomainRedirects.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/Domains/Model/DomainRedirects.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects::__construct`: expected `null|string`, but found `mixed`.'
 count = 1
 
 [[issues]]
@@ -211,36 +181,6 @@ message = 'Could not infer a precise return type for function `Shlinkio\Shlink\S
 count = 1
 
 [[issues]]
-file = "src/RedirectRules/Model/RedirectCondition.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectConditionType::tryFrom`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/RedirectRules/Model/RedirectCondition.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectCondition::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/RedirectRules/Model/RedirectCondition.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectCondition::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/RedirectRules/Model/RedirectCondition.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #4 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectCondition::__construct`: expected `null|string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/RedirectRules/Model/RedirectCondition.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
 file = "src/RedirectRules/Model/RedirectRule.php"
 code = "mixed-argument"
 message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRule::__construct`: expected `string`, but found `nonnull`.'
@@ -249,7 +189,7 @@ count = 1
 [[issues]]
 file = "src/RedirectRules/Model/RedirectRule.php"
 code = "mixed-argument"
-message = "Invalid argument type for argument #2 of `array_map`: expected `array<('K.array_map() extends array-key), array<array-key, mixed>>`, but found `nonnull`."
+message = "Invalid argument type for argument #2 of `array_map`: expected `array<('K.array_map() extends array-key), array{'matchKey'?: string, 'matchValue'?: string, 'type'?: string}>`, but found `nonnull`."
 count = 1
 
 [[issues]]
@@ -459,13 +399,13 @@ count = 1
 [[issues]]
 file = "src/ShortUrls/Model/ShortUrlsList.php"
 code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Model\ListEndpointIterator::__construct`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
+message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Model\ListEndpointIterator::__construct`: expected `(closure(int, int): list{array<array-key, mixed>, array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
 count = 1
 
 [[issues]]
 file = "src/ShortUrls/ShortUrlsClient.php"
 code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList::forTupleLoader`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(int, int): list{nonnull, nonnull})` is less specific.'
+message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlsList::forTupleLoader`: expected `(closure(int, int): list{list<mixed>, list<mixed>})`, but provided type `(closure(int, int): list{nonnull, nonnull})` is less specific.'
 count = 1
 
 [[issues]]
@@ -525,31 +465,13 @@ count = 1
 [[issues]]
 file = "src/Tags/Model/TagsWithStatsList.php"
 code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Model\ListEndpointIterator::__construct`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
-count = 1
-
-[[issues]]
-file = "src/Tags/TagsClient.php"
-code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList::forNonPaginatedTupleLoader`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(int, int): list{nonnull, nonnull})` is less specific.'
-count = 1
-
-[[issues]]
-file = "src/Tags/TagsClient.php"
-code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Model\TagsWithStatsList::forTupleLoader`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(int, int): list{nonnull, nonnull})` is less specific.'
+message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Model\ListEndpointIterator::__construct`: expected `(closure(int, int): list{array<array-key, mixed>, array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
 count = 1
 
 [[issues]]
 file = "src/Tags/TagsClient.php"
 code = "mixed-return-statement"
 message = 'Could not infer a precise return type for function `Shlinkio\Shlink\SDK\Tags\TagsClient::listTagsWithFilter`. Saw type `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Utils/JsonDecoder.php"
-code = "mixed-return-statement"
-message = 'Could not infer a precise return type for function `Shlinkio\Shlink\SDK\Utils\JsonDecoder::decode`. Saw type `mixed`.'
 count = 1
 
 [[issues]]
@@ -681,25 +603,19 @@ count = 1
 [[issues]]
 file = "src/Visits/VisitsClient.php"
 code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsList::forOrphanVisitsTupleLoader`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
+message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsList::forOrphanVisitsTupleLoader`: expected `(closure(int, int): list{array<array-key, mixed>, array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
 count = 1
 
 [[issues]]
 file = "src/Visits/VisitsClient.php"
 code = "less-specific-nested-argument-type"
-message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsList::forTupleLoader`: expected `(closure(int, int): array{0: array<array-key, mixed>, 1: array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
+message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsList::forTupleLoader`: expected `(closure(int, int): list{array<array-key, mixed>, array<array-key, mixed>})`, but provided type `(closure(...mixed=): mixed)` is less specific.'
 count = 4
 
 [[issues]]
 file = "src/Visits/VisitsClient.php"
 code = "mixed-argument"
 message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "test-integration/ShortUrls/ShortUrlsClientTest.php"
-code = "string-member-selector"
-message = "This member selector uses a non-literal string type (`string`); its specific value cannot be statically determined."
 count = 1
 
 [[issues]]
@@ -715,175 +631,7 @@ message = 'Could not infer a precise return type for function `ShlinkioIntegrati
 count = 1
 
 [[issues]]
-file = "test/Builder/ShlinkClientBuilderTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 2
-
-[[issues]]
-file = "test/Builder/ShlinkClientBuilderTest.php"
-code = "string-member-selector"
-message = "This member selector uses a non-literal string type (`string`); its specific value cannot be statically determined."
-count = 2
-
-[[issues]]
-file = "test/Builder/SingletonShlinkClientBuilderTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 5
-
-[[issues]]
-file = "test/Builder/SingletonShlinkClientBuilderTest.php"
-code = "string-member-selector"
-message = "This member selector uses a non-literal string type (`non-empty-string`); its specific value cannot be statically determined."
-count = 5
-
-[[issues]]
-file = "test/Config/EnvShlinkConfigTest.php"
-code = "mixed-argument"
-message = "Invalid argument type for argument #3 of `sprintf`: expected `Stringable|null|scalar`, but found `mixed`."
+file = "test/Config/ArrayShlinkConfigTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig::fromArray`: expected `array{'apiKey'?: string, 'baseUrl'?: string, 'version'?: string}`, but possibly received `array<array-key, mixed>`.'''
 count = 1
-
-[[issues]]
-file = "test/Config/EnvShlinkConfigTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "test/Domains/DomainsClientTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "test/RedirectRules/Model/RedirectRuleDataTest.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `PHPUnit\Framework\Assert::assertCount`: expected `Countable|iterable<mixed, mixed>`, but found `mixed`.'
-count = 3
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlCreationTest.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`false`)."
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlCreationTest.php"
-code = "possibly-false-argument"
-message = 'Argument #1 of method `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlPayloadTrait::validSince` is possibly `false`, but parameter type `DateTimeInterface` does not accept it.'
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlEditionTest.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`false`)."
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlEditionTest.php"
-code = "possibly-false-argument"
-message = 'Argument #1 of method `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlPayloadTrait::validUntil` is possibly `false`, but parameter type `DateTimeInterface` does not accept it.'
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlMetaTest.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`false`)."
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlMetaTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlTest.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`false`)."
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/Model/ShortUrlTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "test/ShortUrls/ShortUrlsClientTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 2
-
-[[issues]]
-file = "test/ShortUrls/ShortUrlsClientTest.php"
-code = "mixed-operand"
-message = "Invalid middle operand: type `mixed` cannot be reliably used in string concatenation."
-count = 4
-
-[[issues]]
-file = "test/ShortUrls/ShortUrlsClientTest.php"
-code = "mixed-operand"
-message = "Left operand in binary operation has type `mixed`."
-count = 2
-
-[[issues]]
-file = "test/Tags/TagsClientTest.php"
-code = "invalid-array-element-key"
-message = "Cannot use spread operator on an iterable with key type `mixed`."
-count = 2
-
-[[issues]]
-file = "test/Tags/TagsClientTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 2
-
-[[issues]]
-file = "test/Tags/TagsClientTest.php"
-code = "redundant-docblock-type"
-message = "Redundant docblock type for variable `$item`."
-count = 1
-
-[[issues]]
-file = "test/Visits/Model/OrphanVisitTest.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`false`)."
-count = 1
-
-[[issues]]
-file = "test/Visits/Model/OrphanVisitTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "test/Visits/Model/VisitTest.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`false`)."
-count = 1
-
-[[issues]]
-file = "test/Visits/Model/VisitTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "test/Visits/VisitsClientTest.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 3
-
-[[issues]]
-file = "test/Visits/VisitsClientTest.php"
-code = "mixed-operand"
-message = "Invalid middle operand: type `mixed` cannot be reliably used in string concatenation."
-count = 4
-
-[[issues]]
-file = "test/Visits/VisitsClientTest.php"
-code = "mixed-operand"
-message = "Left operand in binary operation has type `mixed`."
-count = 2

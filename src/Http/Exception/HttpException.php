@@ -18,7 +18,7 @@ use const ARRAY_FILTER_USE_KEY;
 
 class HttpException extends RuntimeException implements ExceptionInterface
 {
-    private const STANDARD_PROBLEM_DETAILS_PROPS = ['type', 'title', 'detail', 'status'];
+    private const array STANDARD_PROBLEM_DETAILS_PROPS = ['type', 'title', 'detail', 'status'];
 
     private function __construct(
         public readonly ErrorType $type,
@@ -39,7 +39,7 @@ class HttpException extends RuntimeException implements ExceptionInterface
     {
         $additional = array_filter(
             $payload,
-            static fn (string $key) => !in_array($key, self::STANDARD_PROBLEM_DETAILS_PROPS, true),
+            static fn (string $key) => !in_array($key, self::STANDARD_PROBLEM_DETAILS_PROPS, strict: true),
             ARRAY_FILTER_USE_KEY,
         );
 

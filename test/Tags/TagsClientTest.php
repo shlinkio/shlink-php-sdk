@@ -19,7 +19,6 @@ use Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsFilter;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsListOrderField;
-use Shlinkio\Shlink\SDK\Tags\Model\TagWithStats;
 use Shlinkio\Shlink\SDK\Tags\TagsClient;
 use Throwable;
 
@@ -89,7 +88,6 @@ class TagsClientTest extends TestCase
 
         $list = $this->tagsClient->listTagsWithStats();
 
-        /** @var TagWithStats $item */
         foreach ($list as $item) {
             self::assertEquals(3, $item->visitsSummary->total);
             self::assertEquals(2, $item->visitsSummary->nonBots);

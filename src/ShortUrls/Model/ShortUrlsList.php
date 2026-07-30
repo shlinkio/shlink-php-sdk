@@ -20,7 +20,7 @@ final class ShortUrlsList extends ListEndpointIterator
     }
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     * @param Closure(int $page, int $itemsPerPage): list{list, list} $pageLoader
      */
     public static function forTupleLoader(Closure $pageLoader): self
     {
