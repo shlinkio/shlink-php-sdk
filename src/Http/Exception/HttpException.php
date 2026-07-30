@@ -16,10 +16,16 @@ use function sprintf;
 
 use const ARRAY_FILTER_USE_KEY;
 
+/**
+ * @template AdditionalT of array<string, mixed>
+ */
 class HttpException extends RuntimeException implements ExceptionInterface
 {
-    private const STANDARD_PROBLEM_DETAILS_PROPS = ['type', 'title', 'detail', 'status'];
+    private const array STANDARD_PROBLEM_DETAILS_PROPS = ['type', 'title', 'detail', 'status'];
 
+    /**
+     * @param AdditionalT $additional
+     */
     private function __construct(
         public readonly ErrorType $type,
         public readonly string $title,
@@ -35,11 +41,15 @@ class HttpException extends RuntimeException implements ExceptionInterface
         return self::fromPayload(JsonDecoder::decode($resp->getBody()->__toString()));
     }
 
+    /**
+     * @param array{type?: string, title?: string, detail?: string, status?: int, ...<string, mixed>} $payload
+     */
     public static function fromPayload(array $payload): self
     {
+        /** @var AdditionalT $additional */
         $additional = array_filter(
             $payload,
-            static fn (string $key) => !in_array($key, self::STANDARD_PROBLEM_DETAILS_PROPS, true),
+            static fn (string $key) => !in_array($key, self::STANDARD_PROBLEM_DETAILS_PROPS, strict: true),
             ARRAY_FILTER_USE_KEY,
         );
 

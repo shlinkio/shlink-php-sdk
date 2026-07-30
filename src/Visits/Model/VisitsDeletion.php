@@ -13,6 +13,9 @@ final readonly class VisitsDeletion implements Countable
      */
     private function __construct(public int $deletedVisits) {}
 
+    /**
+     * @param array{deletedVisits?: int<0, max>} $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self($payload['deletedVisits'] ?? 0);

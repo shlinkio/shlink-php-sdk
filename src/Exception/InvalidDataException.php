@@ -17,6 +17,9 @@ class InvalidDataException extends RuntimeException implements ExceptionInterfac
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{invalidElements?: string[]}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $invalidElements = $prev->additional['invalidElements'] ?? [];

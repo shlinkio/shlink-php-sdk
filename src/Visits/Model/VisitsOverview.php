@@ -10,6 +10,12 @@ final readonly class VisitsOverview implements Countable
 {
     private function __construct(public VisitsSummary $nonOrphanVisits, public VisitsSummary $orphanVisits) {}
 
+    /**
+     * @param array{
+     *     nonOrphanVisits?: array{total?: int<0, max>, nonBots?: int<0, max>, bots?: int<0, max>},
+     *     orphanVisits?: array{total?: int<0, max>, nonBots?: int<0, max>, bots?: int<0, max>},
+     * } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

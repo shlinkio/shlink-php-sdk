@@ -77,6 +77,9 @@ final readonly class RedirectCondition implements JsonSerializable
         return new self(RedirectConditionType::BROWSER, $browser->value);
     }
 
+    /**
+     * @param array{type?: string, matchValue?: string, matchKey?: string} $payload
+     */
     public static function fromArray(array $payload): self
     {
         $originalType = $payload['type'] ?? '';
