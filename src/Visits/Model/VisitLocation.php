@@ -16,6 +16,17 @@ final readonly class VisitLocation
         public string $timezone,
     ) {}
 
+    /**
+     * @param array{
+     *     countryCode?: string,
+     *     countryName?: string,
+     *     regionName?: string,
+     *     cityName?: string,
+     *     latitude?: float,
+     *     longitude?: float,
+     *     timezone?: string,
+     * } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

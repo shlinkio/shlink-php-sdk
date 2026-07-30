@@ -18,6 +18,9 @@ class TagConflictException extends RuntimeException implements ExceptionInterfac
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{oldName?: string, newName?: string}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $oldName = $prev->additional['oldName'] ?? '';

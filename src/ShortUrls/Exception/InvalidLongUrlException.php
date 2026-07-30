@@ -15,6 +15,9 @@ class InvalidLongUrlException extends RuntimeException implements ExceptionInter
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{url?: string}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $longUrl = $prev->additional['url'] ?? '';

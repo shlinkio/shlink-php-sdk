@@ -10,6 +10,18 @@ final readonly class OrphanVisit implements VisitInterface
 {
     private function __construct(private Visit $visit, private OrphanVisitType $type) {}
 
+    /**
+     * @param array{
+     *     type?: string,
+     *     referer?: string,
+     *     date: string,
+     *     userAgent?: string,
+     *     potentialBot?: bool,
+     *     visitedUrl?: string,
+     *     redirectUrl?: string,
+     *     visitLocation?: array,
+     * } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

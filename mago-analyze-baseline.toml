@@ -79,51 +79,21 @@ message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink
 count = 1
 
 [[issues]]
-file = "src/Domains/Exception/DomainNotFoundException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException::__construct`: expected `string`, but found `nonnull`.'
+file = "src/Domains/DomainsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Exception\InvalidDataException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'invalidElements'?: array<array-key, string>}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
 count = 1
 
 [[issues]]
-file = "src/Domains/Exception/DomainNotFoundException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/Exception/InvalidDataException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Exception\InvalidDataException::__construct`: expected `array<array-key, string>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Exception/InvalidDataException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+file = "src/Http/Exception/HttpException.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Http\Exception\HttpException::fromPayload`: expected `array{'detail'?: string, 'status'?: int, 'title'?: string, 'type'?: string, ...<string, mixed>}`, but provided type `array<array-key, mixed>` is less specific.'''
 count = 1
 
 [[issues]]
 file = "src/Http/Exception/HttpException.php"
 code = "mixed-argument"
 message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Http\ErrorType::tryFrom`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Http/Exception/HttpException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Http\Exception\HttpException::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Http/Exception/HttpException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\Http\Exception\HttpException::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Http/Exception/HttpException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #4 of `Shlinkio\Shlink\SDK\Http\Exception\HttpException::__construct`: expected `int`, but found `nonnull`.'
 count = 1
 
 [[issues]]
@@ -181,202 +151,22 @@ message = 'Could not infer a precise return type for function `Shlinkio\Shlink\S
 count = 1
 
 [[issues]]
-file = "src/RedirectRules/Model/RedirectRule.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRule::__construct`: expected `string`, but found `nonnull`.'
+file = "src/RedirectRules/RedirectRulesClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Exception\InvalidDataException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'invalidElements'?: array<array-key, string>}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
 count = 1
 
 [[issues]]
-file = "src/RedirectRules/Model/RedirectRule.php"
-code = "mixed-argument"
-message = "Invalid argument type for argument #2 of `array_map`: expected `array<('K.array_map() extends array-key), array{'matchKey'?: string, 'matchValue'?: string, 'type'?: string}>`, but found `nonnull`."
-count = 1
-
-[[issues]]
-file = "src/RedirectRules/Model/RedirectRulesList.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRulesList::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/RedirectRules/Model/RedirectRulesList.php"
-code = "mixed-argument"
-message = "Invalid argument type for argument #2 of `array_map`: expected `array<('K.array_map() extends array-key), array<array-key, mixed>>`, but found `nonnull`."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/DeleteShortUrlThresholdException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier::fromShortCodeAndDomain`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/DeleteShortUrlThresholdException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier::fromShortCode`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/DeleteShortUrlThresholdException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier::fromShortCodeAndDomain`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/DeleteShortUrlThresholdException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException::__construct`: expected `int`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/DeleteShortUrlThresholdException.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/DeleteShortUrlThresholdException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+file = "src/RedirectRules/RedirectRulesClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRulesList::fromArray`: expected `array{'defaultLongUrl'?: string, 'redirectRules'?: list<mixed>}`, but possibly received `array<array-key, mixed>`.'''
 count = 2
 
 [[issues]]
-file = "src/ShortUrls/Exception/InvalidLongUrlException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/InvalidLongUrlException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/NonUniqueSlugException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/NonUniqueSlugException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/NonUniqueSlugException.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/NonUniqueSlugException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/ShortUrlNotFoundException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier::fromShortCodeAndDomain`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/ShortUrlNotFoundException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier::fromShortCode`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/ShortUrlNotFoundException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlIdentifier::fromShortCodeAndDomain`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/ShortUrlNotFoundException.php"
-code = "mixed-assignment"
-message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Exception/ShortUrlNotFoundException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #10 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = "Invalid argument type for argument #2 of `DateTimeImmutable::createFromFormat`: expected `string`, but found `mixed`."
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #5 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #6 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `null|string`, but found `mixed`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #7 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `bool`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #8 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `bool`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/ShortUrls/Model/ShortUrl.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #9 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::__construct`: expected `bool|null`, but found `mixed`.'
-count = 1
+file = "src/RedirectRules/RedirectRulesClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'domain'?: string, 'shortCode'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 2
 
 [[issues]]
 file = "src/ShortUrls/Model/ShortUrl.php"
@@ -385,15 +175,15 @@ message = 'Argument #4 of method `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::
 count = 1
 
 [[issues]]
-file = "src/ShortUrls/Model/ShortUrlMeta.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta::toNullableDate`: expected `null|string`, but found `mixed`.'
-count = 2
+file = "src/ShortUrls/Model/ShortUrl.php"
+code = "possibly-null-argument"
+message = "Argument #2 of method `DateTimeImmutable::createFromFormat` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
 
 [[issues]]
-file = "src/ShortUrls/Model/ShortUrlMeta.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta::__construct`: expected `int|null`, but found `mixed`.'
+file = "src/ShortUrls/Model/ShortUrl.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key 'dateCreated' accessed on `array{'crawlable'?: bool, 'dateCreated'?: string, 'domain'?: string, 'forwardQuery'?: bool, 'hasRedirectRules'?: bool, 'longUrl'?: string, 'meta'?: array{'maxVisits'?: positive-int, 'validSince'?: string, 'validUntil'?: string}, 'shortCode'?: string, 'shortUrl'?: string, 'tags'?: array<array-key, string>, 'title'?: string, 'visitsSummary'?: array{'bots'?: non-negative-int, 'nonBots'?: non-negative-int, 'total'?: non-negative-int}}`."
 count = 1
 
 [[issues]]
@@ -409,52 +199,34 @@ message = 'Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortU
 count = 1
 
 [[issues]]
-file = "src/Tags/Exception/TagConflictException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Tags/Exception/TagConflictException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Tags/Exception/TagConflictException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+file = "src/ShortUrls/ShortUrlsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Exception\InvalidDataException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'invalidElements'?: array<array-key, string>}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
 count = 2
 
 [[issues]]
-file = "src/Tags/Exception/TagNotFoundException.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException::__construct`: expected `string`, but found `nonnull`.'
+file = "src/ShortUrls/ShortUrlsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'domain'?: string, 'shortCode'?: string, 'threshold'?: int}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
 count = 1
 
 [[issues]]
-file = "src/Tags/Exception/TagNotFoundException.php"
-code = "mixed-assignment"
-message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+file = "src/ShortUrls/ShortUrlsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'customSlug'?: string, 'domain'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
 count = 1
 
 [[issues]]
-file = "src/Tags/Model/TagWithStats.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Tags\Model\TagWithStats::__construct`: expected `string`, but found `nonnull`.'
-count = 1
+file = "src/ShortUrls/ShortUrlsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'domain'?: string, 'shortCode'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 3
 
 [[issues]]
-file = "src/Tags/Model/TagWithStats.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Tags/Model/TagWithStats.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Tags\Model\TagWithStats::__construct`: expected `int`, but found `nonnull`.'
-count = 1
+file = "src/ShortUrls/ShortUrlsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::fromArray`: expected `array{'crawlable'?: bool, 'dateCreated'?: string, 'domain'?: string, 'forwardQuery'?: bool, 'hasRedirectRules'?: bool, 'longUrl'?: string, 'meta'?: array{'maxVisits'?: positive-int, 'validSince'?: string, 'validUntil'?: string}, 'shortCode'?: string, 'shortUrl'?: string, 'tags'?: array<array-key, string>, 'title'?: string, 'visitsSummary'?: array{'bots'?: non-negative-int, 'nonBots'?: non-negative-int, 'total'?: non-negative-int}}`, but possibly received `array<array-key, mixed>`.'''
+count = 3
 
 [[issues]]
 file = "src/Tags/Model/TagsFilter.php"
@@ -475,51 +247,27 @@ message = 'Could not infer a precise return type for function `Shlinkio\Shlink\S
 count = 1
 
 [[issues]]
+file = "src/Tags/TagsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Exception\InvalidDataException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'invalidElements'?: array<array-key, string>}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 1
+
+[[issues]]
+file = "src/Tags/TagsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'newName'?: string, 'oldName'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 1
+
+[[issues]]
+file = "src/Tags/TagsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'tag'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 1
+
+[[issues]]
 file = "src/Visits/Model/OrphanVisit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\OrphanVisitType::tryFrom`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = "Invalid argument type for argument #2 of `DateTimeImmutable::createFromFormat`: expected `string`, but found `mixed`."
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #4 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::__construct`: expected `bool`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #5 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/Visit.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #6 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::__construct`: expected `null|string`, but found `mixed`.'
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::fromArray`: expected `array{'date': string, 'potentialBot'?: bool, 'redirectUrl'?: string, 'referer'?: string, 'userAgent'?: string, 'visitLocation'?: array<array-key, mixed>, 'visitedUrl'?: string}`, but possibly received `array{'date': string, 'potentialBot'?: bool, 'redirectUrl'?: string, 'referer'?: string, 'type'?: string, 'userAgent'?: string, 'visitLocation'?: array<array-key, mixed>, 'visitedUrl'?: string}`.'''
 count = 1
 
 [[issues]]
@@ -529,75 +277,21 @@ message = 'Argument #2 of method `Shlinkio\Shlink\SDK\Visits\Model\Visit::__cons
 count = 1
 
 [[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `string`, but found `nonnull`.'
+file = "src/Visits/Model/Visit.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::fromArray`: expected `array{'cityName'?: string, 'countryCode'?: string, 'countryName'?: string, 'latitude'?: float, 'longitude'?: float, 'regionName'?: string, 'timezone'?: string}`, but possibly received `array<array-key, mixed>`.'''
 count = 1
 
 [[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `string`, but found `nonnull`.'
+file = "src/Visits/Model/VisitsList.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsList::__construct`: expected `(closure(array<array-key, mixed>): Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit)`, but possibly received `(closure(array{'date': string, 'potentialBot'?: bool, 'redirectUrl'?: string, 'referer'?: string, 'type'?: string, 'userAgent'?: string, 'visitLocation'?: array<array-key, mixed>, 'visitedUrl'?: string}): Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit)`.'''
 count = 1
 
 [[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #4 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #5 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `float`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #6 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `float`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitLocation.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #7 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::__construct`: expected `string`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitsDeletion.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion::__construct`: expected `non-negative-int`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitsOverview.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
-count = 2
-
-[[issues]]
-file = "src/Visits/Model/VisitsSummary.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary::__construct`: expected `non-negative-int`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitsSummary.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #2 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary::__construct`: expected `non-negative-int`, but found `nonnull`.'
-count = 1
-
-[[issues]]
-file = "src/Visits/Model/VisitsSummary.php"
-code = "mixed-argument"
-message = 'Invalid argument type for argument #3 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsSummary::__construct`: expected `non-negative-int`, but found `nonnull`.'
+file = "src/Visits/Model/VisitsList.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsList::__construct`: expected `(closure(array<array-key, mixed>): Shlinkio\Shlink\SDK\Visits\Model\Visit)`, but possibly received `(closure(array{'date': string, 'potentialBot'?: bool, 'redirectUrl'?: string, 'referer'?: string, 'userAgent'?: string, 'visitLocation'?: array<array-key, mixed>, 'visitedUrl'?: string}): Shlinkio\Shlink\SDK\Visits\Model\Visit)`.'''
 count = 1
 
 [[issues]]
@@ -615,8 +309,32 @@ count = 4
 [[issues]]
 file = "src/Visits/VisitsClient.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview::fromArray`: expected `array<array-key, mixed>`, but found `nonnull`.'
+message = '''Invalid argument type for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsOverview::fromArray`: expected `array{'nonOrphanVisits'?: array{'bots'?: non-negative-int, 'nonBots'?: non-negative-int, 'total'?: non-negative-int}, 'orphanVisits'?: array{'bots'?: non-negative-int, 'nonBots'?: non-negative-int, 'total'?: non-negative-int}}`, but found `nonnull`.'''
 count = 1
+
+[[issues]]
+file = "src/Visits/VisitsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'authority'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 1
+
+[[issues]]
+file = "src/Visits/VisitsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'domain'?: string, 'shortCode'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 1
+
+[[issues]]
+file = "src/Visits/VisitsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'tag'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException`.'''
+count = 1
+
+[[issues]]
+file = "src/Visits/VisitsClient.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitsDeletion::fromArray`: expected `array{'deletedVisits'?: non-negative-int}`, but possibly received `array<array-key, mixed>`.'''
+count = 2
 
 [[issues]]
 file = "test-integration/TestCase/AbstractTestCase.php"
@@ -634,4 +352,100 @@ count = 1
 file = "test/Config/ArrayShlinkConfigTest.php"
 code = "possibly-invalid-argument"
 message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Config\ArrayShlinkConfig::fromArray`: expected `array{'apiKey'?: string, 'baseUrl'?: string, 'version'?: string}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/Domains/Exception/DomainNotFoundExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'authority'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/Exception/InvalidDataExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Exception\InvalidDataException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'invalidElements'?: array<array-key, string>}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/Http/Exception/HttpExceptionTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Http\Exception\HttpException::fromPayload`: expected `array{'detail'?: string, 'status'?: int, 'title'?: string, 'type'?: string, ...<string, mixed>}`, but provided type `array<array-key, mixed>` is less specific.'''
+count = 1
+
+[[issues]]
+file = "test/RedirectRules/Model/RedirectRuleTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\RedirectRules\Model\RedirectRule::fromArray`: expected `array{'conditions'?: list<array{'matchKey'?: string, 'matchValue'?: string, 'type'?: string}>, 'longUrl'?: string, 'priority'?: positive-int}`, but provided type `array{'priority': mixed}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "test/ShortUrls/Exception/DeleteShortUrlThresholdExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\DeleteShortUrlThresholdException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'domain'?: string, 'shortCode'?: string, 'threshold'?: int}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/ShortUrls/Exception/InvalidLongUrlExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\InvalidLongUrlException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'url'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/ShortUrls/Exception/NonUniqueSlugExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\NonUniqueSlugException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'customSlug'?: string, 'domain'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/ShortUrls/Exception/ShortUrlNotFoundExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'domain'?: string, 'shortCode'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/ShortUrls/Model/ShortUrlMetaTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlMeta::fromArray`: expected `array{'maxVisits'?: positive-int, 'validSince'?: string, 'validUntil'?: string}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/ShortUrls/Model/ShortUrlTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrl::fromArray`: expected `array{'crawlable'?: bool, 'dateCreated'?: string, 'domain'?: string, 'forwardQuery'?: bool, 'hasRedirectRules'?: bool, 'longUrl'?: string, 'meta'?: array{'maxVisits'?: positive-int, 'validSince'?: string, 'validUntil'?: string}, 'shortCode'?: string, 'shortUrl'?: string, 'tags'?: array<array-key, string>, 'title'?: string, 'visitsSummary'?: array{'bots'?: non-negative-int, 'nonBots'?: non-negative-int, 'total'?: non-negative-int}}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/Tags/Exception/TagConflictExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Exception\TagConflictException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'newName'?: string, 'oldName'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/Tags/Exception/TagNotFoundExceptionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Exception\TagNotFoundException::fromHttpException`: expected `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array{'tag'?: string}>`, but possibly received `Shlinkio\Shlink\SDK\Http\Exception\HttpException<array<string, mixed>>`.'''
+count = 1
+
+[[issues]]
+file = "test/Tags/Model/TagWithStatsTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Tags\Model\TagWithStats::fromArray`: expected `array{'shortUrlsCount'?: non-negative-int, 'tag'?: string, 'visitsSummary'?: array{'bots'?: non-negative-int, 'nonBots'?: non-negative-int, 'total'?: non-negative-int}}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/Visits/Model/OrphanVisitTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\OrphanVisit::fromArray`: expected `array{'date': string, 'potentialBot'?: bool, 'redirectUrl'?: string, 'referer'?: string, 'type'?: string, 'userAgent'?: string, 'visitLocation'?: array<array-key, mixed>, 'visitedUrl'?: string}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/Visits/Model/VisitLocationTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\VisitLocation::fromArray`: expected `array{'cityName'?: string, 'countryCode'?: string, 'countryName'?: string, 'latitude'?: float, 'longitude'?: float, 'regionName'?: string, 'timezone'?: string}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/Visits/Model/VisitTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Shlinkio\Shlink\SDK\Visits\Model\Visit::fromArray`: expected `array{'date': string, 'potentialBot'?: bool, 'redirectUrl'?: string, 'referer'?: string, 'userAgent'?: string, 'visitLocation'?: array<array-key, mixed>, 'visitedUrl'?: string}`, but possibly received `array<array-key, mixed>`.'''
 count = 1

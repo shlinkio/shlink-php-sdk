@@ -13,6 +13,9 @@ final readonly class VisitsSummary
      */
     private function __construct(public int $total, public int $nonBots, public int $bots) {}
 
+    /**
+     * @param array{total?: int<0, max>, nonBots?: int<0, max>, bots?: int<0, max>} $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(
