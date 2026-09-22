@@ -19,11 +19,22 @@ final readonly class Visit implements VisitInterface
         private VisitLocation|null $location,
     ) {}
 
+    /**
+     * @param array{
+     *     referer?: string,
+     *     date: string,
+     *     userAgent?: string,
+     *     potentialBot?: bool,
+     *     visitedUrl?: string,
+     *     redirectUrl?: string,
+     *     visitLocation?: array,
+     * } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(
             referer: $payload['referer'] ?? '',
-            // @phpstan-ignore-next-line
+            // @mago-ignore
             date: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['date']),
             userAgent: $payload['userAgent'] ?? '',
             potentialBot: $payload['potentialBot'] ?? false,

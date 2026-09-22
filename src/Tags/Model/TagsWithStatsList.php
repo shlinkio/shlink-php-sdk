@@ -21,7 +21,7 @@ final class TagsWithStatsList extends ListEndpointIterator
     }
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     * @param Closure(int $page, int $itemsPerPage): list{array, array} $pageLoader
      */
     public static function forTupleLoader(Closure $pageLoader): self
     {
@@ -29,7 +29,7 @@ final class TagsWithStatsList extends ListEndpointIterator
     }
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     * @param Closure(int $page, int $itemsPerPage): list{array, array} $pageLoader
      */
     public static function forNonPaginatedTupleLoader(Closure $pageLoader): self
     {

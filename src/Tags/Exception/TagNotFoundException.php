@@ -15,6 +15,9 @@ class TagNotFoundException extends RuntimeException implements ExceptionInterfac
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{tag?: string}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $tag = $prev->additional['tag'] ?? '';

@@ -17,6 +17,7 @@ class JsonDecoder
      */
     public static function decode(string $data): array
     {
-        return json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        // @mago-expect analysis:mixed-return-statement
+        return json_decode($data, associative: true, flags: JSON_THROW_ON_ERROR);
     }
 }

@@ -15,6 +15,9 @@ final readonly class ShortUrlMeta
         public int|null $maxVisits,
     ) {}
 
+    /**
+     * @param array{validSince?: string, validUntil?: string, maxVisits?: positive-int} $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

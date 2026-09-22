@@ -18,6 +18,9 @@ class NonUniqueSlugException extends RuntimeException implements ExceptionInterf
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{customSlug?: string, domain?: string}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $customSlug = $prev->additional['customSlug'] ?? '';

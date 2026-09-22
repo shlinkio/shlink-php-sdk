@@ -19,7 +19,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
     private array $currentPagination = [];
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $pageLoader
+     * @param Closure(int $page, int $itemsPerPage): list{array, array} $pageLoader
      * @param Closure(mixed): mixed $itemMapper
      */
     public function __construct(

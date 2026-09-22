@@ -16,6 +16,9 @@ class ShortUrlNotFoundException extends RuntimeException implements ExceptionInt
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{shortCode?: string, domain?: string}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $shortCode = $prev->additional['shortCode'] ?? '';

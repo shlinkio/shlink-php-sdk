@@ -51,7 +51,12 @@ readonly class TagsClient implements TagsClientInterface
         };
         $tupleLoader = function (int $page, int $itemsPerPage) use ($buildQueryWithPage): array {
             $payload = $this->httpClient->getFromShlink('/tags/stats', $buildQueryWithPage($page, $itemsPerPage));
-            return [$payload['tags']['data'] ?? [], $payload['tags']['pagination'] ?? []];
+            /** @var array $data */
+            $data = $payload['tags']['data'] ?? [];
+            /** @var array $pagination */
+            $pagination = $payload['tags']['pagination'] ?? [];
+
+            return [$data, $pagination];
         };
 
         return $filter->shouldPaginateRequest()

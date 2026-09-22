@@ -18,6 +18,13 @@ final readonly class RedirectRule implements Countable
      */
     private function __construct(public string $longUrl, public int $priority, public array $conditions) {}
 
+    /**
+     * @param array{
+     *     longUrl?: string,
+     *     priority?: positive-int,
+     *     conditions?: list<array{type?: string, matchValue?: string, matchKey?: string}>
+     * } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

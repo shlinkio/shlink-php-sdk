@@ -12,6 +12,9 @@ final readonly class DomainRedirects
         public string|null $invalidShortUrlRedirect,
     ) {}
 
+    /**
+     * @param array{baseUrlRedirect?: string, regular404Redirect?: string, invalidShortUrlRedirect?: string} $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

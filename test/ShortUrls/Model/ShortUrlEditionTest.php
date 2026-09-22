@@ -24,19 +24,20 @@ class ShortUrlEditionTest extends TestCase
 
     public static function provideConfigs(): iterable
     {
+        /** @var DateTimeImmutable $date */
         $date = DateTimeImmutable::createFromFormat('Y-m-d', '2021-01-01');
 
         yield [ShortUrlEdition::create(...), []];
         yield [
             static fn () => ShortUrlEdition::create()
                 ->withTags('foo', 'bar')
-                ->validUntil($date) // @phpstan-ignore-line
+                ->validUntil($date)
                 ->withTitle('the title')
                 ->withMaxVisits(50),
             [
                 'tags' => ['foo', 'bar'],
                 'maxVisits' => 50,
-                'validUntil' => $date->format(DateTimeInterface::ATOM), // @phpstan-ignore-line
+                'validUntil' => $date->format(DateTimeInterface::ATOM),
                 'title' => 'the title',
             ],
         ];

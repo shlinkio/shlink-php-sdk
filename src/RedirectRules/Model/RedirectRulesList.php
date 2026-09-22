@@ -16,6 +16,9 @@ final readonly class RedirectRulesList implements Countable
      */
     private function __construct(public string $defaultLongUrl, public array $redirectRules) {}
 
+    /**
+     * @param array{defaultLongUrl?: string, redirectRules?: list<mixed>} $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

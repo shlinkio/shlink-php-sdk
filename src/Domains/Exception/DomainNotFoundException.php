@@ -15,6 +15,9 @@ class DomainNotFoundException extends RuntimeException implements ExceptionInter
         parent::__construct($previous->detail, $previous->status, $previous);
     }
 
+    /**
+     * @param HttpException<array{authority?: string}> $prev
+     */
     public static function fromHttpException(HttpException $prev): self
     {
         $authority = $prev->additional['authority'] ?? '';

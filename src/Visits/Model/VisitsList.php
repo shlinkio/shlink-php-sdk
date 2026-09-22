@@ -16,7 +16,7 @@ final class VisitsList extends ListEndpointIterator
     private const ITEMS_PER_PAGE = 1000;
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $visitsLoader
+     * @param Closure(int $page, int $itemsPerPage): list{array, array} $visitsLoader
      * @param Closure(array): VisitType $itemMapper
      */
     private function __construct(Closure $visitsLoader, Closure $itemMapper)
@@ -25,7 +25,7 @@ final class VisitsList extends ListEndpointIterator
     }
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $visitsLoader
+     * @param Closure(int $page, int $itemsPerPage): list{array, array} $visitsLoader
      * @return VisitsList<Visit>
      */
     public static function forTupleLoader(Closure $visitsLoader): self
@@ -34,7 +34,7 @@ final class VisitsList extends ListEndpointIterator
     }
 
     /**
-     * @param Closure(int $page, int $itemsPerPage): array{array, array} $visitsLoader
+     * @param Closure(int $page, int $itemsPerPage): list{array, array} $visitsLoader
      * @return VisitsList<OrphanVisit>
      */
     public static function forOrphanVisitsTupleLoader(Closure $visitsLoader): self

@@ -8,6 +8,13 @@ final readonly class Domain
 {
     private function __construct(public string $domain, public bool $isDefault, public DomainRedirects $redirects) {}
 
+    /**
+     * @param array{
+     *     domain?: string,
+     *      isDefault?: bool,
+     *      redirects?: array{baseUrlRedirect?: string, regular404Redirect?: string, invalidShortUrlRedirect?: string}
+     *     } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(

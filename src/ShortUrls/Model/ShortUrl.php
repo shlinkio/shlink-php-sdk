@@ -28,13 +28,29 @@ final readonly class ShortUrl
         public VisitsSummary $visitsSummary,
     ) {}
 
+    /**
+     * @param array{
+     *     shortCode?: string,
+     *     shortUrl?: string,
+     *     longUrl?: string,
+     *     dateCreated?: string,
+     *     domain?: string,
+     *     title?: string,
+     *     crawlable?: bool,
+     *     forwardQuery?: bool,
+     *     hasRedirectRules?: bool,
+     *     tags?: string[],
+     *     meta?: array{validSince?: string, validUntil?: string, maxVisits?: positive-int},
+     *     visitsSummary?: array{total?: int<0, max>, nonBots?: int<0, max>, bots?: int<0, max>},
+     * } $payload
+     */
     public static function fromArray(array $payload): self
     {
         return new self(
             shortCode: $payload['shortCode'] ?? '',
             shortUrl: $payload['shortUrl'] ?? '',
             longUrl: $payload['longUrl'] ?? '',
-            // @phpstan-ignore-next-line
+            // @mago-ignore
             dateCreated: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['dateCreated']),
             domain: $payload['domain'] ?? null,
             title: $payload['title'] ?? null,
