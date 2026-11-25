@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Domains\Model;
 
 use JsonSerializable;
+use Override;
 
 final class DomainRedirectsConfig implements JsonSerializable
 {
@@ -53,6 +54,7 @@ final class DomainRedirectsConfig implements JsonSerializable
         return $clone;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return $this->payload;

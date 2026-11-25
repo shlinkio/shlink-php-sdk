@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Tags;
 
+use Override;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
@@ -22,6 +23,7 @@ readonly class TagsClient implements TagsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTags(): array
     {
         return $this->listTagsWithFilter(TagsFilter::create());
@@ -30,16 +32,19 @@ readonly class TagsClient implements TagsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagsWithFilter(TagsFilter $filter): array
     {
         return $this->httpClient->getFromShlink('/tags', $filter)['tags']['data'] ?? [];
     }
 
+    #[Override]
     public function listTagsWithStats(): TagsWithStatsList
     {
         return $this->listTagsWithStatsWithFilter(TagsFilter::create());
     }
 
+    #[Override]
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
     {
         $query = $filter->toArray();
@@ -67,6 +72,7 @@ readonly class TagsClient implements TagsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function renameTag(TagRenaming $tagRenaming): void
     {
         try {
@@ -85,6 +91,7 @@ readonly class TagsClient implements TagsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function deleteTags(string ...$tags): void
     {
         try {

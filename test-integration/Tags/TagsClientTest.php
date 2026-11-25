@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioIntegrationTest\Shlink\SDK\Tags;
 
+use Override;
 use PHPUnit\Framework\Attributes\Test;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\ShortUrlCreation;
 use Shlinkio\Shlink\SDK\Tags\Model\TagRenaming;
@@ -18,6 +19,7 @@ class TagsClientTest extends AbstractTestCase
 
     private TagsClient $client;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->client = new TagsClient(self::httpClient());

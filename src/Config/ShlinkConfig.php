@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Config;
 
+use Override;
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
 use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
@@ -51,16 +52,19 @@ final readonly class ShlinkConfig implements ShlinkConfigInterface
         return self::fromBaseUrlAndApiKey($baseUrl, $apiKey);
     }
 
+    #[Override]
     public function baseUrl(): string
     {
         return $this->baseUrl;
     }
 
+    #[Override]
     public function apiKey(): string
     {
         return $this->apiKey;
     }
 
+    #[Override]
     public function version(): ApiVersion
     {
         return $this->version;

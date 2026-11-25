@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Tags;
 
+use Override;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -29,6 +30,7 @@ class TagsClientTest extends TestCase
     private TagsClient $tagsClient;
     private MockObject&HttpClientInterface $httpClient;
 
+    #[Override]
     public function setUp(): void
     {
         $this->httpClient = $this->createMock(HttpClientInterface::class);

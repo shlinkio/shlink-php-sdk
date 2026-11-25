@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK;
 
+use Override;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
@@ -47,6 +48,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDomains(): iterable
     {
         return $this->domainsClient->listDomains();
@@ -55,6 +57,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects
     {
         return $this->domainsClient->configureDomainRedirects($redirects);
@@ -63,6 +66,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listShortUrls(): ShortUrlsList
     {
         return $this->shortUrlsClient->listShortUrls();
@@ -71,6 +75,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
         return $this->shortUrlsClient->listShortUrlsWithFilter($filter);
@@ -79,6 +84,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
         return $this->shortUrlsClient->getShortUrl($identifier);
@@ -87,6 +93,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
         $this->shortUrlsClient->deleteShortUrl($identifier);
@@ -95,6 +102,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function createShortUrl(ShortUrlCreation $creation): ShortUrl
     {
         return $this->shortUrlsClient->createShortUrl($creation);
@@ -103,6 +111,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
     {
         return $this->shortUrlsClient->editShortUrl($identifier, $edition);
@@ -111,11 +120,13 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTags(): array
     {
         return $this->tagsClient->listTags();
     }
 
+    #[Override]
     public function listTagsWithFilter(TagsFilter $filter): array
     {
         return $this->tagsClient->listTagsWithFilter($filter);
@@ -124,6 +135,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagsWithStats(): TagsWithStatsList
     {
         return $this->tagsClient->listTagsWithStats();
@@ -132,6 +144,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagsWithStatsWithFilter(TagsFilter $filter): TagsWithStatsList
     {
         return $this->tagsClient->listTagsWithStatsWithFilter($filter);
@@ -140,6 +153,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function renameTag(TagRenaming $tagRenaming): void
     {
         $this->tagsClient->renameTag($tagRenaming);
@@ -148,11 +162,13 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function deleteTags(string ...$tags): void
     {
         $this->tagsClient->deleteTags(...$tags);
     }
 
+    #[Override]
     public function getVisitsOverview(): VisitsOverview
     {
         return $this->visitsClient->getVisitsOverview();
@@ -161,6 +177,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
         return $this->visitsClient->listShortUrlVisits($shortUrlIdentifier);
@@ -169,6 +186,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
@@ -179,6 +197,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagVisits(string $tag): VisitsList
     {
         return $this->visitsClient->listTagVisits($tag);
@@ -187,6 +206,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagVisitsWithFilter(string $tag, WithDomainVisitsFilter|VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listTagVisitsWithFilter($tag, $filter);
@@ -195,6 +215,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDefaultDomainVisits(): VisitsList
     {
         return $this->visitsClient->listDefaultDomainVisits();
@@ -203,6 +224,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listDefaultDomainVisitsWithFilter($filter);
@@ -211,6 +233,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDomainVisits(string $domain): VisitsList
     {
         return $this->visitsClient->listDomainVisits($domain);
@@ -219,6 +242,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listDomainVisitsWithFilter($domain, $filter);
@@ -227,6 +251,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listOrphanVisits(): VisitsList
     {
         return $this->visitsClient->listOrphanVisits();
@@ -235,6 +260,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listOrphanVisitsWithFilter(
         OrphanVisitsFilter|WithDomainVisitsFilter|VisitsFilter $filter,
     ): VisitsList {
@@ -244,6 +270,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listNonOrphanVisits(): VisitsList
     {
         return $this->visitsClient->listNonOrphanVisits();
@@ -252,16 +279,19 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listNonOrphanVisitsWithFilter(WithDomainVisitsFilter|VisitsFilter $filter): VisitsList
     {
         return $this->visitsClient->listNonOrphanVisitsWithFilter($filter);
     }
 
+    #[Override]
     public function deleteOrphanVisits(): VisitsDeletion
     {
         return $this->visitsClient->deleteOrphanVisits();
     }
 
+    #[Override]
     public function deleteShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsDeletion
     {
         return $this->visitsClient->deleteShortUrlVisits($shortUrlIdentifier);
@@ -270,6 +300,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getShortUrlRedirectRules(ShortUrlIdentifier $identifier): RedirectRulesList
     {
         return $this->redirectRulesClient->getShortUrlRedirectRules($identifier);
@@ -278,6 +309,7 @@ readonly class ShlinkClient implements
     /**
      * @inheritDoc
      */
+    #[Override]
     public function setShortUrlRedirectRules(
         ShortUrlIdentifier $identifier,
         SetRedirectRules $rules,

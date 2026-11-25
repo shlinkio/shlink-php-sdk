@@ -6,6 +6,7 @@ namespace ShlinkioTest\Shlink\SDK\ShortUrls;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -33,6 +34,7 @@ class ShortUrlsClientTest extends TestCase
     private MockObject&HttpClientInterface $httpClient;
     private string $now;
 
+    #[Override]
     public function setUp(): void
     {
         $this->httpClient = $this->createMock(HttpClientInterface::class);

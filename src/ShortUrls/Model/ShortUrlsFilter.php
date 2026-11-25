@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 use DateTimeInterface;
+use Override;
 use Shlinkio\Shlink\SDK\Tags\Model\TagsMode;
 use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
@@ -96,6 +97,7 @@ final class ShortUrlsFilter implements ArraySerializable
         return $clone;
     }
 
+    #[Override]
     public function toArray(): array
     {
         return $this->query;

@@ -7,6 +7,7 @@ namespace Shlinkio\Shlink\SDK\Model;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use Override;
 use Traversable;
 
 /**
@@ -30,6 +31,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
         $this->loadPage(1);
     }
 
+    #[Override]
     public function getIterator(): Traversable
     {
         yield from $this->getFullList();
@@ -55,6 +57,7 @@ abstract class ListEndpointIterator implements IteratorAggregate, Countable
         return (($currentPage - 1) * $this->itemsPerPage) + $index;
     }
 
+    #[Override]
     public function count(): int
     {
         return $this->currentPagination['totalItems'] ?? 0;

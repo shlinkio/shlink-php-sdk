@@ -16,7 +16,7 @@
         "psr/http-factory": "^1.1"
     },
     "require-dev": {
-        "carthage-software/mago": "^1.45",
+        "carthage-software/mago": "~1.61.0",
         "devster/ubench": "^2.1",
         "guzzlehttp/guzzle": "^7.15",
         "phpunit/phpcov": "^13.0",

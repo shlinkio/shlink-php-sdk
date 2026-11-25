@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Config;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -16,6 +17,7 @@ use function sprintf;
 
 class EnvShlinkConfigTest extends TestCase
 {
+    #[Override]
     protected function tearDown(): void
     {
         putenv(sprintf('%s=', EnvShlinkConfig::API_KEY_ENV_VAR));
@@ -29,7 +31,7 @@ class EnvShlinkConfigTest extends TestCase
         $setUp();
 
         $this->expectException(InvalidConfigException::class);
-        $this->expectExceptionMessage($expectedMessage);
+        $this->expectExceptionMessageIs($expectedMessage);
 
         EnvShlinkConfig::fromEnv();
     }

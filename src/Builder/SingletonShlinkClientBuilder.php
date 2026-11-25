@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Builder;
 
+use Override;
 use Shlinkio\Shlink\SDK\Config\ShlinkConfigInterface;
 use Shlinkio\Shlink\SDK\Domains\DomainsClientInterface;
 use Shlinkio\Shlink\SDK\RedirectRules\RedirectRulesClientInterface;
@@ -19,51 +20,43 @@ class SingletonShlinkClientBuilder implements ShlinkClientBuilderInterface
 
     public function __construct(private readonly ShlinkClientBuilderInterface $wrapped) {}
 
+    #[Override]
     public function buildShortUrlsClient(ShlinkConfigInterface $config): ShortUrlsClientInterface
     {
         $key = $this->configToKey($config);
-        return (
-            $this->instances[ShortUrlsClientInterface::class][$key] ?? ($this->instances[ShortUrlsClientInterface::class][$key] =
-                $this->wrapped->buildShortUrlsClient($config))
-        );
+        return $this->instances[ShortUrlsClientInterface::class][$key] ??=
+            $this->wrapped->buildShortUrlsClient($config);
     }
 
+    #[Override]
     public function buildVisitsClient(ShlinkConfigInterface $config): VisitsClientInterface
     {
         $key = $this->configToKey($config);
-        return (
-            $this->instances[VisitsClientInterface::class][$key] ?? ($this->instances[VisitsClientInterface::class][$key] =
-                $this->wrapped->buildVisitsClient($config))
-        );
+        return $this->instances[VisitsClientInterface::class][$key] ??= $this->wrapped->buildVisitsClient($config);
     }
 
+    #[Override]
     public function buildTagsClient(ShlinkConfigInterface $config): TagsClientInterface
     {
         $key = $this->configToKey($config);
-        return (
-            $this->instances[TagsClientInterface::class][$key] ?? ($this->instances[TagsClientInterface::class][$key] =
-                $this->wrapped->buildTagsClient($config))
-        );
+        return $this->instances[TagsClientInterface::class][$key] ??= $this->wrapped->buildTagsClient($config);
     }
 
+    #[Override]
     public function buildDomainsClient(ShlinkConfigInterface $config): DomainsClientInterface
     {
         $key = $this->configToKey($config);
-        return (
-            $this->instances[DomainsClientInterface::class][$key] ?? ($this->instances[DomainsClientInterface::class][$key] =
-                $this->wrapped->buildDomainsClient($config))
-        );
+        return $this->instances[DomainsClientInterface::class][$key] ??= $this->wrapped->buildDomainsClient($config);
     }
 
+    #[Override]
     public function buildRedirectRulesClient(ShlinkConfigInterface $config): RedirectRulesClientInterface
     {
         $key = $this->configToKey($config);
-        return (
-            $this->instances[RedirectRulesClientInterface::class][$key] ?? ($this->instances[RedirectRulesClientInterface::class][$key] =
-                $this->wrapped->buildRedirectRulesClient(
-                    $config,
-                ))
-        );
+        return $this->instances[RedirectRulesClientInterface::class][$key] ??=
+            $this->wrapped->buildRedirectRulesClient(
+                $config,
+            );
     }
 
     private function configToKey(ShlinkConfigInterface $config): string

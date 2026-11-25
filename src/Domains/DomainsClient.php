@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Domains;
 
+use Override;
 use Shlinkio\Shlink\SDK\Domains\Model\Domain;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirects;
 use Shlinkio\Shlink\SDK\Domains\Model\DomainRedirectsConfig;
@@ -19,6 +20,7 @@ readonly class DomainsClient implements DomainsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDomains(): iterable
     {
         $domains = $this->httpClient->getFromShlink('/domains')['domains']['data'] ?? [];
@@ -30,6 +32,7 @@ readonly class DomainsClient implements DomainsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function configureDomainRedirects(DomainRedirectsConfig $redirects): DomainRedirects
     {
         try {

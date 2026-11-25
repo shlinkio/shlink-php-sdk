@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Tags\Model;
 
+use Override;
 use Shlinkio\Shlink\SDK\Utils\ArraySerializable;
 
 use function explode;
@@ -42,6 +43,7 @@ final class TagsFilter implements ArraySerializable
         return $clone;
     }
 
+    #[Override]
     public function toArray(): array
     {
         return $this->query;

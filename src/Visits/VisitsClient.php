@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Visits;
 
 use Closure;
+use Override;
 use Shlinkio\Shlink\SDK\Domains\Exception\DomainNotFoundException;
 use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
@@ -25,6 +26,7 @@ readonly class VisitsClient implements VisitsClientInterface
 {
     public function __construct(private HttpClientInterface $httpClient) {}
 
+    #[Override]
     public function getVisitsOverview(): VisitsOverview
     {
         return VisitsOverview::fromArray($this->httpClient->getFromShlink('/visits')['visits'] ?? []);
@@ -33,6 +35,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsList
     {
         return $this->listShortUrlVisitsWithFilter($shortUrlIdentifier, VisitsFilter::create());
@@ -41,6 +44,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listShortUrlVisitsWithFilter(
         ShortUrlIdentifier $shortUrlIdentifier,
         VisitsFilter $filter,
@@ -62,6 +66,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagVisits(string $tag): VisitsList
     {
         return $this->listTagVisitsWithFilter($tag, VisitsFilter::create());
@@ -70,6 +75,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTagVisitsWithFilter(string $tag, WithDomainVisitsFilter|VisitsFilter $filter): VisitsList
     {
         try {
@@ -87,6 +93,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDefaultDomainVisits(): VisitsList
     {
         return $this->listDomainVisits('DEFAULT');
@@ -95,6 +102,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDefaultDomainVisitsWithFilter(VisitsFilter $filter): VisitsList
     {
         return $this->listDomainVisitsWithFilter('DEFAULT', $filter);
@@ -103,6 +111,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDomainVisits(string $domain): VisitsList
     {
         return $this->listDomainVisitsWithFilter($domain, VisitsFilter::create());
@@ -111,6 +120,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listDomainVisitsWithFilter(string $domain, VisitsFilter $filter): VisitsList
     {
         try {
@@ -128,6 +138,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listOrphanVisits(): VisitsList
     {
         return $this->listOrphanVisitsWithFilter(VisitsFilter::create());
@@ -136,6 +147,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listOrphanVisitsWithFilter(
         OrphanVisitsFilter|WithDomainVisitsFilter|VisitsFilter $filter,
     ): VisitsList {
@@ -146,6 +158,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listNonOrphanVisits(): VisitsList
     {
         return $this->listNonOrphanVisitsWithFilter(VisitsFilter::create());
@@ -154,6 +167,7 @@ readonly class VisitsClient implements VisitsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listNonOrphanVisitsWithFilter(WithDomainVisitsFilter|VisitsFilter $filter): VisitsList
     {
         return VisitsList::forTupleLoader(
@@ -172,11 +186,13 @@ readonly class VisitsClient implements VisitsClientInterface
         };
     }
 
+    #[Override]
     public function deleteOrphanVisits(): VisitsDeletion
     {
         return VisitsDeletion::fromArray($this->httpClient->callShlinkWithBody('/visits/orphan', 'DELETE', []));
     }
 
+    #[Override]
     public function deleteShortUrlVisits(ShortUrlIdentifier $shortUrlIdentifier): VisitsDeletion
     {
         [$shortCode, $query] = $shortUrlIdentifier->toShortCodeAndQuery();

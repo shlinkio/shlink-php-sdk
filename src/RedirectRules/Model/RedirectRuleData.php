@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\RedirectRules\Model;
 
 use JsonSerializable;
+use Override;
 
 final readonly class RedirectRuleData implements JsonSerializable
 {
@@ -28,6 +29,7 @@ final readonly class RedirectRuleData implements JsonSerializable
         return new self($this->longUrl, [...$this->conditions, $newCondition]);
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

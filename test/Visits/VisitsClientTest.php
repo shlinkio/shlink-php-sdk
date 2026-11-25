@@ -7,6 +7,7 @@ namespace ShlinkioTest\Shlink\SDK\Visits;
 use Closure;
 use DateTimeImmutable;
 use DateTimeInterface;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
@@ -36,6 +37,7 @@ class VisitsClientTest extends TestCase
     private MockObject&HttpClientInterface $httpClient;
     private string $now;
 
+    #[Override]
     public function setUp(): void
     {
         $this->httpClient = $this->createMock(HttpClientInterface::class);

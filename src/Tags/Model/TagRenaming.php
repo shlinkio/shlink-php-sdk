@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Tags\Model;
 
 use JsonSerializable;
+use Override;
 
 final readonly class TagRenaming implements JsonSerializable
 {
@@ -18,6 +19,7 @@ final readonly class TagRenaming implements JsonSerializable
         ]);
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return $this->payload;

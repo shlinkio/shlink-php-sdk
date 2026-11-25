@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\RedirectRules\Model;
 
 use DateTimeInterface;
 use JsonSerializable;
+use Override;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\Browser;
 use Shlinkio\Shlink\SDK\ShortUrls\Model\Device;
 
@@ -91,6 +92,7 @@ final readonly class RedirectCondition implements JsonSerializable
         );
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
