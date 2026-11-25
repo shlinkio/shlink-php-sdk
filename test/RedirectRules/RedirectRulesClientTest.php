@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\RedirectRules;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -27,6 +28,7 @@ class RedirectRulesClientTest extends TestCase
     private RedirectRulesClient $client;
     private MockObject&HttpClientInterface $httpClient;
 
+    #[Override]
     public function setUp(): void
     {
         $this->httpClient = $this->createMock(HttpClientInterface::class);

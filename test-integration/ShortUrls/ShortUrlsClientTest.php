@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioIntegrationTest\Shlink\SDK\ShortUrls;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Shlinkio\Shlink\SDK\ShortUrls\Exception\ShortUrlNotFoundException;
@@ -19,6 +20,7 @@ class ShortUrlsClientTest extends AbstractTestCase
 {
     private ShortUrlsClient $client;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->client = new ShortUrlsClient(self::httpClient());

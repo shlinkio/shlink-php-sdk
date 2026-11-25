@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\RedirectRules;
 
+use Override;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
@@ -19,6 +20,7 @@ readonly class RedirectRulesClient implements RedirectRulesClientInterface
 {
     public function __construct(private HttpClientInterface $httpClient) {}
 
+    #[Override]
     public function getShortUrlRedirectRules(ShortUrlIdentifier $identifier): RedirectRulesList
     {
         [$shortCode, $query] = $identifier->toShortCodeAndQuery();
@@ -35,6 +37,7 @@ readonly class RedirectRulesClient implements RedirectRulesClientInterface
         }
     }
 
+    #[Override]
     public function setShortUrlRedirectRules(
         ShortUrlIdentifier $identifier,
         SetRedirectRules $rules,

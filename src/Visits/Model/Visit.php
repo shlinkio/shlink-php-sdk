@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use Override;
 
 final readonly class Visit implements VisitInterface
 {
@@ -44,36 +45,43 @@ final readonly class Visit implements VisitInterface
         );
     }
 
+    #[Override]
     public function referer(): string
     {
         return $this->referer;
     }
 
+    #[Override]
     public function date(): DateTimeInterface
     {
         return $this->date;
     }
 
+    #[Override]
     public function userAgent(): string
     {
         return $this->userAgent;
     }
 
+    #[Override]
     public function potentialBot(): bool
     {
         return $this->potentialBot;
     }
 
+    #[Override]
     public function location(): VisitLocation|null
     {
         return $this->location;
     }
 
+    #[Override]
     public function visitedUrl(): string
     {
         return $this->visitedUrl;
     }
 
+    #[Override]
     public function redirectUrl(): string|null
     {
         return $this->redirectUrl;

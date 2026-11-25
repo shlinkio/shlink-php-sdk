@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\ShortUrls;
 
+use Override;
 use Shlinkio\Shlink\SDK\Exception\InvalidDataException;
 use Shlinkio\Shlink\SDK\Http\ErrorType;
 use Shlinkio\Shlink\SDK\Http\Exception\HttpException;
@@ -24,11 +25,13 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
 {
     public function __construct(private HttpClientInterface $httpClient) {}
 
+    #[Override]
     public function listShortUrls(): ShortUrlsList
     {
         return $this->listShortUrlsWithFilter(ShortUrlsFilter::create());
     }
 
+    #[Override]
     public function listShortUrlsWithFilter(ShortUrlsFilter $filter): ShortUrlsList
     {
         $query = $filter->toArray();
@@ -48,6 +51,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getShortUrl(ShortUrlIdentifier $identifier): ShortUrl
     {
         try {
@@ -65,6 +69,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function deleteShortUrl(ShortUrlIdentifier $identifier): void
     {
         [$url, $query] = $this->identifierToUrlAndQuery($identifier);
@@ -83,6 +88,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function createShortUrl(ShortUrlCreation $creation): ShortUrl
     {
         try {
@@ -99,6 +105,7 @@ readonly class ShortUrlsClient implements ShortUrlsClientInterface
     /**
      * @inheritDoc
      */
+    #[Override]
     public function editShortUrl(ShortUrlIdentifier $identifier, ShortUrlEdition $edition): ShortUrl
     {
         [$url, $query] = $this->identifierToUrlAndQuery($identifier);

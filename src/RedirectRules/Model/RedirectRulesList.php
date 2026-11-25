@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\RedirectRules\Model;
 
 use Countable;
+use Override;
 
 use function array_map;
 use function count;
@@ -30,6 +31,7 @@ final readonly class RedirectRulesList implements Countable
         );
     }
 
+    #[Override]
     public function count(): int
     {
         return count($this->redirectRules);

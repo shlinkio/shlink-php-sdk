@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Builder;
 
+use Override;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -31,26 +32,31 @@ readonly class ShlinkClientBuilder implements ShlinkClientBuilderInterface
         private HttpDebuggerInterface|null $debugger = null,
     ) {}
 
+    #[Override]
     public function buildShortUrlsClient(ShlinkConfigInterface $config): ShortUrlsClientInterface
     {
         return new ShortUrlsClient($this->createHttpClient($config));
     }
 
+    #[Override]
     public function buildVisitsClient(ShlinkConfigInterface $config): VisitsClientInterface
     {
         return new VisitsClient($this->createHttpClient($config));
     }
 
+    #[Override]
     public function buildTagsClient(ShlinkConfigInterface $config): TagsClientInterface
     {
         return new TagsClient($this->createHttpClient($config));
     }
 
+    #[Override]
     public function buildDomainsClient(ShlinkConfigInterface $config): DomainsClientInterface
     {
         return new DomainsClient($this->createHttpClient($config));
     }
 
+    #[Override]
     public function buildRedirectRulesClient(ShlinkConfigInterface $config): RedirectRulesClientInterface
     {
         return new RedirectRulesClient($this->createHttpClient($config));

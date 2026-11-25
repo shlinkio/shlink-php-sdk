@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Config;
 
+use Override;
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
 use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
@@ -38,21 +39,25 @@ final readonly class ArrayShlinkConfig implements ShlinkConfigInterface
                  */
                 public function __construct(private array $config) {}
 
+                #[Override]
                 public function baseUrl(): string
                 {
                     return trim($this->config[ArrayShlinkConfig::BASE_URL_PROP] ?? '');
                 }
 
+                #[Override]
                 public function apiKey(): string
                 {
                     return trim($this->config[ArrayShlinkConfig::API_KEY_PROP] ?? '');
                 }
 
+                #[Override]
                 public function version(): string
                 {
                     return trim($this->config[ArrayShlinkConfig::VERSION_PROP] ?? '');
                 }
 
+                #[Override]
                 public function missingConfigException(): InvalidConfigException
                 {
                     return InvalidConfigException::forInvalidConfig();
@@ -61,16 +66,19 @@ final readonly class ArrayShlinkConfig implements ShlinkConfigInterface
         ));
     }
 
+    #[Override]
     public function baseUrl(): string
     {
         return $this->wrapped->baseUrl();
     }
 
+    #[Override]
     public function apiKey(): string
     {
         return $this->wrapped->apiKey();
     }
 
+    #[Override]
     public function version(): ApiVersion
     {
         return $this->wrapped->version();

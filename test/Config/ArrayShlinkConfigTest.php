@@ -19,7 +19,7 @@ class ArrayShlinkConfigTest extends TestCase
         string $expectedMessage,
     ): void {
         $this->expectException(InvalidConfigException::class);
-        $this->expectExceptionMessage($expectedMessage);
+        $this->expectExceptionMessageIs($expectedMessage);
 
         ArrayShlinkConfig::fromArray($rawConfig);
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\RedirectRules\Model;
 
 use JsonSerializable;
+use Override;
 
 use function array_values;
 use function count;
@@ -76,6 +77,7 @@ final readonly class SetRedirectRules implements JsonSerializable
         return $this->withRule(count($this->rules) + 1, $newRule);
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

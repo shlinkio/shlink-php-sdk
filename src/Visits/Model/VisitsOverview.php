@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use Countable;
+use Override;
 
 final readonly class VisitsOverview implements Countable
 {
@@ -24,6 +25,7 @@ final readonly class VisitsOverview implements Countable
         );
     }
 
+    #[Override]
     public function count(): int
     {
         return $this->nonOrphanVisits->total + $this->orphanVisits->total;

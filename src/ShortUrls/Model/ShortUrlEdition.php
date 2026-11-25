@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\ShortUrls\Model;
 
 use JsonSerializable;
+use Override;
 
 final class ShortUrlEdition implements JsonSerializable
 {
@@ -55,6 +56,7 @@ final class ShortUrlEdition implements JsonSerializable
         return $this->cloneWithProp('forwardQuery', true);
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return $this->payload;

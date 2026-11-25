@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use JsonSerializable;
+use Override;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -28,6 +29,7 @@ class HttpClientTest extends TestCase
     private HttpClient $httpClient;
     private MockObject&ClientInterface $client;
 
+    #[Override]
     public function setUp(): void
     {
         $this->client = $this->createMock(ClientInterface::class);
@@ -83,6 +85,7 @@ class HttpClientTest extends TestCase
         yield 'serializable query' => [
             '/foo/bar',
             new class implements ArraySerializable {
+                #[Override]
                 public function toArray(): array
                 {
                     return ['foo' => 'bar', 'tags' => ['one', 'two']];
@@ -169,6 +172,7 @@ class HttpClientTest extends TestCase
         yield 'serializable body' => [
             'PUT',
             new class implements JsonSerializable {
+                #[Override]
                 public function jsonSerialize(): array
                 {
                     return ['foo' => 'bar', 'tags' => ['one', 'two']];

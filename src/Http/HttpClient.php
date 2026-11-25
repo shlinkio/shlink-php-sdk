@@ -6,6 +6,7 @@ namespace Shlinkio\Shlink\SDK\Http;
 
 use JsonException;
 use JsonSerializable;
+use Override;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -34,6 +35,7 @@ readonly class HttpClient implements HttpClientInterface
     /**
      * @throws HttpException
      */
+    #[Override]
     public function getFromShlink(string $path, array|ArraySerializable $query = []): array
     {
         return $this->callShlink($path, 'GET', null, $this->normalizeQuery($query));
@@ -42,6 +44,7 @@ readonly class HttpClient implements HttpClientInterface
     /**
      * @throws HttpException
      */
+    #[Override]
     public function callShlinkWithBody(
         string $path,
         string $method,

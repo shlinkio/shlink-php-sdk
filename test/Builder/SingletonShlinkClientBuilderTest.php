@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ShlinkioTest\Shlink\SDK\Builder;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -26,6 +27,7 @@ class SingletonShlinkClientBuilderTest extends TestCase
     private SingletonShlinkClientBuilder $builder;
     private MockObject&ShlinkClientBuilderInterface $wrapped;
 
+    #[Override]
     public function setUp(): void
     {
         $this->wrapped = $this->createMock(ShlinkClientBuilderInterface::class);

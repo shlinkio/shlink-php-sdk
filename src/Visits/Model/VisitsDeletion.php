@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shlinkio\Shlink\SDK\Visits\Model;
 
 use Countable;
+use Override;
 
 final readonly class VisitsDeletion implements Countable
 {
@@ -21,6 +22,7 @@ final readonly class VisitsDeletion implements Countable
         return new self($payload['deletedVisits'] ?? 0);
     }
 
+    #[Override]
     public function count(): int
     {
         return $this->deletedVisits;

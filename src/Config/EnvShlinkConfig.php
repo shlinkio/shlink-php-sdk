@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shlinkio\Shlink\SDK\Config;
 
+use Override;
 use Shlinkio\Shlink\SDK\Config\Exception\InvalidConfigException;
 use Shlinkio\Shlink\SDK\Http\ApiVersion;
 
@@ -27,21 +28,25 @@ final readonly class EnvShlinkConfig implements ShlinkConfigInterface
         return new self(ShlinkConfig::fromRawConfig(new class($env) implements RawConfigInterface {
             public function __construct(private readonly array $env) {}
 
+            #[Override]
             public function baseUrl(): string
             {
                 return trim($this->env[EnvShlinkConfig::BASE_URL_ENV_VAR] ?? '');
             }
 
+            #[Override]
             public function apiKey(): string
             {
                 return trim($this->env[EnvShlinkConfig::API_KEY_ENV_VAR] ?? '');
             }
 
+            #[Override]
             public function version(): string
             {
                 return trim($this->env[EnvShlinkConfig::VERSION_ENV_VAR] ?? '');
             }
 
+            #[Override]
             public function missingConfigException(): InvalidConfigException
             {
                 return InvalidConfigException::forMissingEnvVars();
@@ -49,16 +54,19 @@ final readonly class EnvShlinkConfig implements ShlinkConfigInterface
         }));
     }
 
+    #[Override]
     public function baseUrl(): string
     {
         return $this->wrapped->baseUrl();
     }
 
+    #[Override]
     public function apiKey(): string
     {
         return $this->wrapped->apiKey();
     }
 
+    #[Override]
     public function version(): ApiVersion
     {
         return $this->wrapped->version();
